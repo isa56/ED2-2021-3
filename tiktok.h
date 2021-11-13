@@ -1,35 +1,39 @@
 #ifndef TIKTOK_H_INCLUDED
 #define TIKTOK_H_INCLUDED
 
-#include <iostream>
+#include <bits/stdc++.h>
 #include <sstream>
 #include <fstream>
+#include <string>
 
 
 using namespace std;
 
 class Tiktok
 {
-private:
-    string reviewId;
-    string reviewText;
-    int upvotes;
-    string appVersion;
-    string postedDate;
+    // Atributos:
+    private:
+        string reviewId;
+        string reviewText;
+        int upvotes;
+        string appVersion;
+        string postedDate;
 
-public:
-    //construtor e destrutor
-    Tiktok(string reviewId, string reviewText, int upvotes, string appVersion, string postedDate);
-    ~Tiktok();
+    // Métodos:
+    public:
+        //construtor e destrutor
+        Tiktok(string reviewId, string reviewText, int upvotes, string appVersion, string postedDate);
+        ~Tiktok();
 
-    //funcao que seta todos os dados
-    void setDados();
+        //funcao que seta todos os dados
+        void setDados();    // Vamos usar? Sugestão: Criar Tiktok auxiliar antes e chamar essa função no loop
 
-    string getReviewId();
-    string getReviewText();
-    int getUpvotes();
-    string getAppVersion();
-    string getPostedDate();
+        // Getters:
+        string getReviewId();
+        string getReviewText();
+        int getUpvotes();
+        string getAppVersion();
+        string getPostedDate();
 };
 
 #endif // TIKTOK_H_INCLUDED

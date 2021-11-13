@@ -1,10 +1,9 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <sstream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include "tiktok.h"
-
 
 using namespace std;
 
@@ -39,8 +38,10 @@ int main(int argc, char const *argv[])
 
     if (arqEntrada.is_open())
     {
+        // Loop para ler e armazenar cada linha em um elemento do tiktokVector:
         while (getline(arqEntrada, line))
         {
+            // Ver se a linha está vazia:
             if (line == "")
             {
                 continue;
@@ -62,11 +63,14 @@ int main(int argc, char const *argv[])
         arqEntrada.close();
     }
 
-    cout << "Tiktok 1:" << endl;
-    cout << tiktokVector[0].getReviewId() << endl;
-    cout << tiktokVector[0].getReviewText() << endl;
-    cout << tiktokVector[0].getUpvotes() << endl;
-    cout << tiktokVector[0].getAppVersion() << endl;
-    cout << tiktokVector[0].getPostedDate() << endl;
-    cout << "--------" << endl;
+    // Impressão de teste:
+    for(int j = 0; j<5; j++){
+        cout << "Tiktok " << j << ":" << endl;
+        cout << tiktokVector[j].getReviewId() << endl;
+        cout << tiktokVector[j].getReviewText() << endl;
+        cout << tiktokVector[j].getUpvotes() << endl;
+        cout << tiktokVector[j].getAppVersion() << endl;
+        cout << tiktokVector[j].getPostedDate() << endl;
+        cout << "--------" << endl;
+    }
 }

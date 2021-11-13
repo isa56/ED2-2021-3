@@ -10,7 +10,7 @@ Trabalho Prático de Estrutura de Dados 2 (DCC012A) - 2021.3.
 * [Denner Efísio Emanuel Reis - 201735008 ](https://github.com/dennerEfisio);
 * [Isadora Gonçalves Ferreira - 202035017](https://github.com/isa56/);
 * [Mariana Siano - 201765572C](https://github.com/MarianaSiano07);
-* [Samuel Paiva - ]().
+* [Samuel Paiva - ](https://github.com/samuka105).
 
 ## Links importantes:
 
@@ -18,3 +18,10 @@ Trabalho Prático de Estrutura de Dados 2 (DCC012A) - 2021.3.
 * [Base de Dados](https://www.kaggle.com/shivamb/35-million-tiktok-mobile-app-reviews);
 * [Relatório](https://docs.google.com/document/d/1gvMfNZZx5tL2OjKo3H_hK4cd8vFteKP-9-ZkTID7shw/edit?usp=sharing);
 * [GitHub](https://github.com/isa56/ED2-2021-3).
+
+## Instruções:
+Para compilar: `g++ tiktok.cpp main.cpp -o main` <br>
+\* Se houver mais algum arquivo, adicione-o como argumento <br>
+Para rodar o programa (Windows): `./main tiktok_app_reviews.csv` <br>
+\* O arquivo `tiktok_app_reviews.csv` deve ser incluído na pasta do código <br>
+

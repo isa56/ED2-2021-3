@@ -1,10 +1,11 @@
-#include "tiktok.h"
-#include <iostream>
+#include <bits/stdc++.h>
 #include <sstream>
 #include <fstream>
+#include "tiktok.h"
 
 using namespace std;
 
+// Construtor:
 Tiktok::Tiktok(string reviewId, string reviewText, int upvotes, string appVersion, string postedDate)
 {
     this->reviewId = reviewId;
@@ -14,8 +15,10 @@ Tiktok::Tiktok(string reviewId, string reviewText, int upvotes, string appVersio
     this->postedDate = postedDate;
 }
 
+// Destrutor:
 Tiktok::~Tiktok() {}
 
+// Getters:
 string Tiktok::getReviewId() { return this->reviewId; }
 
 string Tiktok::getReviewText() { return this->reviewText; }
