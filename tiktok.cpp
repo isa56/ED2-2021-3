@@ -18,6 +18,14 @@ Tiktok::Tiktok(string reviewId, string reviewText, int upvotes, string appVersio
 // Destrutor:
 Tiktok::~Tiktok() {}
 
+void Tiktok::setDados(string reviewId, string reviewText, int upvotes, string appVersion, string postedDate) { 
+    this->reviewId = reviewId;
+    this->reviewText = reviewText;
+    this->upvotes = upvotes;
+    this->appVersion = appVersion;
+    this->postedDate = postedDate;
+}
+
 // Getters:
 string Tiktok::getReviewId() { return this->reviewId; }
 

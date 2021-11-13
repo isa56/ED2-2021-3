@@ -11,7 +11,7 @@ std::fstream arqEntrada;
 
 int main(int argc, char const *argv[])
 {
-    //code protection: Numero de parametros insuficiente
+    //Code Protection: Numero de parametros insuficiente
     if (argc != 2)
     {
         cout << "Erro! Os seguintes parametros eram esperados ./<nome do executavel> <arquivo de entrada>" << endl;
@@ -32,29 +32,37 @@ int main(int argc, char const *argv[])
     string upvotes;
     string appVersion;
     string postedDate;
+    Tiktok auxiliar;
 
     vector<Tiktok> tiktokVector;
-    string line;
+    string linha;
 
     if (arqEntrada.is_open())
     {
         // Loop para ler e armazenar cada linha em um elemento do tiktokVector:
-        while (getline(arqEntrada, line))
+        while (getline(arqEntrada, linha))
         {
             // Ver se a linha está vazia:
-            if (line == "")
+            if (linha == "")
             {
                 continue;
             }
             else
             {
-                istringstream dataFromLine(line);
-                getline(dataFromLine, reviewId, ',');
-                getline(dataFromLine, reviewText, ',');
-                getline(dataFromLine, upvotes, ',');
-                getline(dataFromLine, appVersion, ',');
-                getline(dataFromLine, postedDate, ',');
-                Tiktok auxiliar(reviewId, reviewText, atoi(upvotes.c_str()), appVersion, postedDate);
+                // Setta stream de input:
+                istringstream dadosDaLinha(linha);
+
+                // Faz o getline de cada linha, usando o separador ',':
+                getline(dadosDaLinha, reviewId, ',');
+                getline(dadosDaLinha, reviewText, ',');
+                getline(dadosDaLinha, upvotes, ',');
+                getline(dadosDaLinha, appVersion, ',');
+                getline(dadosDaLinha, postedDate, ',');
+
+                // Setta usando a função auxiliar:
+                auxiliar.setDados(reviewId, reviewText, atoi(upvotes.c_str()), appVersion, postedDate);
+
+                // Usando o vector:
                 tiktokVector.push_back(auxiliar);
 
                 //TODO: deletar auxiliar?

@@ -6,7 +6,6 @@
 #include <fstream>
 #include <string>
 
-
 using namespace std;
 
 class Tiktok
@@ -22,11 +21,12 @@ class Tiktok
     // Métodos:
     public:
         //construtor e destrutor
+        Tiktok();
         Tiktok(string reviewId, string reviewText, int upvotes, string appVersion, string postedDate);
         ~Tiktok();
 
         //funcao que seta todos os dados
-        void setDados();    // Vamos usar? Sugestão: Criar Tiktok auxiliar antes e chamar essa função no loop
+        void setDados(string reviewId, string reviewText, int upvotes, string appVersion, string postedDate);    // Vamos usar? Sugestão: Criar Tiktok auxiliar antes e chamar essa função no loop
 
         // Getters:
         string getReviewId();
