@@ -9,6 +9,23 @@ using namespace std;
 
 std::fstream arqEntrada;
 
+void acessaRegistro(int posicao)
+{
+    char *buffer = new char[sizeof(Tiktok)];
+
+    fstream arquivoBin;
+
+    arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
+
+    arquivoBin.seekg(posicao * sizeof(Tiktok));
+
+    arquivoBin.read(buffer, sizeof(Tiktok));
+    arquivoBin.close();
+
+    cout.write(buffer, sizeof(Tiktok));
+    delete[] buffer;
+}
+
 int main(int argc, char const *argv[])
 {
     //Code Protection: Numero de parametros insuficiente
@@ -98,10 +115,18 @@ int main(int argc, char const *argv[])
     }
 
     // Gravar cada objeto do tiktokVector no binário:
-    for (int i = 0; i < tamTabela; i++)
+    for (int i = 0; i < 10; i++)
     {
-        arqSaida.write( 
+        arqSaida.write(
             (char *)&tiktokVector[i],
-            tamTabela * sizeof(Tiktok) );
+            tamTabela * sizeof(Tiktok));
     }
+    arqSaida.close();
+
+    int linhaPesquisada;
+
+    cout << "Digite a i-esima posicao que deseja acessar: " << endl;
+    cin >> linhaPesquisada;
+
+    acessaRegistro(linhaPesquisada);
 }
