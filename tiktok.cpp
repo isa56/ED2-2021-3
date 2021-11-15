@@ -6,6 +6,8 @@
 using namespace std;
 
 // Construtor:
+Tiktok::Tiktok(){}
+
 Tiktok::Tiktok(string reviewId, string reviewText, int upvotes, string appVersion, string postedDate)
 {
     this->reviewId = reviewId;

@@ -32,6 +32,7 @@ int main(int argc, char const *argv[])
     string upvotes;
     string appVersion;
     string postedDate;
+
     Tiktok auxiliar;
 
     vector<Tiktok> tiktokVector;
@@ -64,21 +65,43 @@ int main(int argc, char const *argv[])
 
                 // Usando o vector:
                 tiktokVector.push_back(auxiliar);
-
-                //TODO: deletar auxiliar?
             }
         }
         arqEntrada.close();
     }
 
     // Impressão de teste:
-    for(int j = 0; j<5; j++){
-        cout << "Tiktok " << j << ":" << endl;
-        cout << tiktokVector[j].getReviewId() << endl;
-        cout << tiktokVector[j].getReviewText() << endl;
-        cout << tiktokVector[j].getUpvotes() << endl;
-        cout << tiktokVector[j].getAppVersion() << endl;
-        cout << tiktokVector[j].getPostedDate() << endl;
-        cout << "--------" << endl;
+    // for (int j = 0; j < 5; j++)
+    // {
+    //     cout << "Tiktok " << j << ":" << endl;
+    //     cout << tiktokVector[j].getReviewId() << endl;
+    //     cout << tiktokVector[j].getReviewText() << endl;
+    //     cout << tiktokVector[j].getUpvotes() << endl;
+    //     cout << tiktokVector[j].getAppVersion() << endl;
+    //     cout << tiktokVector[j].getPostedDate() << endl;
+    //     cout << "--------" << endl;
+    // }
+
+    // Tamanho da tabela
+    int tamTabela = tiktokVector.size();
+
+    // Saída:
+    std::fstream arqSaida;
+
+    arqSaida.open("tiktok_app_reviews.bin", ios::out | ios::binary);
+
+    // Code protection pro arquivo de saída:
+    if (!arqSaida.is_open())
+    {
+        cout << "Impossivel abrir o arquivo de saída!" << endl;
+        exit(-2);
+    }
+
+    // Gravar cada objeto do tiktokVector no binário:
+    for (int i = 0; i < tamTabela; i++)
+    {
+        arqSaida.write( 
+            (char *)&tiktokVector[i],
+            tamTabela * sizeof(Tiktok) );
     }
 }
