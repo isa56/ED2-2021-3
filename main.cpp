@@ -26,6 +26,46 @@ void acessaRegistro(int posicao)
     delete[] buffer;
 }
 
+void testeImportacao()
+{
+    cout << "Escolha o metodo de teste: " << endl;
+    cout << "Digite 1 para imprimir na tela 10 itens" << endl;
+    cout << "Digite 2 para salvar 100 itens num txt" << endl;
+    cout << "Digite 0 para sair" << endl;
+
+    int numeroEscolhido;
+
+    cin >> numeroEscolhido;
+    fstream arquivoBin;
+
+    switch (numeroEscolhido)
+    {
+
+    case 1:
+        char *buffer = new char[sizeof(Tiktok)];
+
+        arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
+
+        for (int i = 0; i < 10; i++)
+        {
+            
+            int posicao = rand()%sizeof(Tiktok);
+            arquivoBin.seekg(posicao * sizeof(Tiktok));
+
+            arquivoBin.read(buffer, sizeof(Tiktok));
+
+            cout.write(buffer, sizeof(Tiktok));
+            delete[] buffer;
+        }
+
+        arquivoBin.close();
+        break; // prints "1",
+    case 2:
+
+        break;
+    }
+}
+
 int main(int argc, char const *argv[])
 {
     //Code Protection: Numero de parametros insuficiente
