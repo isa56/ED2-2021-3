@@ -10,7 +10,7 @@ Trabalho Prático de Estrutura de Dados 2 (DCC012A) - 2021.3.
 * [Denner Efísio Emanuel Reis - 201735008 ](https://github.com/dennerEfisio);
 * [Isadora Gonçalves Ferreira - 202035017](https://github.com/isa56/);
 * [Mariana Siano Pinto - 201765572C](https://github.com/MarianaSiano07);
-* [Samuel Paiva - ](https://github.com/samuka105).
+* [Samuel Paiva Bernardes - 201765568AC](https://github.com/samuka105).
 
 ## Links importantes:
 
