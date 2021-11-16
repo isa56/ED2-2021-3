@@ -29,9 +29,10 @@ void acessaRegistro(int posicao)
 void testeImportacao()
 {
     cout << "Escolha o metodo de teste: " << endl;
-    cout << "Digite 1 para imprimir na tela 10 itens" << endl;
-    cout << "Digite 2 para salvar 100 itens num txt" << endl;
-    cout << "Digite 0 para sair" << endl;
+    cout << "Digite 1 para pesquisar uma linha" << endl;
+    cout << "Digite 2 para imprimir na tela 10 itens" << endl;
+    cout << "Digite 3 para salvar 100 itens num txt" << endl;
+    cout << "Digite outro para sair" << endl;
 
     int numeroEscolhido;
 
@@ -42,26 +43,48 @@ void testeImportacao()
     {
 
     case 1:
-        char *buffer = new char[sizeof(Tiktok)];
+        cout << "Digite a i-esima posicao que deseja acessar: " << endl;
+        int linhaPesquisada;
+        cin >> linhaPesquisada;
+        acessaRegistro(linhaPesquisada);
+        break;
 
-        arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
-
+    case 2:
         for (int i = 0; i < 10; i++)
         {
-            
-            int posicao = rand()%sizeof(Tiktok);
+            int posicao = rand() % 10; // Numero de linhas do arquivo csv hardcoded (3660723)
+            acessaRegistro(posicao);
+        }
+        break;
+
+    case 3:
+        char *buffer = new char[sizeof(Tiktok)];
+        fstream arquivoBin;
+        vector<string> tiktokVector;
+
+        arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
+        for (int i = 0; i < 100; i++)
+        {
+            int posicao = rand() % 10; // 3660723
             arquivoBin.seekg(posicao * sizeof(Tiktok));
 
             arquivoBin.read(buffer, sizeof(Tiktok));
-
-            cout.write(buffer, sizeof(Tiktok));
-            delete[] buffer;
+            tiktokVector.push_back(buffer);
         }
-
+        delete[] buffer;
         arquivoBin.close();
-        break; // prints "1",
-    case 2:
 
+        std::fstream arqTeste;
+
+        arqTeste.open("teste_importacao.txt", ios::out);
+
+        for (int i = 0; i < tiktokVector.size(); i++)
+        {
+            arqTeste.write(
+                (char *)&tiktokVector[i],
+                tiktokVector.size() * sizeof(Tiktok));
+        }
+        arqTeste.close();
         break;
     }
 }
@@ -127,18 +150,6 @@ int main(int argc, char const *argv[])
         arqEntrada.close();
     }
 
-    // Impressão de teste:
-    // for (int j = 0; j < 5; j++)
-    // {
-    //     cout << "Tiktok " << j << ":" << endl;
-    //     cout << tiktokVector[j].getReviewId() << endl;
-    //     cout << tiktokVector[j].getReviewText() << endl;
-    //     cout << tiktokVector[j].getUpvotes() << endl;
-    //     cout << tiktokVector[j].getAppVersion() << endl;
-    //     cout << tiktokVector[j].getPostedDate() << endl;
-    //     cout << "--------" << endl;
-    // }
-
     // Tamanho da tabela
     int tamTabela = tiktokVector.size();
 
@@ -155,18 +166,17 @@ int main(int argc, char const *argv[])
     }
 
     // Gravar cada objeto do tiktokVector no binário:
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) //trocar para tiktokVector.size()?
     {
         arqSaida.write(
             (char *)&tiktokVector[i],
             tamTabela * sizeof(Tiktok));
     }
     arqSaida.close();
-
-    int linhaPesquisada;
-
-    cout << "Digite a i-esima posicao que deseja acessar: " << endl;
-    cin >> linhaPesquisada;
-
-    acessaRegistro(linhaPesquisada);
+    testeImportacao();
 }
+
+//Duvidas
+//Como salvar arquivo bin corretamente?
+//Como escrever com o write()?
+//Tamanho do bin?
