@@ -166,11 +166,12 @@ int main(int argc, char const *argv[])
     }
 
     // Gravar cada objeto do tiktokVector no binário:
-    for (int i = 0; i < 10; i++) //trocar para tiktokVector.size()?
+    for (int i = 0; i < 10; i++) //trocar para tiktokVector.size()
     {
         arqSaida.write(
             (char *)&tiktokVector[i],
-            tamTabela * sizeof(Tiktok));
+            tamTabela * sizeof(Tiktok));    // Definir tamanho máximo das strings a serem salvas (pensar no maior caso?) => dividir para cada atributo:         arq.write(reinterpret_cast<const char*>(str.c_str()), str.length());
+
     }
     arqSaida.close();
     testeImportacao();
