@@ -150,9 +150,6 @@ int main(int argc, char const *argv[])
         arqEntrada.close();
     }
 
-    // Tamanho da tabela
-    int tamTabela = tiktokVector.size();
-
     // Saída:
     std::fstream arqSaida;
 
@@ -166,18 +163,21 @@ int main(int argc, char const *argv[])
     }
 
     // Gravar cada objeto do tiktokVector no binário:
-    for (int i = 0; i < 10; i++) //trocar para tiktokVector.size()
+    for (int i = 0; i < tiktokVector.size(); i++) //trocar para tiktokVector.size()
     {
-        arqSaida.write(
-            (char *)&tiktokVector[i],
-            tamTabela * sizeof(Tiktok));    // Definir tamanho máximo das strings a serem salvas (pensar no maior caso?) => dividir para cada atributo:         arq.write(reinterpret_cast<const char*>(str.c_str()), str.length());
+        string reviewIdAux = tiktokVector[i].getReviewId();
+        string reviewTextAux = tiktokVector[i].getReviewText();
+        int upvotesAux = tiktokVector[i].getUpvotes();
+        string appVersionAux = tiktokVector[i].getAppVersion();
+        string postedDateAux = tiktokVector[i].getPostedDate();
 
+        arqSaida.write(reinterpret_cast<const char *>(reviewIdAux.c_str()), reviewIdAux.length());
+        arqSaida.write(reinterpret_cast<const char *>(reviewTextAux.c_str()), reviewTextAux.length());
+        arqSaida.write(reinterpret_cast<const char *>(&upvotesAux), sizeof(int));
+        arqSaida.write(reinterpret_cast<const char *>(appVersionAux.c_str()), appVersionAux.length());
+        arqSaida.write(reinterpret_cast<const char *>(postedDateAux.c_str()), postedDateAux.length());
     }
+
     arqSaida.close();
     testeImportacao();
 }
-
-//Duvidas
-//Como salvar arquivo bin corretamente?
-//Como escrever com o write()?
-//Tamanho do bin?
