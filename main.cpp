@@ -11,13 +11,13 @@ std::fstream arqEntrada;
 
 void acessaRegistro(int posicao)
 {
-    char *buffer = new char[sizeof(Tiktok)];
+    char *buffer = new char[sizeof(Tiktok)]; //precisa receber o tamanho da linha
 
     fstream arquivoBin;
 
     arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
 
-    arquivoBin.seekg(posicao * sizeof(Tiktok));
+    arquivoBin.seekg(posicao * sizeof(Tiktok)); //posiciona o cursor no local indicado
 
     arquivoBin.read(buffer, sizeof(Tiktok));
     arquivoBin.close();
@@ -181,3 +181,9 @@ int main(int argc, char const *argv[])
     arqSaida.close();
     testeImportacao();
 }
+
+//Duvidas:
+//O arquivo bin agora está salvando corretamente entretanto as leituras do arquivo bin não estão
+//funcionando corretamente. Isto está acontecendo, provavelmente, devido aos size_of usados dentro da 
+//função "acessaRegistro" que estamos usando de forma incorreta, fazendo que somente pedaços pequenos das linhas 
+//sejam capturados. Precisamos ver com o Caniato como fazer essa leitura de forma correta.
