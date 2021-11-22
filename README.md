@@ -2,8 +2,8 @@
 
 ## Descrição:
 
-Trabalho Prático de Estrutura de Dados 2 (DCC012A) - 2021.3.
-* Linguagem escolhida:  <img alt="C++" src="https://www.alura.com.br/artigos/assets/formacao-linguagem-c-plus-plus/img-01.png" width="15"></img>
+Trabalho Prático de Estrutura de Dados 2 (DCC012A) - Para o período 2021.3. <br>
+* Linguagem escolhida:  <img alt="C++" src="https://www.alura.com.br/artigos/assets/formacao-linguagem-c-plus-plus/img-01.png" width="20"></img>
 
 ## Integrantes do grupo:
 
@@ -20,8 +20,11 @@ Trabalho Prático de Estrutura de Dados 2 (DCC012A) - 2021.3.
 * [GitHub](https://github.com/isa56/ED2-2021-3).
 
 ## Instruções:
-Para compilar: `g++ tiktok.cpp main.cpp -o main` <br>
-\* Se houver mais algum arquivo, adicione-o como argumento <br>
-Para rodar o programa (Windows): `./main tiktok_app_reviews.csv` <br>
-\* O arquivo `tiktok_app_reviews.csv` deve ser incluído na pasta do código <br>
+Para compilar: `g++ *.cpp -o main`
+<br>
+Para rodar o programa (Windows): `./main tiktok_app_reviews.csv`
+<br>
+\* O arquivo `tiktok_app_reviews.csv` deve ser incluído na pasta do código, o usuário deve [baixá-lo aqui](https://www.kaggle.com/shivamb/35-million-tiktok-mobile-app-reviews) e copiá-lo para a pasta raiz `ED2-2021-3`.
+
+<br>
 
