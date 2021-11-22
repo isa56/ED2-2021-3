@@ -3,6 +3,7 @@
 *.csv
 *.bin
 *.exe
+*.txt
 
 # Ignorar arquivos de ambiente de desenvolvimento: 
 .vscode/

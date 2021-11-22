@@ -3,7 +3,17 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sys/stat.h>
+
+// #include <filesystem>
+
 #include "tiktok.h"
+
+// Contantes:
+#define BINARY_NAME "tiktok_app_reviews.bin"
+#define TEXT_NAME "teste_importacao.txt"
+#define STRING_MEDIUM_SIZE 320
+#define LINES_CSV 3660723
 
 using namespace std;
 
@@ -11,18 +21,18 @@ std::fstream arqEntrada;
 
 void acessaRegistro(int posicao)
 {
-    char *buffer = new char[320];
+    char *buffer = new char[STRING_MEDIUM_SIZE];
 
     fstream arquivoBin;
 
-    arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
+    arquivoBin.open(BINARY_NAME, ios::in | ios::binary);
 
-    arquivoBin.seekg(posicao * 320); //posiciona o cursor no local indicado
+    arquivoBin.seekg(posicao * STRING_MEDIUM_SIZE); //posiciona o cursor no local indicado
 
-    arquivoBin.read(buffer, 320);
+    arquivoBin.read(buffer, STRING_MEDIUM_SIZE);
     arquivoBin.close();
 
-    cout.write(buffer, 320);
+    cout.write(buffer, STRING_MEDIUM_SIZE);
     cout << endl;
 
     delete[] buffer;
@@ -64,7 +74,7 @@ void testeImportacao()
         fstream arquivoBin;
         vector<string> tiktokVector;
 
-        arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
+        arquivoBin.open(BINARY_NAME, ios::in | ios::binary);
         for (int i = 0; i < 100; i++)
         {
             int posicao = rand() % 10; // 3660723
@@ -78,7 +88,7 @@ void testeImportacao()
 
         std::fstream arqTeste;
 
-        arqTeste.open("teste_importacao.txt", ios::out);
+        arqTeste.open(TEXT_NAME, ios::out);
 
         for (int i = 0; i < tiktokVector.size(); i++)
         {
@@ -152,34 +162,47 @@ int main(int argc, char const *argv[])
         arqEntrada.close();
     }
 
-    // Saída:
-    std::fstream arqSaida;
+    struct stat buf;
 
-    arqSaida.open("tiktok_app_reviews.bin", ios::out | ios::binary);
+    if(! (stat(BINARY_NAME, &buf) != -1)) {
+        
+        // Saída:
+        std::fstream arqSaida;
 
-    // Code protection pro arquivo de saída:
-    if (!arqSaida.is_open())
-    {
-        cout << "Impossivel abrir o arquivo de saída!" << endl;
-        exit(-2);
+        arqSaida.open(BINARY_NAME, ios::out | ios::binary);
+
+        // Code protection pro arquivo de saída:
+        if (!arqSaida.is_open())
+        {
+            cout << "Impossivel abrir o arquivo de saída!" << endl;
+            exit(-2);
+        }
+
+        // Gravar cada objeto do tiktokVector no binário:
+        for (int i = 0; i < tiktokVector.size(); i++) //trocar para tiktokVector.size()
+        {
+            string reviewIdAux = tiktokVector[i].getReviewId();
+            string reviewTextAux = tiktokVector[i].getReviewText();
+            int upvotesAux = tiktokVector[i].getUpvotes();
+            string appVersionAux = tiktokVector[i].getAppVersion();
+            string postedDateAux = tiktokVector[i].getPostedDate();
+
+            arqSaida.write(reinterpret_cast<const char *>(reviewIdAux.c_str()), reviewIdAux.length());
+            arqSaida.write(reinterpret_cast<const char *>(reviewTextAux.c_str()), reviewTextAux.length());
+            arqSaida.write(reinterpret_cast<const char *>(&upvotesAux), sizeof(int));
+            arqSaida.write(reinterpret_cast<const char *>(appVersionAux.c_str()), appVersionAux.length());
+            arqSaida.write(reinterpret_cast<const char *>(postedDateAux.c_str()), postedDateAux.length());
+        }
+
+        arqSaida.close();
     }
 
-    // Gravar cada objeto do tiktokVector no binário:
-    for (int i = 0; i < tiktokVector.size(); i++) //trocar para tiktokVector.size()
-    {
-        string reviewIdAux = tiktokVector[i].getReviewId();
-        string reviewTextAux = tiktokVector[i].getReviewText();
-        int upvotesAux = tiktokVector[i].getUpvotes();
-        string appVersionAux = tiktokVector[i].getAppVersion();
-        string postedDateAux = tiktokVector[i].getPostedDate();
+    int continuar = 1;
 
-        arqSaida.write(reinterpret_cast<const char *>(reviewIdAux.c_str()), reviewIdAux.length());
-        arqSaida.write(reinterpret_cast<const char *>(reviewTextAux.c_str()), reviewTextAux.length());
-        arqSaida.write(reinterpret_cast<const char *>(&upvotesAux), sizeof(int));
-        arqSaida.write(reinterpret_cast<const char *>(appVersionAux.c_str()), appVersionAux.length());
-        arqSaida.write(reinterpret_cast<const char *>(postedDateAux.c_str()), postedDateAux.length());
+    // Chamada da função de teste:
+    while (continuar == 1) {
+        testeImportacao();
+        cout << endl << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
+        cin >> continuar;
     }
-
-    arqSaida.close();
-    testeImportacao();
 }
