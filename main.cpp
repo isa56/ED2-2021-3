@@ -11,18 +11,20 @@ std::fstream arqEntrada;
 
 void acessaRegistro(int posicao)
 {
-    char *buffer = new char[sizeof(Tiktok)]; //precisa receber o tamanho da linha
+    char *buffer = new char[320];
 
     fstream arquivoBin;
 
     arquivoBin.open("tiktok_app_reviews.bin", ios::in | ios::binary);
 
-    arquivoBin.seekg(posicao * sizeof(Tiktok)); //posiciona o cursor no local indicado
+    arquivoBin.seekg(posicao * 320); //posiciona o cursor no local indicado
 
-    arquivoBin.read(buffer, sizeof(Tiktok));
+    arquivoBin.read(buffer, 320);
     arquivoBin.close();
 
-    cout.write(buffer, sizeof(Tiktok));
+    cout.write(buffer, 320);
+    cout << endl;
+
     delete[] buffer;
 }
 
@@ -58,7 +60,7 @@ void testeImportacao()
         break;
 
     case 3:
-        char *buffer = new char[sizeof(Tiktok)];
+        char *buffer = new char[320];
         fstream arquivoBin;
         vector<string> tiktokVector;
 
@@ -66,9 +68,9 @@ void testeImportacao()
         for (int i = 0; i < 100; i++)
         {
             int posicao = rand() % 10; // 3660723
-            arquivoBin.seekg(posicao * sizeof(Tiktok));
+            arquivoBin.seekg(posicao * 320);
 
-            arquivoBin.read(buffer, sizeof(Tiktok));
+            arquivoBin.read(buffer, 320);
             tiktokVector.push_back(buffer);
         }
         delete[] buffer;
@@ -81,8 +83,7 @@ void testeImportacao()
         for (int i = 0; i < tiktokVector.size(); i++)
         {
             arqTeste.write(
-                (char *)&tiktokVector[i],
-                tiktokVector.size() * sizeof(Tiktok));
+                (char *)&tiktokVector[i], tiktokVector.size() * 320);
         }
         arqTeste.close();
         break;
@@ -116,6 +117,7 @@ int main(int argc, char const *argv[])
     Tiktok auxiliar;
 
     vector<Tiktok> tiktokVector;
+    vector<string> tamanhoAux;
     string linha;
 
     if (arqEntrada.is_open())
@@ -181,9 +183,3 @@ int main(int argc, char const *argv[])
     arqSaida.close();
     testeImportacao();
 }
-
-//Duvidas:
-//O arquivo bin agora está salvando corretamente entretanto as leituras do arquivo bin não estão
-//funcionando corretamente. Isto está acontecendo, provavelmente, devido aos size_of usados dentro da 
-//função "acessaRegistro" que estamos usando de forma incorreta, fazendo que somente pedaços pequenos das linhas 
-//sejam capturados. Precisamos ver com o Caniato como fazer essa leitura de forma correta.
