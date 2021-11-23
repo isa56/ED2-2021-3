@@ -22,7 +22,7 @@ Trabalho Prático de Estrutura de Dados 2 (DCC012A) - Para o período 2021.3. <b
 ## Instruções:
 Para compilar: `g++ *.cpp -o main`
 <br>
-Para rodar o programa (Windows): `./main tiktok_app_reviews.csv`
+Para rodar o programa (Windows): `./main diretorio/do/arquivo/entrada.csv`
 <br>
 \* O arquivo `tiktok_app_reviews.csv` deve ser incluído na pasta do código, o usuário deve [baixá-lo aqui](https://www.kaggle.com/shivamb/35-million-tiktok-mobile-app-reviews) e copiá-lo para a pasta raiz `ED2-2021-3`.
 
