@@ -1,32 +1,60 @@
+#ifndef TABELAHASH_H_INCLUDED
+#define TABELAHASH_H_INCLUDED
+
 #include <bits/stdc++.h>
+
+#define FATOR_CARGA 0.35;
+#define TAMANHO_INICIAL 127; // numero primo
 
 using namespace std;
 
-#define LINES_CSV 3660723;
-#define INITIAL_SIZE 10000;
+class TabelaHash {
 
-    // Contrutor e Destrutor:
-    TabelaHash(){}
-    ~TabelaHash(){}
+    // Tabela Hash: a chave é a app_version. Deve contar quantas vezes cada version existe... seria esse o valor?
 
-    // Função Hash:
-    int funcaoHash(int chave) {
-        return (chave) % INITIAL_SIZE;
-    }
+    private:
+    DadoHash dados[TAMANHO_INICIAL];
+    int tamanho;
+    int numeroEntradas = 0;
 
-    // Função de Inserção:
-    void insereHash(int chave, string valor) {
-        int posicao = funcaoHash(chave);
-        if(tabelaVector[posicao] = null || tabelaVector[posicao] == "") tabelaVector[posicao] = valor;
-        else {
-            // recalcula a posicao
+    public:
+        // Contrutor e Destrutor:
+        TabelaHash();
+        ~TabelaHash();
+
+        // Função Hash:
+        int funcaoHash(string chave) {
+            return (chave) % tamanho;
         }
-    }
 
-    // Função imprimir Hash::
-    void printHash() { 
-        for(int i = 0; i < tabelaVector.size(); i++) 
-            cout << tabelaVector[i] << endl;
-    }
+        // Função de Inserção:
+        void insereHash(string chave, int valor) {
 
+            if(numeroEntradas / tamanho > FATOR_CARGA)
+                rehash();
 
+            int indice = funcaoHash(chave);
+
+            if(dados[indice].getChave() == chave) dados[indice].incrementaValor();  // Já existe, aumenta o número de chaves iguais
+            else if(dados[indice].getChave() == null) dados[indice].setElemento(chave, valor);  // Não existe, setta o elemento na posicao
+            else    // Já existe mas não é o valor 'chave'
+
+            numeroEntradas++;
+
+        }
+
+        // Função imprimir Hash:
+        void printHash() { 
+            for(int i = 0; i < numeroEntradas; i++)
+                cout << dados[i] << " ";
+            cout << endl;
+        }
+
+        // Rehash da tabela:
+        void rehash() { 
+
+        }
+
+}
+
+#endif
