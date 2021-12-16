@@ -1,6 +1,3 @@
-#ifndef DADOHASH_H_INCLUDED
-#define DADOHASH_H_INCLUDED
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -35,5 +32,3 @@ class DadoHash {
     void incrementaValor() { valor++; }
 
 }
-
-#endif // DADOHASH_H_INCLUDED
