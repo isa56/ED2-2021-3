@@ -64,7 +64,7 @@ void testeImportacao()
     case 2:
         for (int i = 0; i < 10; i++)
         {
-            int posicao = rand() % 10; // Numero de linhas do arquivo csv hardcoded (3660723)
+            int posicao = rand() % LINES_CSV; // Numero de linhas do arquivo csv hardcoded (3660723)
             acessaRegistro(posicao);
         }
         break;
@@ -77,10 +77,10 @@ void testeImportacao()
         arquivoBin.open(BINARY_NAME, ios::in | ios::binary);
         for (int i = 0; i < 100; i++)
         {
-            int posicao = rand() % 10; // 3660723
-            arquivoBin.seekg(posicao * 320);
+            int posicao = rand() % LINES_CSV; // 3660723
+            arquivoBin.seekg(posicao * STRING_MEDIUM_SIZE);
 
-            arquivoBin.read(buffer, 320);
+            arquivoBin.read(buffer, STRING_MEDIUM_SIZE);
             tiktokVector.push_back(buffer);
         }
         delete[] buffer;
@@ -93,7 +93,7 @@ void testeImportacao()
         for (int i = 0; i < tiktokVector.size(); i++)
         {
             arqTeste.write(
-                (char *)&tiktokVector[i], tiktokVector.size() * 320);
+                (char *)&tiktokVector[i], tiktokVector.size() * STRING_MEDIUM_SIZE);
         }
         arqTeste.close();
         break;

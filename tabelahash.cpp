@@ -1,60 +1,116 @@
-#ifndef TABELAHASH_H_INCLUDED
-#define TABELAHASH_H_INCLUDED
-
 #include <bits/stdc++.h>
-
-#define FATOR_CARGA 0.35;
-#define TAMANHO_INICIAL 127; // numero primo
+#include "TabelaHash.h"
 
 using namespace std;
 
-class TabelaHash {
+// Construtor e Destrutor:
+TabelaHash::TabelaHash() {
+    tamanhoTabela = TAMANHO_TABELA_INICIAL;
+}
+TabelaHash::~TabelaHash() {}
 
-    // Tabela Hash: a chave é a app_version. Deve contar quantas vezes cada version existe... seria esse o valor?
-
-    private:
-    DadoHash dados[TAMANHO_INICIAL];
-    int tamanho;
-    int numeroEntradas = 0;
-
-    public:
-        // Contrutor e Destrutor:
-        TabelaHash();
-        ~TabelaHash();
-
-        // Função Hash:
-        int funcaoHash(string chave) {
-            return (chave) % tamanho;
-        }
-
-        // Função de Inserção:
-        void insereHash(string chave, int valor) {
-
-            if(numeroEntradas / tamanho > FATOR_CARGA)
-                rehash();
-
-            int indice = funcaoHash(chave);
-
-            if(dados[indice].getChave() == chave) dados[indice].incrementaValor();  // Já existe, aumenta o número de chaves iguais
-            else if(dados[indice].getChave() == null) dados[indice].setElemento(chave, valor);  // Não existe, setta o elemento na posicao
-            else    // Já existe mas não é o valor 'chave'
-
-            numeroEntradas++;
-
-        }
-
-        // Função imprimir Hash:
-        void printHash() { 
-            for(int i = 0; i < numeroEntradas; i++)
-                cout << dados[i] << " ";
-            cout << endl;
-        }
-
-        // Rehash da tabela:
-        void rehash() { 
-
-        }
-
+bool TabelaHash::estaVazia()
+{
+    for (int i = 0; i < tamanhoTabela; i++)
+    {
+        if (tabela[i].getAppVersion() != "")
+            return false;
+    }
+    return true;
 }
 
-#endif
+int TabelaHash::funcaoHash(string chave)
+{
+    int hash = 0;
+    const char *s = chave.c_str();
+
+    while (*s)
+    {
+        hash = hash * 71 + *s++;
+    }
+
+    cout << "Hash: " << hash << endl;
+
+    return hash % tamanhoTabela;
+}
+
+void TabelaHash::inserirItem(string chave)
+{
+    int indiceSondagem = 0;
+    int posicao = funcaoHash(chave);
+    bool inserido = false;
+
+    do
+    {
+        if (tabela[posicao].getAppVersion() == "")
+        {
+            tabela[posicao].setDados(chave);
+            // qtdPreenchida++;
+            inserido = true;
+        }
+        else
+        {
+            if (tabela[posicao].getAppVersion() == chave)
+            {
+                tabela[posicao].incrementNVezes();
+                inserido = true;
+            }
+            else
+            {
+                indiceSondagem++;
+                posicao += indiceSondagem;
+            }
+        }
+    } while (!inserido);
+}
+
+void TabelaHash::ordenaTabela()
+{
+    // chama a função de ordenação
+}
+
+void TabelaHash::imprimirTabela()
+{
+    ordenaTabela();
+
+    int tamanho = sizeof(tabela) / sizeof(tabela[0]);
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        cout << tabela[i].getAppVersion() << endl;
+    }
+}
+
+/* MAIN PARA TESTE
+
+int main()
+{
+
+    TabelaHash tb;
+
+    if (tb.estaVazia())
+        cout << "A tabela esta vazia" << endl;
+    else
+        cout << "a tabela nao esta vazia" << endl;
+
+    tb.inserirItem("11111");
+    tb.inserirItem("2165");
+    tb.inserirItem("2165");
+    tb.inserirItem("564531");
+    tb.inserirItem("2684");
+    tb.inserirItem("5431");
+    tb.inserirItem("518");
+    tb.inserirItem("518");
+
+    if (tb.estaVazia())
+    {
+        cout << "A tabela está vazia" << endl;
+    }
+    else
+    {
+        cout << "a tabela não está vazia" << endl;
+    }
+
+    return 0;
+}
+*/
