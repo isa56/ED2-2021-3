@@ -4,7 +4,8 @@
 using namespace std;
 
 // Construtor e Destrutor:
-TabelaHash::TabelaHash() {
+TabelaHash::TabelaHash()
+{
     tamanhoTabela = TAMANHO_TABELA_INICIAL;
 }
 TabelaHash::~TabelaHash() {}
@@ -21,16 +22,13 @@ bool TabelaHash::estaVazia()
 
 int TabelaHash::funcaoHash(string chave)
 {
-    int hash = 0;
-    const char *s = chave.c_str();
+    int tamS = strlen(chave.c_str());
+    unsigned int hash = 0;
 
-    while (*s)
+    for (int i = 0; i < tamS; i++)
     {
-        hash = hash * 71 + *s++;
+        hash += chave[i] * (i + 1);
     }
-
-    cout << "Hash: " << hash << endl;
-
     return hash % tamanhoTabela;
 }
 
@@ -77,6 +75,8 @@ void TabelaHash::imprimirTabela()
 
     for (int i = 0; i < tamanho; i++)
     {
+        if (tabela[i].getAppVersion() == "")
+            continue;
         cout << tabela[i].getAppVersion() << endl;
     }
 }
@@ -101,6 +101,8 @@ int main()
     tb.inserirItem("5431");
     tb.inserirItem("518");
     tb.inserirItem("518");
+
+    tb.imprimirTabela();
 
     if (tb.estaVazia())
     {
