@@ -70,7 +70,7 @@ void testeImportacao()
         break;
 
     case 3:
-        char *buffer = new char[320];
+        char *buffer = new char[LINES_CSV];
         fstream arquivoBin;
         vector<string> tiktokVector;
 
@@ -78,9 +78,9 @@ void testeImportacao()
         for (int i = 0; i < 100; i++)
         {
             int posicao = rand() % 10; // 3660723
-            arquivoBin.seekg(posicao * 320);
+            arquivoBin.seekg(posicao * LINES_CSV);
 
-            arquivoBin.read(buffer, 320);
+            arquivoBin.read(buffer, LINES_CSV);
             tiktokVector.push_back(buffer);
         }
         delete[] buffer;
@@ -93,11 +93,49 @@ void testeImportacao()
         for (int i = 0; i < tiktokVector.size(); i++)
         {
             arqTeste.write(
-                (char *)&tiktokVector[i], tiktokVector.size() * 320);
+                (char *)&tiktokVector[i], tiktokVector.size() * LINES_CSV);
         }
         arqTeste.close();
         break;
     }
+}
+
+void ordenacaoQuickSort(int vetor[], int a, int b)
+{
+    if (a < b)
+    {
+        
+        int indiceParticionamento = particionamentoQuickSort(vetor, a, b);
+ 
+        // Faz o sort dos elementos em separado, de cada partição
+        ordenacaoQuickSort(vetor, a, indiceParticionamento - 1);
+        ordenacaoQuickSort(vetor, indiceParticionamento + 1, b);
+    }
+}
+
+int particionamentoQuickSort(int vetor[], int a, int b)
+{
+    int pivo = vetor[b];    // pivô
+    int i = (a - 1);  // Índice do elemento menor
+ 
+    for (int j = a; j <= b - 1; j++)
+    {
+        //Se o elemento atual é menor ou igual ao pivô
+        if (vetor[j] <= pivo)
+        {
+            i++;    // aumenta o índice do elemento menor
+            troca(&vetor[i], &vetor[j]);
+        }
+    }
+    troca(&vetor[i + 1], &vetor[b]);
+    return (i + 1);
+}
+
+void troca(int* e1, int* e2)
+{
+    int t = *e1;
+    *e1 = *e2;
+    *e2 = t;
 }
 
 int main(int argc, char const *argv[])
