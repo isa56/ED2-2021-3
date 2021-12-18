@@ -5,11 +5,11 @@
 #include <vector>
 #include <sys/stat.h>
 #include <algorithm>
-#include <heapsort.cpp>
 
 // #include <filesystem>
 
 #include "tiktok.h"
+#include "heapsort.cpp"
 #include "TabelaHash.h"
 
 // Contantes:

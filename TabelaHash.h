@@ -17,7 +17,6 @@ private:
     void ordenaTabela();
     int rehash();
     int funcaoHash(string chave);
-    void ordenaTabela();
     void aumentaTabela();
 
 public:

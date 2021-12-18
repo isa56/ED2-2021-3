@@ -19,7 +19,7 @@ bool TabelaHash::estaVazia()
 {
     for (int i = 0; i < tamanhoTabela; i++)
     {
-        if (tabela[i].getAppVersion() != "")
+        if (tabela[i]->getAppVersion() != "")
             return false;
     }
     return true;
@@ -34,7 +34,7 @@ int TabelaHash::funcaoHash(string chave)
     {
         hash += chave[i] * (i + 1);
     }
-    return hash % (TAMANHO_TABELA_INICIAL * pow(2, nivelTabela));
+    return hash % tamanhoTabela;
 }
 
 void TabelaHash::inserirItem(string chave)
@@ -45,17 +45,17 @@ void TabelaHash::inserirItem(string chave)
 
     do
     {
-        if (tabela[posicao].getAppVersion() == "")
+        if (tabela[posicao]->getAppVersion() == "")
         {
-            tabela[posicao].setDados(chave);
+            tabela[posicao]->setDados(chave);
             qtdPreenchida++;
             inserido = true;
         }
         else
         {
-            if (tabela[posicao].getAppVersion() == chave)
+            if (tabela[posicao]->getAppVersion() == chave)
             {
-                tabela[posicao].incrementNVezes();
+                tabela[posicao]->incrementNVezes();
                 inserido = true;
             }
             else
@@ -79,9 +79,9 @@ void TabelaHash::imprimirTabela(int qtdImpressa)
 
     for (int i = 0; i < qtdImpressa; i++)
     {
-        if (tabela[i].getAppVersion() == "")
+        if (tabela[i]->getAppVersion() == "")
             continue;
-        cout << tabela[i].getAppVersion() << endl;
+        cout << tabela[i]->getAppVersion() << endl;
     }
 }
 
@@ -90,16 +90,17 @@ void TabelaHash::aumentaTabela()
 
     if (qtdPreenchida / tamanhoTabela >= FATOR_CARGA)
     {
-        TabelaHash novaTabela[tamanhoTabela * 3];
+        DadoHash novaTabela[tamanhoTabela * 3];
         nivelTabela++;
         for (int i = 0; i < tamanhoTabela; i++)
         {
-            if (tabela[i] != "")
-                novaTabela->inserirItem(tabela[i]);
+            if (tabela[i]->getAppVersion() != "")
+                novaTabela->setDados(tabela[i]->getAppVersion());
         }
-        delete [] tabela;
+        // delete [] tabela;
         tabela = novaTabela;
         delete [] novaTabela;
+        tamanhoTabela *= 3;
     }
 
 }
