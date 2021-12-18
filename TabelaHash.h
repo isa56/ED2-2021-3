@@ -8,11 +8,12 @@ class TabelaHash
 {
 
 private:
-    static const int TAMANHO_TABELA_INICIAL = 10;   // tamanho da tabela hash
-    // static const float FATOR_CARGA = 0.35;   // fator de carga
+    static const int TAMANHO_TABELA_INICIAL = 114397;   // tamanho da tabela hash - 32 avos do número de linhas do csv
+    static const float FATOR_CARGA = 0.35;   // fator de carga
     DadoHash tabela[TAMANHO_TABELA_INICIAL];
     int tamanhoTabela;
-    // int qtdPreenchida;
+    int qtdPreenchida;
+    int nivelTabela;
     void ordenaTabela();
     int rehash();
 
@@ -22,7 +23,8 @@ public:
     bool estaVazia();
     int funcaoHash(string chave);
     void inserirItem(string chave);
-    void imprimirTabela();
+    void imprimirTabela(int qtdImpressa);
+    void ordenaTabela();
     void aumentaTabela();
 
 };

@@ -7,7 +7,9 @@ using namespace std;
 TabelaHash::TabelaHash()
 {
     tamanhoTabela = TAMANHO_TABELA_INICIAL;
+    nivelTabela = 0;
 }
+
 TabelaHash::~TabelaHash() {}
 
 bool TabelaHash::estaVazia()
@@ -29,7 +31,7 @@ int TabelaHash::funcaoHash(string chave)
     {
         hash += chave[i] * (i + 1);
     }
-    return hash % tamanhoTabela;
+    return hash % (TAMANHO_TABELA_INICIAL * pow(2, nivelTabela));
 }
 
 void TabelaHash::inserirItem(string chave)
@@ -43,7 +45,7 @@ void TabelaHash::inserirItem(string chave)
         if (tabela[posicao].getAppVersion() == "")
         {
             tabela[posicao].setDados(chave);
-            // qtdPreenchida++;
+            qtdPreenchida++;
             inserido = true;
         }
         else
@@ -60,6 +62,7 @@ void TabelaHash::inserirItem(string chave)
             }
         }
     } while (!inserido);
+    aumentaTabela();
 }
 
 void TabelaHash::ordenaTabela()
@@ -67,13 +70,11 @@ void TabelaHash::ordenaTabela()
     // chama a função de ordenação
 }
 
-void TabelaHash::imprimirTabela()
+void TabelaHash::imprimirTabela(int qtdImpressa)
 {
     ordenaTabela();
 
-    int tamanho = sizeof(tabela) / sizeof(tabela[0]);
-
-    for (int i = 0; i < tamanho; i++)
+    for (int i = 0; i < qtdImpressa; i++)
     {
         if (tabela[i].getAppVersion() == "")
             continue;
@@ -81,38 +82,17 @@ void TabelaHash::imprimirTabela()
     }
 }
 
-/* MAIN PARA TESTE
-
-int main()
+void TabelaHash::aumentaTabela()
 {
 
-    TabelaHash tb;
-
-    if (tb.estaVazia())
-        cout << "A tabela esta vazia" << endl;
-    else
-        cout << "a tabela nao esta vazia" << endl;
-
-    tb.inserirItem("11111");
-    tb.inserirItem("2165");
-    tb.inserirItem("2165");
-    tb.inserirItem("564531");
-    tb.inserirItem("2684");
-    tb.inserirItem("5431");
-    tb.inserirItem("518");
-    tb.inserirItem("518");
-
-    tb.imprimirTabela();
-
-    if (tb.estaVazia())
+    if (qtdPreenchida / tamanhoTabela >= FATOR_CARGA)
     {
-        cout << "A tabela está vazia" << endl;
+        DadoHash novaTabela[tamanhoTabela * 3];
+        nivelTabela++;
+        // tabela = novaTabela;
     }
     else
     {
-        cout << "a tabela não está vazia" << endl;
+        return;
     }
-
-    return 0;
 }
-*/

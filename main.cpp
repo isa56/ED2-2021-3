@@ -8,10 +8,12 @@
 // #include <filesystem>
 
 #include "tiktok.h"
+#include "TabelaHash.h"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
 #define TEXT_NAME "teste_importacao.txt"
+#define TXT_NAME_PART2 "teste.txt"
 #define STRING_MEDIUM_SIZE 320
 #define LINES_CSV 3660723
 
@@ -100,13 +102,40 @@ void testeImportacao()
     }
 }
 
+void manipulaHash(vector<Tiktok> tiktokVector)
+{
+
+    int numReviews;
+    int qtdImpressa;
+
+    cout << "Digite o número de Reviews que você quer importar" << endl;
+    cin >> numReviews;
+    cout << "Digite o número de impressões que você quer fazer" << endl;
+    cin >> qtdImpressa;
+
+    string appVersion;
+    TabelaHash tb;
+
+    // Encontra reviews aleatórias e dá push:
+    for (int i = 0; i < numReviews; i++)
+    {
+        int posicao = rand() % LINES_CSV;
+        appVersion = tiktokVector[posicao].getAppVersion();
+        //  appVersion = ; // appVersion receber a versão do aplicativo na posicao aleatória
+        tb.inserirItem(appVersion);
+    }
+
+    tb.imprimirTabela(qtdImpressa);
+}
+
+/*
 void ordenacaoQuickSort(int vetor[], int a, int b)
 {
     if (a < b)
     {
-        
+
         int indiceParticionamento = particionamentoQuickSort(vetor, a, b);
- 
+
         // Faz o sort dos elementos em separado, de cada partição
         ordenacaoQuickSort(vetor, a, indiceParticionamento - 1);
         ordenacaoQuickSort(vetor, indiceParticionamento + 1, b);
@@ -115,15 +144,15 @@ void ordenacaoQuickSort(int vetor[], int a, int b)
 
 int particionamentoQuickSort(int vetor[], int a, int b)
 {
-    int pivo = vetor[b];    // pivô
-    int i = (a - 1);  // Índice do elemento menor
- 
+    int pivo = vetor[b]; // pivô
+    int i = (a - 1);     // Índice do elemento menor
+
     for (int j = a; j <= b - 1; j++)
     {
         //Se o elemento atual é menor ou igual ao pivô
         if (vetor[j] <= pivo)
         {
-            i++;    // aumenta o índice do elemento menor
+            i++; // aumenta o índice do elemento menor
             troca(&vetor[i], &vetor[j]);
         }
     }
@@ -131,13 +160,13 @@ int particionamentoQuickSort(int vetor[], int a, int b)
     return (i + 1);
 }
 
-void troca(int* e1, int* e2)
+void troca(int *e1, int *e2)
 {
     int t = *e1;
     *e1 = *e2;
     *e2 = t;
 }
-
+*/
 int main(int argc, char const *argv[])
 {
     //Code Protection: Numero de parametros insuficiente
@@ -202,8 +231,9 @@ int main(int argc, char const *argv[])
 
     struct stat buf;
 
-    if(! (stat(BINARY_NAME, &buf) != -1)) {
-        
+    if (!(stat(BINARY_NAME, &buf) != -1))
+    {
+
         // Saída:
         std::fstream arqSaida;
 
@@ -238,9 +268,29 @@ int main(int argc, char const *argv[])
     int continuar = 1;
 
     // Chamada da função de teste:
-    while (continuar == 1) {
-        testeImportacao();
-        cout << endl << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
+    while (continuar == 1)
+    {
+
+        int decisao = 0;
+
+        cout << endl
+             << "Digite 1 se quiser testar a Tabela Hash, 2 se quiser testar a Ordenação e 3 se quiser acessar o Módulo de Teste" << endl;
+
+        switch (decisao)
+        {
+        case 1:
+            manipulaHash(tiktokVector);
+            break;
+        case 2:
+            // chama função que coordena as Ordenações
+            break;
+        case 3:
+            // chama a função de Módulo de Teste
+            break;
+        }
+        // testeImportacao();
+        cout << endl
+             << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
         cin >> continuar;
     }
 }
