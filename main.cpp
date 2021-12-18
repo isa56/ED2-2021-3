@@ -123,7 +123,6 @@ void manipulaHash(vector<Tiktok> tiktokVector)
     {
         int posicao = rand() % LINES_CSV;
         appVersion = tiktokVector[posicao].getAppVersion();
-        //  appVersion = ; // appVersion receber a versão do aplicativo na posicao aleatória
         tb.inserirItem(appVersion);
     }
 
@@ -267,6 +266,8 @@ int main(int argc, char const *argv[])
         arqSaida.close();
     }
 
+    cout << endl;
+
     int continuar = 1;
 
     // Chamada da função de teste:
@@ -275,8 +276,7 @@ int main(int argc, char const *argv[])
 
         int decisao = 0;
 
-        cout << endl
-             << "Digite 1 se quiser testar a Tabela Hash, 2 se quiser testar a Ordenação e 3 se quiser acessar o Módulo de Teste" << endl;
+        cout << "Digite 1 se quiser testar a Tabela Hash, 2 se quiser testar a Ordenação e 3 se quiser acessar o Módulo de Teste" << endl;
 
         switch (decisao)
         {
@@ -291,8 +291,7 @@ int main(int argc, char const *argv[])
             break;
         }
         // testeImportacao();
-        cout << endl
-             << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
+        cout << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
         cin >> continuar;
     }
 }

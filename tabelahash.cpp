@@ -10,7 +10,10 @@ TabelaHash::TabelaHash()
     nivelTabela = 0;
 }
 
-TabelaHash::~TabelaHash() {}
+TabelaHash::~TabelaHash()
+{
+    delete[] tabela;
+}
 
 bool TabelaHash::estaVazia()
 {
@@ -87,12 +90,16 @@ void TabelaHash::aumentaTabela()
 
     if (qtdPreenchida / tamanhoTabela >= FATOR_CARGA)
     {
-        DadoHash novaTabela[tamanhoTabela * 3];
+        TabelaHash novaTabela[tamanhoTabela * 3];
         nivelTabela++;
-        // tabela = novaTabela;
+        for (int i = 0; i < tamanhoTabela; i++)
+        {
+            if (tabela[i] != "")
+                novaTabela->inserirItem(tabela[i]);
+        }
+        delete [] tabela;
+        tabela = novaTabela;
+        delete [] novaTabela;
     }
-    else
-    {
-        return;
-    }
+
 }
