@@ -27,8 +27,8 @@ bool TabelaHash::estaVazia()
 
 int TabelaHash::funcaoHash(string chave)
 {
-    int tamS = strlen(chave.c_str());
-    unsigned int hash = 0;
+    int tamS = strlen(chave.c_str()); // strlen funciona com string do c, então c_str converte para o padrão c
+    unsigned int hash = 0;            // como hash chega a valores muito grandes, precisamos que ele não "vire" negativo, por isso unsigned
 
     for (int i = 0; i < tamS; i++)
     {
@@ -39,33 +39,35 @@ int TabelaHash::funcaoHash(string chave)
 
 void TabelaHash::inserirItem(string chave)
 {
-    int indiceSondagem = 0;
+    int indiceSondagem = 0; // Índice de Sondagem para recálculo de posição
     int posicao = funcaoHash(chave);
     bool inserido = false;
 
     do
     {
         if (tabela[posicao]->getAppVersion() == "")
-        {
+        { // Posição vazia, então insere
             tabela[posicao]->setDados(chave);
             qtdPreenchida++;
             inserido = true;
         }
         else
         {
-            if (tabela[posicao]->getAppVersion() == chave)
+            if (tabela[posicao]->getAppVersion() == chave) // Posição com a chave, então incrementa o nº de vezes que aparece
             {
                 tabela[posicao]->incrementNVezes();
                 inserido = true;
             }
-            else
+            else // Significa que a posição está preenchida por um valor diferente da chave
             {
                 indiceSondagem++;
                 posicao += indiceSondagem;
             }
         }
     } while (!inserido);
-    aumentaTabela();
+
+    if (qtdPreenchida / tamanhoTabela >= FATOR_CARGA)
+        aumentaTabela();
 }
 
 void TabelaHash::ordenaTabela()
@@ -88,19 +90,23 @@ void TabelaHash::imprimirTabela(int qtdImpressa)
 void TabelaHash::aumentaTabela()
 {
 
-    if (qtdPreenchida / tamanhoTabela >= FATOR_CARGA)
+    unsigned int novoTamanho = tamanhoTabela * 3;
+    TabelaHash novaTabela;
+    string valorInserido;
+    nivelTabela++;
+    for (int i = 0; i < tamanhoTabela; i++)
     {
-        DadoHash novaTabela[tamanhoTabela * 3];
-        nivelTabela++;
-        for (int i = 0; i < tamanhoTabela; i++)
+        if (tabela[i]->getAppVersion() != "")
         {
-            if (tabela[i]->getAppVersion() != "")
-                novaTabela->setDados(tabela[i]->getAppVersion());
+            valorInserido = tabela[i]->getAppVersion();
+            (novaTabela).inserirItem(valorInserido);
         }
-        // delete [] tabela;
-        tabela = novaTabela;
-        delete [] novaTabela;
-        tamanhoTabela *= 3;
     }
-
+    tabela = novaTabela.getTabela();
+    tamanhoTabela *= 3;
 }
+
+// DadoHash TabelaHash::*getTabela()
+// {
+//     return *tabela;
+// }
