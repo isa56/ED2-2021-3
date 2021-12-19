@@ -10,13 +10,14 @@ class TabelaHash
 private:
     static const int TAMANHO_TABELA_INICIAL = 104729; //  tamanho da tabela hash: numLinhas total / 32 = 114397, número próximo a isso
     static const float FATOR_CARGA = 0.35;            // fator de carga
-    DadoHash *tabela[TAMANHO_TABELA_INICIAL];
+    DadoHash tabela[];
     int tamanhoTabela;
     int qtdPreenchida;
     int nivelTabela;
     void ordenaTabela();
     int funcaoHash(string chave);
     void aumentaTabela();
+    void insercao(string chave);
 
 public:
     TabelaHash();
