@@ -10,6 +10,8 @@
 
 // #include "heapsort.cpp"
 #include "tiktok.h"
+#include "heapsort.cpp"
+#include "quicksort.cpp"
 #include "TabelaHash.h"
 
 // Contantes:
