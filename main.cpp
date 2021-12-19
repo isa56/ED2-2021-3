@@ -8,8 +8,8 @@
 
 // #include <filesystem>
 
+// #include "heapsort.cpp"
 #include "tiktok.h"
-#include "heapsort.cpp"
 #include "TabelaHash.h"
 
 // Contantes:

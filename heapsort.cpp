@@ -2,24 +2,6 @@
 
 using namespace std;
 
-void heapsort(int vetor[], int tamanhoVetor)
-{
-    construirHeap(vetor, tamanhoVetor);
-    for (int i = tamanhoVetor - 1; i >= 0; i--)
-    {
-        swap(vetor[0], vetor[1]);
-        heapficar(vetor, i, 0);
-    }
-}
-
-void construirHeap(int vetor[], int tamanhoVetor)
-{
-    for (int i = (tamanhoVetor / 2) - 1; i >= 0; i--)
-    {
-        heapficar(vetor, tamanhoVetor, i);
-    }
-}
-
 void heapficar(int vetor[], int n, int i)
 {
     int esquerda = 2*i +1;
@@ -35,5 +17,23 @@ void heapficar(int vetor[], int n, int i)
     if(maior != i){
         swap(vetor[i], vetor[maior]);
         heapficar(vetor, n, maior);
+    }
+}
+
+void construirHeap(int vetor[], int tamanhoVetor)
+{
+    for (int i = (tamanhoVetor / 2) - 1; i >= 0; i--)
+    {
+        heapficar(vetor, tamanhoVetor, i);
+    }
+}
+
+void heapsort(int vetor[], int tamanhoVetor)
+{
+    construirHeap(vetor, tamanhoVetor);
+    for (int i = tamanhoVetor - 1; i >= 0; i--)
+    {
+        swap(vetor[0], vetor[1]);
+        heapficar(vetor, i, 0);
     }
 }
