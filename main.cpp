@@ -13,6 +13,7 @@
 #include "heapsort.cpp"
 #include "quicksort.cpp"
 #include "TabelaHash.h"
+#include "combsort.cpp"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
