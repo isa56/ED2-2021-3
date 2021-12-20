@@ -4,21 +4,13 @@
 using namespace std;
 
 // Construtor e Destrutor:
-TabelaHash::TabelaHash()
-{
-    tamanhoTabela = TAMANHO_TABELA_INICIAL;
-    nivelTabela = 0;
-    tabela = new DadoHash[tamanhoTabela];
-}
+//TabelaHash::TabelaHash(){}
 
-TabelaHash::~TabelaHash()
-{
-    delete []tabela;
-}
+//TabelaHash::~TabelaHash(){}
 
 bool TabelaHash::estaVazia()
 {
-    for (int i = 0; i < tamanhoTabela; i++)
+    for (int i = 0; i < TAMANHO_TABELA_INICIAL; i++)
     {
         if (tabela[i].getAppVersion() != "")
             return false;
@@ -35,11 +27,12 @@ int TabelaHash::funcaoHash(string chave)
     {
         hash += chave[i] * (i + 1);
     }
-    return hash % tamanhoTabela;
+    return hash % TAMANHO_TABELA_INICIAL;
 }
 
-void TabelaHash::insercao(string chave)
+void TabelaHash::inserirItem(string chave)
 {
+
     int indiceSondagem = 0; // Índice de Sondagem para recálculo de posição
     int posicao = funcaoHash(chave);
     bool inserido = false;
@@ -65,16 +58,13 @@ void TabelaHash::insercao(string chave)
                 posicao += indiceSondagem;
             }
         }
+        if(posicao == TAMANHO_TABELA_INICIAL - 1 || qtdPreenchida == TAMANHO_TABELA_INICIAL)
+        {
+            cout << "Não é possível inserir um novo elemento" << endl;
+            continue;
+        }
     } while (!inserido);
-}
 
-void TabelaHash::inserirItem(string chave)
-{
-
-    insercao(chave);
-
-    if (qtdPreenchida / tamanhoTabela >= FATOR_CARGA)
-        aumentaTabela();
 }
 
 void TabelaHash::ordenaTabela()
@@ -92,53 +82,4 @@ void TabelaHash::imprimirTabela(int qtdImpressa)
             continue;
         cout << tabela[i].getAppVersion() << endl;
     }
-}
-
-void TabelaHash::aumentaTabela()
-{
-    unsigned int novoTamanho = tamanhoTabela * 3;
-    DadoHash *novaTabela = new DadoHash[novoTamanho];
-    string valorInserido;
-    int hash;
-    nivelTabela++;
-
-    int indiceSondagem = 0; // Índice de Sondagem para recálculo de posição
-    int posicao = funcaoHash(valorInserido);
-    bool inserido = false;
-
-    for (int i = 0; i < tamanhoTabela; i++)
-    {
-        if (tabela[i].getAppVersion() != "")
-        {
-            valorInserido = tabela[i].getAppVersion();
-
-            do
-            {
-                if (novaTabela[posicao].getAppVersion() == "") // Posição vazia, então insere
-                { 
-                    novaTabela[posicao].setDados(valorInserido);
-                    qtdPreenchida++;
-                    inserido = true;
-                }
-                else
-                {
-                    if (novaTabela[posicao].getAppVersion() == valorInserido) // Posição com a chave, então incrementa o nº de vezes que aparece
-                    {
-                        novaTabela[posicao].incrementNVezes();
-                        inserido = true;
-                    }
-                    else // Significa que a posição está preenchida por um valor diferente da chave
-                    {
-                        indiceSondagem++;
-                        posicao += indiceSondagem;
-                    }
-                }
-            } while (!inserido);
-
-        }
-    }
-
-    delete[] tabela;
-    tabela = novaTabela;
-    tamanhoTabela *= 3;
 }
