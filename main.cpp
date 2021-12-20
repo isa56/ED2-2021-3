@@ -129,8 +129,6 @@ void manipulaHash(vector<Tiktok> tiktokVector)
     }
 
     tb.imprimirTabela(qtdImpressa);
-
-
 }
 
 int main(int argc, char const *argv[])
@@ -237,21 +235,22 @@ int main(int argc, char const *argv[])
     int escolheSort;
     int *sortingArray;
     int numDados, numInstancias;
+    int decisao = 0;
 
     // Chamada da função de teste:
     while (continuar == 1)
     {
 
-        int decisao = 0;
-
         cout << "Digite 1 se quiser testar a Tabela Hash, 2 se quiser testar a Ordenacao e 3 se quiser acessar o Modulo de Teste" << endl;
+
+        cin >> decisao;
 
         switch (decisao)
         {
         case 1:
             manipulaHash(tiktokVector);
             break;
-        case 2:            
+        case 2:
             cout << "Digite 1 para testar o heap sort, 2 para o quicksort, 3 para o combosort e outro para sair" << endl;
             cin >> escolheSort;
 

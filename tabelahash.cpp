@@ -4,9 +4,13 @@
 using namespace std;
 
 // Construtor e Destrutor:
-TabelaHash::TabelaHash(){}
+TabelaHash::TabelaHash()
+{
+    cout << "criando tabela hash..." << endl;
+    qtdPreenchida = 0;
+}
 
-TabelaHash::~TabelaHash(){}
+TabelaHash::~TabelaHash() {}
 
 bool TabelaHash::estaVazia()
 {
@@ -58,28 +62,44 @@ void TabelaHash::inserirItem(string chave)
                 posicao += indiceSondagem;
             }
         }
-        if(posicao == TAMANHO_TABELA_INICIAL - 1 || qtdPreenchida == TAMANHO_TABELA_INICIAL)
+        if (posicao == TAMANHO_TABELA_INICIAL - 1 || qtdPreenchida == TAMANHO_TABELA_INICIAL)
         {
             cout << "Não é possível inserir um novo elemento" << endl;
             continue;
         }
     } while (!inserido);
-
-}
-
-void TabelaHash::ordenaTabela()
-{
-    // chama a função de ordenação
 }
 
 void TabelaHash::imprimirTabela(int qtdImpressa)
 {
-    ordenaTabela();
 
-    for (int i = 0; i < qtdImpressa; i++)
+    int arrayVezes[qtdPreenchida];
+
+    int j = 0;
+
+    // insere no arrayVezes
+    for (int i = 0; i < TAMANHO_TABELA_INICIAL; i++)
     {
-        if (tabela[i].getAppVersion() == "")
-            continue;
-        cout << tabela[i].getAppVersion() << endl;
+        if (tabela[i].getAppVersion() != "")
+        {
+            arrayVezes[j] = tabela[i].getNVezes();
+            j++;
+        }
+    }
+
+    // chama a função de ordenação
+
+    // Imprime de acordo com a ordenação:
+    int i;
+    for (int j = 0; j < qtdPreenchida; j++) // não vai funcionar assim
+    {
+        for (int i = 0; i < TAMANHO_TABELA_INICIAL; i++)
+        {
+            if (arrayVezes[j] == tabela[i].getNVezes())
+            {
+                cout << tabela[i].getAppVersion() << endl;
+                break;
+            }
+        }
     }
 }
