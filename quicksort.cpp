@@ -7,17 +7,11 @@
 
 using namespace std;
 
-void ordenacaoQuickSort(int vetor[], int a, int b)
+void troca(int *e1, int *e2)
 {
-    if (a < b)
-    {
-
-        int indiceParticionamento = particionamentoQuickSort(vetor, a, b);
-
-        // Faz o sort dos elementos em separado, de cada partição
-        ordenacaoQuickSort(vetor, a, indiceParticionamento - 1);
-        ordenacaoQuickSort(vetor, indiceParticionamento + 1, b);
-    }
+    int t = *e1;
+    *e1 = *e2;
+    *e2 = t;
 }
 
 int particionamentoQuickSort(int vetor[], int a, int b)
@@ -38,9 +32,18 @@ int particionamentoQuickSort(int vetor[], int a, int b)
     return (i + 1);
 }
 
-void troca(int *e1, int *e2)
+void ordenacaoQuickSort(int vetor[], int a, int b)
 {
-    int t = *e1;
-    *e1 = *e2;
-    *e2 = t;
+    if (a < b)
+    {
+
+        int indiceParticionamento = particionamentoQuickSort(vetor, a, b);
+
+        // Faz o sort dos elementos em separado, de cada partição
+        ordenacaoQuickSort(vetor, a, indiceParticionamento - 1);
+        ordenacaoQuickSort(vetor, indiceParticionamento + 1, b);
+    }
 }
+
+
+
