@@ -90,14 +90,16 @@ void TabelaHash::imprimirTabela(int qtdImpressa)
     // chama a função de ordenação
 
     // Imprime de acordo com a ordenação:
+    cout << "Imprimindo a tabela hash:" << endl;
+    cout << "Versao - Numero de vezes que aparece" << endl;
     int i;
     for (int j = 0; j < qtdPreenchida; j++) // não vai funcionar assim
     {
         for (int i = 0; i < TAMANHO_TABELA_INICIAL; i++)
         {
-            if (arrayVezes[j] == tabela[i].getNVezes())
+            if (arrayVezes[j] == tabela[i].getNVezes() && tabela[i].getNVezes() != 0)
             {
-                cout << tabela[i].getAppVersion() << endl;
+                cout << tabela[i].getAppVersion() << " - " << tabela[i].getNVezes() << endl;
                 break;
             }
         }

@@ -25,7 +25,32 @@ using namespace std;
 
 std::fstream arqEntrada;
 
-void acessaRegistro(int posicao)
+void manipularHash(vector<Tiktok>& tiktokVector)
+{
+
+    int numReviews;
+    int qtdImpressa;
+
+    cout << "Digite o numero de Reviews que você quer importar" << endl;
+    cin >> numReviews;
+    cout << "Digite o numero de impressoes que você quer fazer" << endl;
+    cin >> qtdImpressa;
+
+    string appVersion;
+    TabelaHash *tb = new TabelaHash();
+
+    // Encontra reviews aleatórias e dá push:
+    for (int i = 0; i < numReviews; i++)
+    {
+        int posicao = rand() % LINES_CSV;
+        appVersion = tiktokVector[posicao].getAppVersion();
+        tb->inserirItem(appVersion);
+    }
+
+    tb->imprimirTabela(qtdImpressa);
+}
+
+void acessarRegistro(int posicao)
 {
     char *buffer = new char[STRING_MEDIUM_SIZE];
 
@@ -44,7 +69,7 @@ void acessaRegistro(int posicao)
     delete[] buffer;
 }
 
-void testeImportacao()
+void testarImportacao()
 {
     cout << "Escolha o metodo de teste: " << endl;
     cout << "Digite 1 para pesquisar uma linha" << endl;
@@ -64,14 +89,14 @@ void testeImportacao()
         cout << "Digite a i-esima posicao que deseja acessar: " << endl;
         int linhaPesquisada;
         cin >> linhaPesquisada;
-        acessaRegistro(linhaPesquisada);
+        acessarRegistro(linhaPesquisada);
         break;
 
     case 2:
         for (int i = 0; i < 10; i++)
         {
             int posicao = rand() % LINES_CSV; // Numero de linhas do arquivo csv hardcoded (3660723)
-            acessaRegistro(posicao);
+            acessarRegistro(posicao);
         }
         break;
 
@@ -104,31 +129,6 @@ void testeImportacao()
         arqTeste.close();
         break;
     }
-}
-
-void manipulaHash(vector<Tiktok> tiktokVector)
-{
-
-    int numReviews;
-    int qtdImpressa;
-
-    cout << "Digite o número de Reviews que você quer importar" << endl;
-    cin >> numReviews;
-    cout << "Digite o número de impressões que você quer fazer" << endl;
-    cin >> qtdImpressa;
-
-    string appVersion;
-    TabelaHash tb;
-
-    // Encontra reviews aleatórias e dá push:
-    for (int i = 0; i < numReviews; i++)
-    {
-        int posicao = rand() % LINES_CSV;
-        appVersion = tiktokVector[posicao].getAppVersion();
-        tb.inserirItem(appVersion);
-    }
-
-    tb.imprimirTabela(qtdImpressa);
 }
 
 int main(int argc, char const *argv[])
@@ -230,6 +230,7 @@ int main(int argc, char const *argv[])
     }
 
     cout << endl;
+    
 
     int continuar = 1;
     int escolheSort;
@@ -248,7 +249,7 @@ int main(int argc, char const *argv[])
         switch (decisao)
         {
         case 1:
-            manipulaHash(tiktokVector);
+            manipularHash(tiktokVector);
             break;
         case 2:
             cout << "Digite 1 para testar o heap sort, 2 para o quicksort, 3 para o combosort e outro para sair" << endl;
@@ -276,7 +277,7 @@ int main(int argc, char const *argv[])
             // chama a função de Módulo de Teste
             break;
         }
-        // testeImportacao();
+        // testarImportacao();
         cout << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
         cin >> continuar;
     }
