@@ -12,6 +12,7 @@
 #include "quicksort.cpp"
 #include "TabelaHash.h"
 #include "combsort.cpp"
+#include "preprocessamento.cpp"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
