@@ -7,40 +7,62 @@
 
 using namespace std;
 
-void ordenacaoCombSort(int vetor[])
+//Para encontrar a lacuna entre os elementos 
+int getProximoGap(int gap)
+{ 
+    gap = (gap * 10) / 13;
+
+    if(gap < 1) {
+        return 1;
+    }
+
+    return gap;
+}
+
+void ordCombSort(int vetor[], int N)
 {
-    int troca, comparacao, qnt_troca, tamanho_vetor, intervalo;
-    float tempo;
+    int gap;
+    bool trocar;
+    int comparar, tempo, qnt_troca, troque;
 
-    troca = 0;
-    comparacao = 0;
+    gap = N;
+
+    //Inicialize trocado como verdadeiro para garantir que o loop seja executado
+    trocar = true;
+
+    comparar = 0;
+    tempo = 0;
     qnt_troca = 0;
-    tamanho_vetor = sizeof(vetor) / sizeof(int);
-    intervalo = (int)(tamanho_vetor / 1.3);
-    tempo = 0.0;
 
-    while(intervalo > 0 && troca != tamanho_vetor - 1) {
-        troca = 0;
-        for(int i = 0; (i + intervalo) < tamanho_vetor; i++){
-            comparacao += 1;
-            if(vetor[i] > vetor[i + intervalo]){
-                int aux = vetor[i];
-                vetor[i] = vetor[i + intervalo];
-                vetor[i + intervalo] = aux;
-                troca = 1;
-                qnt_troca += troca;
+    //Continue executando enquanto a lacuna é maior que 1 e a última iteração causou uma troca 
+    while(gap != 1 || trocar == true){
+        //Encontre a próxima lacuna 
+        gap = getProximoGap(gap);
+
+        //Inicialize trocado como falso para que possamos verificar se a troca aconteceu ou não
+        trocar = false;
+        troque = 0;
+
+        //Compare todos os elementos com a lacuna atual
+        for(int i = 0; i < N - gap; i++){
+            if(vetor[i] > vetor[i + gap]){
+                comparar += 1;
+                swap(vetor[i], vetor[i + gap]);
+                trocar = true;
+                troque = 1;
+                qnt_troca += troque;
             }
         }
-        intervalo = (int)(intervalo / 1.3);
+
         tempo = clock();
     }
 
-    for(int i = 0; i < tamanho_vetor; i++){
+    for(int i = 0; i < N; i++){
         cout << " " << vetor[i];
     }
     cout << endl;
 
-    cout << "Quantidade de trocas => " << qnt_troca << endl;
-    cout << "Quantidade de comparacoes => " << comparacao << endl;
-    cout << "Tempo de execucao => " << tempo << endl;
+    cout << "Quantidade de troca => " << qnt_troca << endl;
+    cout << "Quantidade de comparacoes => " << comparar << endl;
+    cout << "Tempo em execucao => " << tempo << " ms" << endl;
 }
