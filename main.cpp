@@ -7,12 +7,11 @@
 #include <algorithm>
 
 // #include <filesystem>
-
-// #include "heapsort.cpp"
 #include "tiktok.h"
 #include "heapsort.cpp"
 #include "quicksort.cpp"
 #include "TabelaHash.h"
+#include "preprocessamento.cpp"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
@@ -131,7 +130,6 @@ void manipulaHash(vector<Tiktok> tiktokVector)
     tb.imprimirTabela(qtdImpressa);
 }
 
-
 int main(int argc, char const *argv[])
 {
     //Code Protection: Numero de parametros insuficiente
@@ -233,6 +231,9 @@ int main(int argc, char const *argv[])
     cout << endl;
 
     int continuar = 1;
+    int escolheSort;
+    int *sortingArray;
+    int numDados, numInstancias;
 
     // Chamada da função de teste:
     while (continuar == 1)
@@ -247,8 +248,27 @@ int main(int argc, char const *argv[])
         case 1:
             manipulaHash(tiktokVector);
             break;
-        case 2:
-            // chama função que coordena as Ordenações
+        case 2:            
+            cout << "Digite 1 para testar o heap sort, 2 para o quicksort, 3 para o combosort e outro para sair" << endl;
+            cin >> escolheSort;
+
+            cout << "Digite quantos dados devem ser pré processados: " << endl;
+            cin >> numDados;
+
+            sortingArray = preprocessar(tiktokVector, numDados);
+
+            if (escolheSort == 1)
+            {
+                heapsort(sortingArray, numDados);
+            }
+            else if (escolheSort == 2)
+            {
+                //ordenacaoQuickSort
+            }
+            else if (escolheSort == 3)
+            {
+                //ordenacaoComboSort
+            }
             break;
         case 3:
             // chama a função de Módulo de Teste
