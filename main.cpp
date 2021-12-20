@@ -7,12 +7,12 @@
 #include <algorithm>
 
 // #include <filesystem>
+#include "preprocessamento.cpp"
 #include "tiktok.h"
+#include "TabelaHash.h"
 #include "heapsort.cpp"
 #include "quicksort.cpp"
-#include "TabelaHash.h"
 #include "combsort.cpp"
-#include "preprocessamento.cpp"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
@@ -129,6 +129,8 @@ void manipulaHash(vector<Tiktok> tiktokVector)
     }
 
     tb.imprimirTabela(qtdImpressa);
+
+
 }
 
 int main(int argc, char const *argv[])
@@ -242,7 +244,7 @@ int main(int argc, char const *argv[])
 
         int decisao = 0;
 
-        cout << "Digite 1 se quiser testar a Tabela Hash, 2 se quiser testar a Ordenação e 3 se quiser acessar o Módulo de Teste" << endl;
+        cout << "Digite 1 se quiser testar a Tabela Hash, 2 se quiser testar a Ordenacao e 3 se quiser acessar o Modulo de Teste" << endl;
 
         switch (decisao)
         {
@@ -253,7 +255,7 @@ int main(int argc, char const *argv[])
             cout << "Digite 1 para testar o heap sort, 2 para o quicksort, 3 para o combosort e outro para sair" << endl;
             cin >> escolheSort;
 
-            cout << "Digite quantos dados devem ser pré processados: " << endl;
+            cout << "Digite quantos dados devem ser pre processados: " << endl;
             cin >> numDados;
 
             sortingArray = preprocessar(tiktokVector, numDados);

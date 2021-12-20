@@ -4,9 +4,9 @@
 using namespace std;
 
 // Construtor e Destrutor:
-//TabelaHash::TabelaHash(){}
+TabelaHash::TabelaHash(){}
 
-//TabelaHash::~TabelaHash(){}
+TabelaHash::~TabelaHash(){}
 
 bool TabelaHash::estaVazia()
 {
