@@ -25,15 +25,17 @@ void ordCombSort(int vetor[], int N)
     bool trocar;
     int comparar, qnt_troca, troque;
     float tempo;
+    clock_t start, end;
+
 
     gap = N;
 
     //Inicialize trocado como verdadeiro para garantir que o loop seja executado
     trocar = true;
-
     comparar = 0;
     qnt_troca = 0;
-    tempo = 0.0;
+
+    start = clock(); //Iniciando o clock para contar o tempo
 
     //Continue executando enquanto a lacuna é maior que 1 e a última iteração causou uma troca 
     while(gap != 1 || trocar == true){
@@ -54,7 +56,9 @@ void ordCombSort(int vetor[], int N)
                 qnt_troca += troque;
             }
         }
-
-        tempo = clock();
     }
+
+    end = clock(); //Finaliza o clock de contar o tempo
+
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
 }
