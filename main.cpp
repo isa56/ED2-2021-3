@@ -18,6 +18,7 @@
 #define BINARY_NAME "tiktok_app_reviews.bin"
 #define TEXT_NAME "teste_importacao.txt"
 #define TXT_NAME_PART2 "teste.txt"
+#define INPUT_NAME "input.dat"
 #define STRING_MEDIUM_SIZE 320
 #define LINES_CSV 3660723
 
@@ -25,7 +26,7 @@ using namespace std;
 
 std::fstream arqEntrada;
 
-void manipularHash(vector<Tiktok>& tiktokVector)
+void manipularHash(vector<Tiktok> &tiktokVector)
 {
 
     int numReviews;
@@ -131,6 +132,45 @@ void testarImportacao()
     }
 }
 
+void simulaSorts()
+{
+    fstream arquivoInputs;
+    arquivoInputs.open(INPUT_NAME, ios::in); // Leitura do Arquivo de Entrada
+    string linha;
+    int upVotes;
+
+    vector<int> numTestes;
+
+    if (arquivoInputs.is_open())
+    {
+        while (getline(arquivoInputs, linha))
+        {
+            if (linha = "")
+                continue;
+            else
+            {
+                istringstream dadosLinha(linha);
+
+                getline(dadosLinha, upVotes);
+
+                numTestes.push_back(atoi(upVotes.c_str()));
+            }
+        }
+    }
+
+
+    for(int i=0; i<numTestes.size(); i++)
+    {
+
+        for(int j = 0; j<numTestes[i]; j++)
+        {
+
+        }
+
+    }
+
+}
+
 int main(int argc, char const *argv[])
 {
     //Code Protection: Numero de parametros insuficiente
@@ -230,7 +270,6 @@ int main(int argc, char const *argv[])
     }
 
     cout << endl;
-    
 
     int continuar = 1;
     int escolheSort;

@@ -1,8 +1,12 @@
 #include <vector>
+#include <sstream>
+
 #include "tiktok.h"
 
+#define SORT_SAIDA "arquivosaida.txt"
+
 int *preprocessar(vector<Tiktok> tiktokvector, int numDados)
-{   
+{
     int *sortingArray = new int[numDados];
 
     for (int i = 0; i < numDados; i++)
@@ -13,3 +17,26 @@ int *preprocessar(vector<Tiktok> tiktokvector, int numDados)
 
     return sortingArray;
 }
+
+/*
+void insereTxt(int vetor[]) // faz a inserção dos elementos do vetor no txt
+{
+    std::fstream arqSaida;
+
+    arqSaida.open(SORT_SAIDA, ios::out);
+
+    // Code protection pro txt:
+    if (!arqSaida.is_open())
+    {
+        cout << "Impossivel abrir o arquivo de saída!" << endl;
+        exit(-2);
+    }
+
+    for (int i = 0; i < vetor.size(); i++)
+    {
+        arqSaida.write(reinterpret_cast<const char *>(&vetor[i]), sizeof(int));
+    }
+
+    arqSaida.close();
+}
+*/

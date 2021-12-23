@@ -88,6 +88,7 @@ void TabelaHash::imprimirTabela(int qtdImpressa)
     }
 
     // chama a função de ordenação
+    heapsort(arrayVezes, qtdPreenchida);
 
     // Imprime de acordo com a ordenação:
     cout << "Imprimindo a tabela hash:" << endl;
