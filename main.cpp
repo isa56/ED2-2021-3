@@ -280,7 +280,7 @@ int main(int argc, char const *argv[])
                     cout << "Digite quantos dados devem ser pre processados: " << endl;
                     cin >> numDados;
                     sortingArray = preprocessar(tiktokVector, numDados);
-                    // ordenacaoQuickSort
+                    ordenacaoQuickSort(sortingArray, 0, numDados);
                 }
             else if (escolheSort == 3)
             {

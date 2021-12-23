@@ -42,13 +42,13 @@ int particionamentoQuickSort(int vetor[], int a, int b, int *contadorTroca, int 
 
 void ordenacaoQuickSort(int vetor[], int a, int b)
 {
-    int comparacao;
-    int qnt_troca;
-    int tempo;
+    int comparacao; //Numero de comparacoes feitas
+    int qnt_troca; //Quantidades de trocas realizadas
+    clock_t start, end;
+    start = clock(); //Tempo de funcionamento
     
     comparacao = 0;
     qnt_troca = 0; 
-    tempo = 0;
 
     if (a < b)
     {
@@ -62,10 +62,8 @@ void ordenacaoQuickSort(int vetor[], int a, int b)
 
     }
 
-    cout << "Quantidade de troca " << qnt_troca;
-    cout << "Comparacao" << comparacao;
-    cout << "Tempo em execucao " << tempo;
-
+    end = clock();
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC); //Transforma contagem em segundos
 }
 
 
