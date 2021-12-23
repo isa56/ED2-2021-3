@@ -59,7 +59,7 @@ void acessarRegistro(int posicao)
 
     arquivoBin.open(BINARY_NAME, ios::in | ios::binary);
 
-    arquivoBin.seekg(posicao * STRING_MEDIUM_SIZE); //posiciona o cursor no local indicado
+    arquivoBin.seekg(posicao * STRING_MEDIUM_SIZE); // posiciona o cursor no local indicado
 
     arquivoBin.read(buffer, STRING_MEDIUM_SIZE);
     arquivoBin.close();
@@ -134,7 +134,7 @@ void testarImportacao()
 
 int main(int argc, char const *argv[])
 {
-    //Code Protection: Numero de parametros insuficiente
+    // Code Protection: Numero de parametros insuficiente
     if (argc != 2)
     {
         cout << "Erro! Os seguintes parametros eram esperados ./<nome do executavel> <arquivo de entrada>" << endl;
@@ -149,7 +149,7 @@ int main(int argc, char const *argv[])
         exit(-1);
     }
 
-    //Leitura do arquivo csv:
+    // Leitura do arquivo csv:
     string reviewId;
     string reviewText;
     string upvotes;
@@ -212,7 +212,7 @@ int main(int argc, char const *argv[])
         }
 
         // Gravar cada objeto do tiktokVector no binário:
-        for (int i = 0; i < tiktokVector.size(); i++) //trocar para tiktokVector.size()
+        for (int i = 0; i < tiktokVector.size(); i++) // trocar para tiktokVector.size()
         {
             string reviewIdAux = tiktokVector[i].getReviewId();
             string reviewTextAux = tiktokVector[i].getReviewText();
@@ -235,7 +235,7 @@ int main(int argc, char const *argv[])
     int continuar = 1;
     int escolheSort;
     int *sortingArray;
-    int numDados, numInstancias;
+    int numDados, numInstancias, numConjuntos;
     int decisao = 0;
 
     // Chamada da função de teste:
@@ -255,23 +255,44 @@ int main(int argc, char const *argv[])
             cout << "Digite 1 para testar o heap sort, 2 para o quicksort, 3 para o combosort e outro para sair" << endl;
             cin >> escolheSort;
 
-            cout << "Digite quantos dados devem ser pre processados: " << endl;
-            cin >> numDados;
+            cout << "digite o número de conjuntos distintos de N que serão realizados (minimo 3)" << endl;
+            cin >> numConjuntos;
 
-            sortingArray = preprocessar(tiktokVector, numDados);
+            while (numConjuntos < 3)
+            {
+                cout << "Numero inválido! Digite um número maior que 3." << endl;
+                cin >> numConjuntos;
+            }
 
             if (escolheSort == 1)
             {
-                heapsort(sortingArray, numDados);
+                for (int i = 0; i < numConjuntos; i++)
+                {
+                    cout << "Digite quantos dados devem ser pre processados: " << endl;
+                    cin >> numDados;
+                    sortingArray = preprocessar(tiktokVector, numDados);
+                    heapsort(sortingArray, numDados);
+                }
             }
             else if (escolheSort == 2)
-            {
-                //ordenacaoQuickSort
-            }
+                for (int i = 0; i < numConjuntos; i++)
+                {
+                    cout << "Digite quantos dados devem ser pre processados: " << endl;
+                    cin >> numDados;
+                    sortingArray = preprocessar(tiktokVector, numDados);
+                    // ordenacaoQuickSort
+                }
             else if (escolheSort == 3)
             {
-                ordCombSort(sortingArray, numDados);
+                for (int i = 0; i < numConjuntos; i++)
+                {
+                    cout << "Digite quantos dados devem ser pre processados: " << endl;
+                    cin >> numDados;
+                    sortingArray = preprocessar(tiktokVector, numDados);
+                    ordCombSort(sortingArray, numDados);
+                }
             }
+
             break;
         case 3:
             // chama a função de Módulo de Teste
