@@ -23,7 +23,8 @@ void ordCombSort(int vetor[], int N)
 {
     int gap;
     bool trocar;
-    int comparar, tempo, qnt_troca, troque;
+    int comparar, qnt_troca, troque;
+    float tempo;
 
     gap = N;
 
@@ -31,8 +32,8 @@ void ordCombSort(int vetor[], int N)
     trocar = true;
 
     comparar = 0;
-    tempo = 0;
     qnt_troca = 0;
+    tempo = 0.0;
 
     //Continue executando enquanto a lacuna é maior que 1 e a última iteração causou uma troca 
     while(gap != 1 || trocar == true){
@@ -56,13 +57,4 @@ void ordCombSort(int vetor[], int N)
 
         tempo = clock();
     }
-
-    for(int i = 0; i < N; i++){
-        cout << " " << vetor[i];
-    }
-    cout << endl;
-
-    cout << "Quantidade de troca => " << qnt_troca << endl;
-    cout << "Quantidade de comparacoes => " << comparar << endl;
-    cout << "Tempo em execucao => " << tempo << " ms" << endl;
 }

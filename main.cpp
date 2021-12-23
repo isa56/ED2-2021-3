@@ -270,7 +270,7 @@ int main(int argc, char const *argv[])
             }
             else if (escolheSort == 3)
             {
-                //ordenacaoComboSort
+                ordCombSort(sortingArray, numDados);
             }
             break;
         case 3:
