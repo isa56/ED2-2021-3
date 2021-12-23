@@ -7,12 +7,12 @@
 #include <algorithm>
 
 // #include <filesystem>
-#include "preprocessamento.cpp"
+#include "preprocessamento.h"
 #include "tiktok.h"
 #include "TabelaHash.h"
-#include "heapsort.cpp"
-#include "quicksort.cpp"
-#include "combsort.cpp"
+#include "heapsort.h"
+#include "quicksort.h"
+#include "combsort.h"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
@@ -32,9 +32,9 @@ void manipularHash(vector<Tiktok> &tiktokVector)
     int numReviews;
     int qtdImpressa;
 
-    cout << "Digite o numero de Reviews que você quer importar" << endl;
+    cout << "Digite o numero de Reviews que voce quer importar" << endl;
     cin >> numReviews;
-    cout << "Digite o numero de impressoes que você quer fazer" << endl;
+    cout << "Digite o numero de impressoes que voce quer fazer" << endl;
     cin >> qtdImpressa;
 
     string appVersion;
@@ -130,45 +130,6 @@ void testarImportacao()
         arqTeste.close();
         break;
     }
-}
-
-void simulaSorts()
-{
-    fstream arquivoInputs;
-    arquivoInputs.open(INPUT_NAME, ios::in); // Leitura do Arquivo de Entrada
-    string linha;
-    int upVotes;
-
-    vector<int> numTestes;
-
-    if (arquivoInputs.is_open())
-    {
-        while (getline(arquivoInputs, linha))
-        {
-            if (linha = "")
-                continue;
-            else
-            {
-                istringstream dadosLinha(linha);
-
-                getline(dadosLinha, upVotes);
-
-                numTestes.push_back(atoi(upVotes.c_str()));
-            }
-        }
-    }
-
-
-    for(int i=0; i<numTestes.size(); i++)
-    {
-
-        for(int j = 0; j<numTestes[i]; j++)
-        {
-
-        }
-
-    }
-
 }
 
 int main(int argc, char const *argv[])

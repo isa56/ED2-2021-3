@@ -5,6 +5,8 @@
 #include <math.h>
 #include <algorithm>
 
+#include "quicksort.h"
+
 using namespace std;
 
 void troca(int *e1, int *e2)

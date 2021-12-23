@@ -1,5 +1,7 @@
 # ED2-2021-3 - **Parte 2**
 
+### Entrega: 23/12/2021.
+
 ## Sumário
 * [Descrição](#descrição);
 * [Integrantes do Grupo](#integrantes-do-grupo);
@@ -26,7 +28,7 @@ Trabalho Prático de Estrutura de Dados 2 (DCC012A) - Para o período 2021.3. <b
 Clonar o repositório do GitHub:  `git clone https://github.com/isa56/ED2-2021-3`  pelo terminal.
 <br>
 
-Para compilar: `g++ main.cpp TabelaHash.cpp tiktok.cpp -o main`
+Para compilar: `g++ *.cpp -o main`
 <br>
 
 Para rodar o programa (Windows): `./main diretorio/do/arquivo/entrada.csv`

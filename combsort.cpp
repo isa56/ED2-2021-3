@@ -5,6 +5,8 @@
 #include <math.h>
 #include <algorithm>
 
+#include "combsort.h"
+
 using namespace std;
 
 //Para encontrar a lacuna entre os elementos 

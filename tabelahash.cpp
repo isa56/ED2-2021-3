@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 #include "TabelaHash.h"
 
+#include "heapsort.h"
+
 using namespace std;
 
 // Construtor e Destrutor:

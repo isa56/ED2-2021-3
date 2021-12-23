@@ -1,4 +1,7 @@
 #include <algorithm>
+#include <time.h>
+
+#include "heapsort.h"
 
 using namespace std;
 

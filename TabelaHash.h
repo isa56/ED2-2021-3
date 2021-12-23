@@ -4,6 +4,8 @@
 #include <bits/stdc++.h>
 #include "DadoHash.h"
 
+#include "heapsort.h"
+
 class TabelaHash
 {
 

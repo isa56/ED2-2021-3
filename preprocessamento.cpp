@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "tiktok.h"
+#include "preprocessamento.h"
 
 #define SORT_SAIDA "arquivosaida.txt"
 
