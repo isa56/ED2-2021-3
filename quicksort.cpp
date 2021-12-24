@@ -40,7 +40,7 @@ int particionamentoQuickSort(int vetor[], int a, int b, int *contadorTroca, int 
     return (i + 1);
 }
 
-void ordenacaoQuickSort(int vetor[], int a, int b)
+void ordenacaoQuickSort(int vetor[], int indiceInferior, int indiceSuperior)
 {
     int comparacao; //Numero de comparacoes feitas
     int qnt_troca; //Quantidades de trocas realizadas
@@ -50,14 +50,14 @@ void ordenacaoQuickSort(int vetor[], int a, int b)
     comparacao = 0;
     qnt_troca = 0; 
 
-    if (a < b)
+    if (indiceInferior < indiceSuperior)
     {
 
-        int indiceParticionamento = particionamentoQuickSort(vetor, a, b, &qnt_troca, &comparacao);
+        int indiceParticionamento = particionamentoQuickSort(vetor, indiceInferior, indiceSuperior, &qnt_troca, &comparacao);
 
         // Faz o sort dos elementos em separado, de cada partição
-        ordenacaoQuickSort(vetor, a, indiceParticionamento - 1);
-        ordenacaoQuickSort(vetor, indiceParticionamento + 1, b);
+        ordenacaoQuickSort(vetor, indiceInferior, indiceParticionamento - 1);
+        ordenacaoQuickSort(vetor, indiceParticionamento + 1, indiceSuperior);
 
 
     }
