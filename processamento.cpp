@@ -2,7 +2,7 @@
 #include <sstream>
 
 #include "tiktok.h"
-#include "preprocessamento.h"
+#include "processamento.h"
 
 #define SORT_SAIDA "arquivosaida.txt"
 
@@ -18,6 +18,18 @@ int *preprocessar(vector<Tiktok> tiktokvector, int numDados)
 
     return sortingArray;
 }
+
+double *salvarDadosRun(int comparacoes, int trocas, double tempo)
+{
+    double dadosDaRun[3];
+ 
+    dadosDaRun[0] = comparacoes;
+    dadosDaRun[1] = trocas;
+    dadosDaRun[2] = tempo;
+    
+    return dadosDaRun;
+}
+
 
 /*
 void insereTxt(int vetor[]) // faz a inserção dos elementos do vetor no txt

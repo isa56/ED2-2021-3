@@ -1,11 +1,10 @@
-#ifndef PREPROCESSAMENTO_H_INCLUDED
-#define PREPROCESSAMENTO_H_INCLUDED
+#ifndef PROCESSAMENTO_H_INCLUDED
+#define PROCESSAMENTO_H_INCLUDED
 
 #include <vector>
 #include <sstream>
 
 #include "tiktok.h"
-#include "preprocessamento.h"
 
 using namespace std;
 

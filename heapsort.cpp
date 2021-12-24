@@ -2,6 +2,7 @@
 #include <time.h>
 
 #include "heapsort.h"
+#include "processamento.h"
 
 using namespace std;
 
