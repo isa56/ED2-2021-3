@@ -53,4 +53,11 @@ void heapsort(int vetor[], int tamanhoVetor)
     }
     end = clock();
     double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
+
+    for (int i = 0; i < tamanhoVetor; i++)
+        cout << vetor[i] << " ";
+    cout << endl
+        << "Numero de comparacoes: " << comparacoes << endl
+        << "Numero de trocas: " << trocas << endl
+        << "Tempo de execucao: " << time_taken << endl;
 }

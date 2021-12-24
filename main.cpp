@@ -242,7 +242,7 @@ int main(int argc, char const *argv[])
     while (continuar == 1)
     {
 
-        cout << "Digite 1 se quiser testar a Tabela Hash, 2 se quiser testar a Ordenacao e 3 se quiser acessar o Modulo de Teste" << endl;
+        cout << "Digite 1 se quiser testar a Tabela Hash ou 2 se quiser testar a Ordenacao" << endl;
 
         cin >> decisao;
 
@@ -252,15 +252,15 @@ int main(int argc, char const *argv[])
             manipularHash(tiktokVector);
             break;
         case 2:
-            cout << "Digite 1 para testar o heap sort, 2 para o quicksort, 3 para o combosort e outro para sair" << endl;
+            cout << "Digite 1 para testar o heapsort, 2 para o quicksort, 3 para o combsort e outro para sair" << endl;
             cin >> escolheSort;
 
-            cout << "digite o número de conjuntos distintos de N que serão realizados (minimo 3)" << endl;
+            cout << "Digite o numero de conjuntos distintos de N que serao realizados (minimo 3)" << endl;
             cin >> numConjuntos;
 
             while (numConjuntos < 3)
             {
-                cout << "Numero inválido! Digite um número maior que 3." << endl;
+                cout << "Numero invalido! Digite um numero maior que 3." << endl;
                 cin >> numConjuntos;
             }
 
@@ -294,9 +294,7 @@ int main(int argc, char const *argv[])
             }
 
             break;
-        case 3:
-            // chama a função de Módulo de Teste
-            break;
+
         }
         // testarImportacao();
         cout << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;

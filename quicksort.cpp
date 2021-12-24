@@ -31,7 +31,7 @@ int particionamentoQuickSort(int vetor[], int a, int b, int *contadorTroca, int 
             i++; // aumenta o índice do elemento menor
             troca(&vetor[i], &vetor[j]);
 
-            (*contadorTroca)++; // Conta o numero de trocas feitas 
+            (*contadorTroca)++; // Conta o numero de trocas feitas
         }
     }
     troca(&vetor[i + 1], &vetor[b]);
@@ -43,12 +43,12 @@ int particionamentoQuickSort(int vetor[], int a, int b, int *contadorTroca, int 
 void ordenacaoQuickSort(int vetor[], int indiceInferior, int indiceSuperior)
 {
     int comparacao; //Numero de comparacoes feitas
-    int qnt_troca; //Quantidades de trocas realizadas
+    int qnt_troca;  //Quantidades de trocas realizadas
     clock_t start, end;
     start = clock(); //Tempo de funcionamento
-    
+
     comparacao = 0;
-    qnt_troca = 0; 
+    qnt_troca = 0;
 
     if (indiceInferior < indiceSuperior)
     {
@@ -58,13 +58,17 @@ void ordenacaoQuickSort(int vetor[], int indiceInferior, int indiceSuperior)
         // Faz o sort dos elementos em separado, de cada partição
         ordenacaoQuickSort(vetor, indiceInferior, indiceParticionamento - 1);
         ordenacaoQuickSort(vetor, indiceParticionamento + 1, indiceSuperior);
-
-
     }
 
     end = clock();
     double time_taken = double(end - start) / double(CLOCKS_PER_SEC); //Transforma contagem em segundos
+
+    int tamanhoVetor = indiceSuperior;
+
+    for (int i = 0; i < tamanhoVetor; i++)
+        cout << vetor[i] << " ";
+    cout << endl
+        << "Numero de comparacoes: " << comparacao << endl
+        << "Numero de trocas: " << qnt_troca << endl
+        << "Tempo de execucao: " << time_taken << endl;
 }
-
-
-

@@ -9,12 +9,13 @@
 
 using namespace std;
 
-//Para encontrar a lacuna entre os elementos 
+//Para encontrar a lacuna entre os elementos
 int getProximoGap(int gap)
-{ 
+{
     gap = (gap * 10) / 13;
 
-    if(gap < 1) {
+    if (gap < 1)
+    {
         return 1;
     }
 
@@ -29,7 +30,6 @@ void ordCombSort(int vetor[], int N)
     float tempo;
     clock_t start, end;
 
-
     gap = N;
 
     //Inicialize trocado como verdadeiro para garantir que o loop seja executado
@@ -39,9 +39,10 @@ void ordCombSort(int vetor[], int N)
 
     start = clock(); //Iniciando o clock para contar o tempo
 
-    //Continue executando enquanto a lacuna é maior que 1 e a última iteração causou uma troca 
-    while(gap != 1 || trocar == true){
-        //Encontre a próxima lacuna 
+    //Continue executando enquanto a lacuna é maior que 1 e a última iteração causou uma troca
+    while (gap != 1 || trocar == true)
+    {
+        //Encontre a próxima lacuna
         gap = getProximoGap(gap);
 
         //Inicialize trocado como falso para que possamos verificar se a troca aconteceu ou não
@@ -49,8 +50,10 @@ void ordCombSort(int vetor[], int N)
         troque = 0;
 
         //Compare todos os elementos com a lacuna atual
-        for(int i = 0; i < N - gap; i++){
-            if(vetor[i] > vetor[i + gap]){
+        for (int i = 0; i < N - gap; i++)
+        {
+            if (vetor[i] > vetor[i + gap])
+            {
                 comparar += 1;
                 swap(vetor[i], vetor[i + gap]);
                 trocar = true;
@@ -63,4 +66,11 @@ void ordCombSort(int vetor[], int N)
     end = clock(); //Finaliza o clock de contar o tempo
 
     double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
+
+    for (int i = 0; i < N; i++)
+        cout << vetor[i] << " ";
+    cout << endl
+        << "Numero de comparacoes: " << comparar << endl
+        << "Numero de trocas: " << qnt_troca << endl
+        << "Tempo de execucao: " << time_taken << endl;
 }
