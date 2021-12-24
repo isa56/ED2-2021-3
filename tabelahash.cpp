@@ -2,6 +2,8 @@
 #include "TabelaHash.h"
 
 #include "heapsort.h"
+#include "quicksort.h"
+#include "combsort.h"
 
 using namespace std;
 
@@ -90,12 +92,11 @@ void TabelaHash::imprimirTabela(int qtdImpressa)
     }
 
     // chama a função de ordenação
-    heapsort(arrayVezes, qtdPreenchida);
+    ordenacaoQuickSort(arrayVezes, 0, qtdPreenchida);   // ordena em ordem crescente
 
     // Imprime de acordo com a ordenação:
     cout << "Imprimindo a tabela hash:" << endl;
     cout << "Versao - Numero de vezes que aparece" << endl;
-    int i;
     for (int j = 0; j < qtdPreenchida; j++) // não vai funcionar assim
     {
         for (int i = 0; i < TAMANHO_TABELA_INICIAL; i++)
