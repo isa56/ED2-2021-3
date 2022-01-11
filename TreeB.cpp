@@ -60,7 +60,7 @@ void TreeBNo::percorrer()
 }
 
 //Função para pesquisar a chave k
-TreeBNo *TreeBNo::procurar(int k)
+TreeBNo *TreeBNo::buscar(int k)
 {
     //Encontre a primeira chave maior ou igual a k
     int i;
@@ -83,7 +83,7 @@ TreeBNo *TreeBNo::procurar(int k)
     }
 
     //Vá para o filho apropriado
-    return C[i]->procurar(k);
+    return C[i]->buscar(k);
 }
 
 void TreeB::inserir(int k)

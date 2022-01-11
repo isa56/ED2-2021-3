@@ -4,6 +4,8 @@
 #include <fstream>
 #include <string>
 
+using namespace std;
+
 class TreeBNo {
     public:
         int *chave; //Série de Chaves
@@ -20,8 +22,8 @@ class TreeBNo {
         void dividirFilho(int i, TreeBNo *y); //Dividir nó
         void percorrer(); //Percorrer todos os nós em uma subarvore onde esse nó é a raiz
 
-        //Procurar nó
-        TreeBNo *procurar(int k); //Retorna NULL se k não estiver presente
+        //Buscar nó
+        TreeBNo *buscar(int k); //Retorna NULL se k não estiver presente
         
     friend class BTree;
 };

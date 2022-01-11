@@ -23,9 +23,9 @@ class TreeB {
         void percorrer()
         { if(raiz != NULL) raiz->percorrer(); }
 
-        //Função para procurar chave na árvore
-        TreeBNo *procurar(int k)
-        {return (raiz == NULL)? NULL : raiz->procurar(k); }
+        //Função para buscar chave na árvore
+        TreeBNo *buscar(int k)
+        {return (raiz == NULL)? NULL : raiz->buscar(k); }
 
         // A função main que insere uma nova chave
         void inserir(int k); 
