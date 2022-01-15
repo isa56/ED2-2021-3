@@ -6,6 +6,8 @@
 #include <vector>
 #include <sys/stat.h>
 #include <algorithm>
+#include <time.h>
+#include <math.h>
 
 #include "TreeBNo.h" //incluindo o '.h' do Nó da Árvore B
 #include "TreeB.h" //incluindo o '.h' da Árvore B
@@ -27,8 +29,7 @@ TreeBNo::TreeBNo(int t1, bool folha1)
     t = t1;
     folha = folha1;
 
-    //Aloca memória para o número máximo de chaves
-    //E ponteiros filhos possíveis
+    //Aloca memória para o número máximo de chaves e ponteiros filhos possíveis
     chave = new int[2 * t - 1];
     C = new TreeBNo *[2 * t];
 
@@ -39,13 +40,11 @@ TreeBNo::TreeBNo(int t1, bool folha1)
 //Função para percorrer todos os nós em uma subárvore com raiz neste nó
 void TreeBNo::percorrer()
 {
-    //Exitem n chaves e n+1 filhos
-    //Percorra n chaves e os primeiros n filhos
+    //Exitem n chaves e n+1 filhos e percorra n chaves e os primeiros n filhos
     int i;
 
     for(i = 0; i < n; i++){
-        //Se não for folha, antes de imprimir k[i]
-        //percorra a subárvore com filho C[i]
+        //Se não for folha, antes de imprimir k[i], percorra a subárvore com filho C[i]
         if(folha == false){
             C[i]->percorrer();
         }
@@ -70,14 +69,12 @@ TreeBNo *TreeBNo::buscar(int k)
         i++;
     }
 
-    //Se a chave encontrada for igual a k
-    //retorne esse nó
+    //Se a chave encontrada for igual a k e retorne esse nó
     if(chave[i] == k){
         return this;
     }
 
-    //Se a chave não for encontrada aqui
-    //E este for um nó folha
+    //Se a chave não for encontrada aqui e este for um nó folha
     if(folha == true){
         return NULL;
     }
@@ -92,13 +89,12 @@ void TreeB::inserir(int k)
     if(raiz == NULL){
         //Alocar memória para raiz
         raiz = new TreeBNo(t, true);
-        raiz->chave[0] = k; //insere chave
+        raiz->chave[0] = k; //Insere chave
         raiz->n = 1; //Atualizar número de chaves na raiz
     }
     else //Se a árvore não estiver vazia
     {
-        //Se a raiz está cheia
-        //Então a árvore cresce em altura
+        //Se a raiz está cheia, então a árvore cresce em altura
         if(raiz->n == 2*t-1){
             //Alocar memória para a nova raiz
             TreeBNo *s = new TreeBNo(t, false);
@@ -109,9 +105,7 @@ void TreeB::inserir(int k)
             //Divida a raiz antiga e mova uma chave para a nova raiz
             s->dividirFilho(0, raiz);
 
-            //A nova raiz tem dois filhos
-            //Decidir qual das duas folhas
-            //Terá uma nova chave
+            //A nova raiz tem dois filhos e decidir qual das duas folhas terá uma nova chave
             int i = 0;
             if(s->chave[0] < k){
                 i++;
@@ -135,6 +129,15 @@ void TreeBNo::inserirNaoCheia(int k)
     //Inicialize o índice como índice do elemento mais à direita
     int i;
     i = n - 1;
+
+    //Variáveis para o processo de comparação e tempo de execução de inserção
+    int comparar;
+    clock_t start, end;
+
+    //Inicialize a varipavel 'comparar'
+    comparar = 0;
+
+    start = clock(); //Iniciando o clock para contar o tempo
 
     //Se este for um nó folha
     if(folha == true){
@@ -162,9 +165,9 @@ void TreeBNo::inserirNaoCheia(int k)
         if(C[i + 1]->n == 2*t-1){
             //Se o filho estiver cheia, divida-a
             dividirFilho(i + 1, C[i + 1]);
+            comparar += 1;
 
-            //Após a divisão, o filho do meio de C[i] sobre
-            //C[i] é dividido em dois
+            //Após a divisão, o filho do meio de C[i] sobre C[i] é dividido em dois
             //Veja qual dos dois vai ter a nova chave
             if(chave[i + 1] < k){
                 i++;
@@ -172,12 +175,16 @@ void TreeBNo::inserirNaoCheia(int k)
         }
         C[i + 1]->inserirNaoCheia(k);
     }
+    end = clock(); //Finaliza o clock de contar o tempo
+
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
+    cout << "Numero de comparacoes => " << comparar << endl;
+    cout << "Tempo de execucao => " << time_taken << endl;
 }
 
 void TreeBNo::dividirFilho(int i, TreeBNo *y)
 {
-    //Crie um novo nó que irá armazenar
-    //(t - 1) chaves de y
+    //Crie um novo nó que irá armazenar (t-1) chaves de y
     TreeBNo *z = new TreeBNo(y->t, y->folha);
     z->n = t - 1;
 
@@ -196,8 +203,7 @@ void TreeBNo::dividirFilho(int i, TreeBNo *y)
     //Reduza o número de chaves em y
     y->n = t - 1;
 
-    //Como este nó terá um novo filho
-    //Crie um espaço para o novo filho
+    //Como este nó terá um novo filho, crie um espaço para o novo filho
     for(int j = n; j >= i + 1; j--){
         C[j + 1] = C[j];
     }
@@ -206,8 +212,7 @@ void TreeBNo::dividirFilho(int i, TreeBNo *y)
     C[i + 1] = z;
 
     //Uma chave de y moverá para este nó
-    //Encontre a localização da nova chave
-    //E mova todas as chaves maiores um espaço à frente
+    //Encontre a localização da nova chave e mova todas as chaves maiores um espaço à frente
     for(int j = n - 1; j >= i; j--){
         chave[j + 1] = chave[j];
     }
