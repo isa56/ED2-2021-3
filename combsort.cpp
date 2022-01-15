@@ -27,7 +27,6 @@ void ordCombSort(int vetor[], int N)
     int gap;
     bool trocar;
     int comparar, qnt_troca, troque;
-    float tempo;
     clock_t start, end;
 
     gap = N;
