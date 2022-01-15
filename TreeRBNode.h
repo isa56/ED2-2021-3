@@ -18,6 +18,8 @@ private:
 
     // Métodos:
 public:
+    TreeRBNode(){}
+
     TreeRBNode(string id, int pos)
     {
         father = null;

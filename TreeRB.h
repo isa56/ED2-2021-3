@@ -12,8 +12,10 @@ class TreeRB
     // Atributos:
 private:
     TreeRBNode *root;
+    TreeRBNode nil;
     int blackHeight;
     void balanceTree();
+    void checkBalanceTree();
 
     // Métodos:
 public:
