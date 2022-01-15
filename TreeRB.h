@@ -19,7 +19,7 @@ private:
 public:
     TreeRB();
     void insertNode(string infoId, int infoPosition);
-    void findNode(string infoId);
+    TreeRBNode *findNode(string infoId);
 }
 
 #endif
