@@ -20,9 +20,12 @@ void TreeRB::insertNode(string infoId, int infoPosition)
     newNode.setInfo(infoId, infoPosition);
 
     TreeRBNode *r = root;
+    TreeRBNode *previous = null;
 
+    // Encontrar posição:
     while (r != null)
     {
+        previous = r;
         if (newNode.getInfoID() < r->getInfoID())
         {
             r = r->getLeftChild();
@@ -33,13 +36,22 @@ void TreeRB::insertNode(string infoId, int infoPosition)
         }
     }
 
-    if(root == null)
+    // Inserir:
+    if (root == null)
     {
         root = newNode;
     }
+    else if (infoId < previous->getInfoId())
+    {
+        previous->setLeftChild(newNode);
+    }
+    else
+    {
+        previous->setRightChild(newNode);
+    }
 
-    checkBalanceTree();
-
+    if (!checkProperties(newNode))
+        balanceTree(newNode);
 }
 
 TreeRBNode *TreeRB::findNode(string infoId)
@@ -59,10 +71,29 @@ TreeRBNode *TreeRB::findNode(string infoId)
     return null;
 }
 
-void TreeRB::checkBalanceTree()
+boolean TreeRB::checkProperties(TreeRBNode *r)
 {
+    // Propriedade 1 ok
+    // Propriedade 2: A raiz é preta
+    if (root->getColor() != 1)
+        return false;
+
+    // Propriedade 3 ok
+    // Propriedade 4: Se um nó é vermelho, seus filhos são pretos
+    TreeRBNode father = r->getFather();
+    if (father.getColor() == 0) // pai é vermelho, como r foi inserido agora, também é vermelho
+        return false;
+
+    // Propriedade 5
+    return true;
 }
 
-void TreeRB::balanceTree()
+void TreeRB::balanceTree(TreeRBNode *r)
 {
+    // rotação simples à esquerda
+    r = r->getParent();
+    TreeRBNode *q;
+    q = p->getRightSibling();
+    p->setRightChild(q->getLeftSibling());
+    q->setLeftChild(p);
 }

@@ -14,8 +14,8 @@ private:
     TreeRBNode *root;
     TreeRBNode nil;
     int blackHeight;
-    void balanceTree();
-    void checkBalanceTree();
+    void balanceTree(TreeRBNode *r);
+    boolean checkProperties(TreeRBNode *r);
 
     // Métodos:
 public:
