@@ -61,24 +61,43 @@ void TreeBNo::percorrer()
 //Função para pesquisar a chave k
 TreeBNo *TreeBNo::buscar(int k)
 {
+    int comparar;
+
+    //Inicializando a variavel 'comparar'
+    comparar = 0;
+
+    clock_t start, end;
+
+    //Iniciando o clock para contar o tempo
+    start = clock();
     //Encontre a primeira chave maior ou igual a k
     int i;
     i = 0;
 
     while(i < n && k > chave[i]){
+        comparar += 1;
         i++;
     }
 
     //Se a chave encontrada for igual a k e retorne esse nó
     if(chave[i] == k){
+        comparar += 1;
         return this;
     }
 
     //Se a chave não for encontrada aqui e este for um nó folha
     if(folha == true){
+        comparar += 1;
         return NULL;
     }
 
+    end = clock();
+
+    //Retorna o tempo em segundos
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
+
+    cout << "Numero de comparacoes => " << comparar << endl;
+    cout << "Tempo de execucao => " << time_taken << endl;
     //Vá para o filho apropriado
     return C[i]->buscar(k);
 }
@@ -136,6 +155,7 @@ void TreeB::inserir(int k)
     }
     end = clock(); //Finaliza o clock de contar o tempo
 
+    //Retorna o tempo em segundos
     double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
 
     cout << "Numero de comparacoes => " << comparar << endl;
