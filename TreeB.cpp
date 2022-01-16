@@ -85,8 +85,19 @@ TreeBNo *TreeBNo::buscar(int k)
 
 void TreeB::inserir(int k)
 {
+    //Declara e inicaliza a variavel de comparacao
+    int comparar;
+    comparar = 0;
+
+    //Declara as variaveis para iniciar a contagem do tempo
+    clock_t start, end;
+
+    start = clock(); //Iniciano o clock para contar o tempo
+
     //Se a árvore estiver vazia
     if(raiz == NULL){
+        comparar += 1; //Atualiza a variável
+
         //Alocar memória para raiz
         raiz = new TreeBNo(t, true);
         raiz->chave[0] = k; //Insere chave
@@ -96,6 +107,8 @@ void TreeB::inserir(int k)
     {
         //Se a raiz está cheia, então a árvore cresce em altura
         if(raiz->n == 2*t-1){
+            comparar += 1; //Atualiza a variável
+
             //Alocar memória para a nova raiz
             TreeBNo *s = new TreeBNo(t, false);
 
@@ -108,6 +121,7 @@ void TreeB::inserir(int k)
             //A nova raiz tem dois filhos e decidir qual das duas folhas terá uma nova chave
             int i = 0;
             if(s->chave[0] < k){
+                comparar += 1; //Atualiza a variavel
                 i++;
             }
             s->C[i]->inserirNaoCheia(k);
@@ -120,24 +134,20 @@ void TreeB::inserir(int k)
             raiz->inserirNaoCheia(k);
         }
     }
+    end = clock(); //Finaliza o clock de contar o tempo
+
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
+
+    cout << "Numero de comparacoes => " << comparar << endl;
+    cout << "Tempo de execucao => " << time_taken << endl;
 }
 
-//Função para inserir uma nova chave no nó
 //O nó não deve está cheia quando a função deve ser chamada
-void TreeBNo::inserirNaoCheia(int k)
+void TreeBNo::inserirNaoCheia(int k) //Função para inserir uma nova chave no nó
 {
     //Inicialize o índice como índice do elemento mais à direita
     int i;
     i = n - 1;
-
-    //Variáveis para o processo de comparação e tempo de execução de inserção
-    int comparar;
-    clock_t start, end;
-
-    //Inicialize a varipavel 'comparar'
-    comparar = 0;
-
-    start = clock(); //Iniciando o clock para contar o tempo
 
     //Se este for um nó folha
     if(folha == true){
@@ -165,7 +175,6 @@ void TreeBNo::inserirNaoCheia(int k)
         if(C[i + 1]->n == 2*t-1){
             //Se o filho estiver cheia, divida-a
             dividirFilho(i + 1, C[i + 1]);
-            comparar += 1;
 
             //Após a divisão, o filho do meio de C[i] sobre C[i] é dividido em dois
             //Veja qual dos dois vai ter a nova chave
@@ -175,11 +184,6 @@ void TreeBNo::inserirNaoCheia(int k)
         }
         C[i + 1]->inserirNaoCheia(k);
     }
-    end = clock(); //Finaliza o clock de contar o tempo
-
-    double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
-    cout << "Numero de comparacoes => " << comparar << endl;
-    cout << "Tempo de execucao => " << time_taken << endl;
 }
 
 void TreeBNo::dividirFilho(int i, TreeBNo *y)

@@ -11,7 +11,8 @@
 
 using namespace std;
 
-class TreeB {
+class TreeB 
+{
     private:
         TreeBNo *raiz; //Ponteiro para o nó raiz
         int t; //grau minimo

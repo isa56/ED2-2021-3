@@ -6,7 +6,8 @@
 
 using namespace std;
 
-class TreeBNo {
+class TreeBNo 
+{
     public:
         int *chave; //Série de Chaves
         int t; //Grau mínimo (define o intervalo para o número de chaves)
