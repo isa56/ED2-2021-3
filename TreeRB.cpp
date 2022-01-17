@@ -40,6 +40,7 @@ void TreeRB::insertNode(string infoId, int infoPosition)
     if (root == null)
     {
         root = newNode;
+        blackHeight++;
     }
     else if (infoId < previous->getInfoId())
     {
@@ -52,14 +53,13 @@ void TreeRB::insertNode(string infoId, int infoPosition)
 
     balanceTree(newNode, previous);
 
-
 }
 
 void TreeRB::balanceTree(TreeRBNode* r, TreeRBNode* previous)
 {
-    
+
     if(previous->getColor() == 1)   // pai é preto
-        recolor(raise);
+        recolor(r);
     else {  // pai é vermelho
 
         if(previous->getFather()->getLeftChild() ==  && previous->getLeftChild() == r)
@@ -80,7 +80,7 @@ void TreeRB::recolor(TreeRBNode* r)
     TreeRBNode *grandfather = father->getFather();
     TreeRBNode *uncle;
 
-    if (father->getLeftChild() == r)
+    if (grandfather->getLeftChild() == father)
         uncle = grandfather->getRightChild();
     else
         uncle = grandfather->getLeftChild();
