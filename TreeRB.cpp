@@ -120,7 +120,7 @@ void TreeRB::rotateLeftSimple(TreeRBNode *p)
     q->setLeftChild(p);
 }
 
-void TreeRB::rotateLeftSimple(TreeRBNode *p)
+void TreeRB::rotateRIghtSimple(TreeRBNode *p)
 {
     // rotação simples à direita
     p = p->getParent();
