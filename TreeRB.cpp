@@ -113,17 +113,17 @@ TreeRBNode *TreeRB::findNode(string infoId)
 void TreeRB::rotateLeftSimple(TreeRBNode *p)
 {
     // rotação simples à esquerda
-    p = p->getParent();
+    p = p->getFather();
     TreeRBNode *q;
     q = p->getRightSibling();
     p->setRightChild(q->getLeftSibling());
     q->setLeftChild(p);
 }
 
-void TreeRB::rotateRIghtSimple(TreeRBNode *p)
+void TreeRB::rotateRightSimple(TreeRBNode *p)
 {
     // rotação simples à direita
-    p = p->getParent();
+    p = p->getFather();
     TreeRBNode *q;
     q = p->getLeftSibling();
     p->setLeftChild(q->getRightSibling());
@@ -133,7 +133,7 @@ void TreeRB::rotateRIghtSimple(TreeRBNode *p)
 void TreeRB::rotateLeftDouble(TreeRBNode *p)
 {
     // rotação dupla à esquerda
-    r = r->getParent();
+    r = r->getFather();
     TreeRBNode *q, *r;
 
     q = p->getRightSibling();
@@ -149,7 +149,7 @@ void TreeRB::rotateLeftDouble(TreeRBNode *p)
 void TreeRB::rotateRightDouble(TreeRBNode *p)
 {
     // rotação dupla à direita
-    r = r->getParent();
+    r = r->getFather();
     TreeRBNode *q, *r;
 
     q = p->getLeftSibling();
