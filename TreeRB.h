@@ -9,17 +9,17 @@ using namespace std;
 
 class TreeRB
 {
-    // Atributos:
+
 private:
     TreeRBNode *root;
-    TreeRBNode nil;
     int blackHeight;
-    void balanceTree(TreeRBNode *r);
-    boolean checkProperties(TreeRBNode *r);
+    void recolor(TreeRBNode *r);
+    void rotateLeftSimple(TreeRBNode *r);
+    void rotateRightSimple(TreeRBNode *r);
+    void rotateLeftDouble(TreeRBNode *r);
+    void rotateRightDouble(TreeRBNode *r);
 
-    // Métodos:
-public:
-    TreeRB();
+    public : TreeRB();
     void insertNode(string infoId, int infoPosition);
     TreeRBNode *findNode(string infoId);
 }

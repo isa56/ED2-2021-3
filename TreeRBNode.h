@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class TreeRBNo
+class TreeRBNode
 {
     // Atributos:
 private:
@@ -18,8 +18,6 @@ private:
 
     // Métodos:
 public:
-    TreeRBNode(){}
-
     TreeRBNode(string id, int pos)
     {
         father = null;
