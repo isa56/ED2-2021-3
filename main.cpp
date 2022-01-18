@@ -50,6 +50,27 @@ void testaArvoreRubroNegra(vector<Tiktok> &tiktokVector)
 
 }
 
+void testeArvores()
+{
+    cout << "Escolha uma Arvore para montar " << endl;
+    cout << "Digite 1 para Arvore Rubro Negra" << endl;
+    cout << "Digite 2 para Arvore B" << endl;
+    cout << "Digite outro para sair" << endl;
+
+    int numeroEscolhido;
+
+    cin >> numeroEscolhido;
+
+    switch(numeroEscolhido)
+    {
+        case 1:
+
+        case 2:
+
+        case 3:
+    }
+}
+
 void manipularHash(vector<Tiktok> &tiktokVector)
 {
 
