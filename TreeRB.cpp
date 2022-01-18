@@ -14,16 +14,18 @@ TreeRB::TreeRB()
     blackHeight = 0;
 }
 
+TreeRBNode* TreeRB::getRoot(){ return root; }
+
 void TreeRB::insertNode(string infoId, int infoPosition)
 {
     TreeRBNode newNode = new TreeRBNode();
     newNode.setInfo(infoId, infoPosition);
 
     TreeRBNode *r = root;
-    TreeRBNode *previous = null;
+    TreeRBNode *previous = NULL;
 
     // Encontrar posição:
-    while (r != null)
+    while (r != NULL)
     {
         previous = r;
         if (newNode.getInfoID() < r->getInfoID())
@@ -37,10 +39,11 @@ void TreeRB::insertNode(string infoId, int infoPosition)
     }
 
     // Inserir:
-    if (root == null)
+    if (root == NULL)
     {
         root = newNode;
         blackHeight++;
+        return;
     }
     else if (infoId < previous->getInfoId())
     {
@@ -52,112 +55,175 @@ void TreeRB::insertNode(string infoId, int infoPosition)
     }
 
     balanceTree(newNode, previous);
-
 }
 
-void TreeRB::balanceTree(TreeRBNode* r, TreeRBNode* previous)
+void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
 {
 
-    if(previous->getColor() == 1)   // pai é preto
-        recolor(r);
-    else {  // pai é vermelho
+    TreeRBNode *father = NULL;
+    TreeRBNode *grandfather = NULL;
 
-        if(previous->getFather()->getLeftChild() ==  && previous->getLeftChild() == r)
-        {
-
-        }
-        else if(previous->getLeftChild() == r)
-        {
-
-        }
-
-    }
-}
-
-void TreeRB::recolor(TreeRBNode* r)
-{
-    TreeRBNode *father = r->getFather();
-    TreeRBNode *grandfather = father->getFather();
-    TreeRBNode *uncle;
-
-    if (grandfather->getLeftChild() == father)
-        uncle = grandfather->getRightChild();
-    else
-        uncle = grandfather->getLeftChild();
-
-    if (uncle->getColor() == 0) // tio é vermelho
+    while ((r != root) * *(pt->getColor() != 1) && (r->getFather()->getColor() == 0))
     {
-        uncle->changeColor();
-        parent->changeColor();
-        grandfather->changeColor();
+
+        father = r->getFather();
+        grandfather = father->getFather();
+
+        if (father == grandfather->getLeftChild())
+        {
+
+            TreeRBNode *uncle = grandfather->getRightChild();
+
+            if (uncle != NULL && uncle->getColor() == 0)
+            {
+                grandfather->getColor() = 0;
+                father->getColor() = 1;
+                uncle->getColor() = 1;
+                r = grandfather;
+            }
+            else
+            {
+
+                if (r == father->getRightChild())
+                {
+                    rotateLeft(r, father);
+                    r = father;
+                    father = r->getFather();
+                }
+
+                rotateRight(r, grandfather);
+                father->changeColor();
+                grandfather->changeColor();
+                r = father;
+
+            }
+
+        }
+        else
+        {
+
+            TreeRBNode *uncle = grandfather->getLeftChild();
+
+            if( (uncle != NULL) && uncle->getColor() != 0 )
+            {
+                grandfather->changeColor();
+                father->changeColor();
+                uncle->changeColor();
+                r = grandfather;
+            }
+            else
+            {
+
+                if (r == father->getLeftChild())
+                {
+                    rotateRight(previous, father);
+                    r = father;
+                    father = r->getFather();
+                }
+
+                rotateLeft(previous, grandfather);
+                father->changeColor();
+                grandfather->changeColor();
+
+                r = father;
+
+            }
+        }
     }
+
+    previous->changeColor();
+
 }
 
 TreeRBNode *TreeRB::findNode(string infoId)
 {
     TreeRBNode *r = root;
 
-    while (r->getLeftSibling() != null || r->getRightSibling() != null)
+    while (r->getLeftChild() != NULL || r->getRightChild() != NULL)
     {
         if (infoId == r->getInfoId())
             return r;
         else if (infoId < r->getInfoId())
-            r = r->getLeftSibling();
+            r = r->getLeftChild();
         else
-            r = r->getRightSibling();
+            r = r->getRightChild();
     }
 
-    return null;
+    return NULL;
 }
 
-void TreeRB::rotateLeftSimple(TreeRBNode *p)
+void TreeRB::rotateLeft(TreeRBNode *r, TreeRBNode *pointer)
 {
     // rotação simples à esquerda
-    p = p->getFather();
-    TreeRBNode *q;
-    q = p->getRightSibling();
-    p->setRightChild(q->getLeftSibling());
-    q->setLeftChild(p);
+    TreeRBNode *pointerRight = pointer->getRightChild();
+
+    pointer->setRightChild(pointerRight->getLeftChild());
+
+    if (pointer->getRightChild() != NULL)
+    {
+        pointer->getRightChild->setFather(pointer);
+    }
+
+    pointerRight->setFather(pointer->getFather());
+
+    if (pointer->getFather() == NULL)
+    {
+        r = pointerRight;
+    }
+    else if (pointer == pointer->getFather()->getLeftChild())
+    {
+        pointer->getFather()->setLeftChild(pointerRight);
+    }
+    else
+    {
+        pointer->getFather()->setRightChild(pointerRight);
+    }
+
+    pointerRight->setLeftChild(pointer);
+    pointer->setFather(pointerRight);
 }
 
-void TreeRB::rotateRightSimple(TreeRBNode *p)
+void TreeRB::rotateRight(TreeRBNode *r, TreeRBNode *pointer)
 {
     // rotação simples à direita
-    p = p->getFather();
-    TreeRBNode *q;
-    q = p->getLeftSibling();
-    p->setLeftChild(q->getRightSibling());
-    q->setRightChild(p);
+    TreeRBNode *pointerLeft = pointer->getLeftChild();
+
+    pointer->setLeftChild(pointerLeft->getRightChild());
+
+    if (pointer->getLeftChild() != NULL)
+    {
+        pointer->getLeftChild()->setFather(pointer);
+    }
+
+    pointerLeft->setFather(pointer->getFather());
+
+    if (pointer->getFather() == NULL)
+    {
+        r = pointerLeft;
+    }
+    else if (pointer == pointer->getFather()->getLeftChild())
+    {
+        pointer->getFather()->setLeftChild(pointerLeft);
+    }
+    else
+    {
+        pointer->getFather()->setRightChild(pointerLeft);
+    }
+
+    pointerLeft->setRightChild(pointer);
+    pointer->setFather(pointerLeft);
 }
 
-void TreeRB::rotateLeftDouble(TreeRBNode *p)
+void TreeRB::printTree(TreeRBNode *r) // percurso em ordem
 {
-    // rotação dupla à esquerda
-    r = r->getFather();
-    TreeRBNode *q, *r;
-
-    q = p->getRightSibling();
-    r = q->getLeftSibling();
-
-    p->setRightChild(r->getLeftSibling());
-    q->setLeftChild(r->getRightSibling());
-
-    r->setLeftChild(p);
-    r->setRightChild(q);
-}
-
-void TreeRB::rotateRightDouble(TreeRBNode *p)
-{
-    // rotação dupla à direita
-    r = r->getFather();
-    TreeRBNode *q, *r;
-
-    q = p->getLeftSibling();
-    r = q->getRightSibling();
-
-    p->setLeftChild(r->getRightSibling());
-    q->setRightChild(r->getLeftSibling());
-
-    r->setRightChild(p);
-    r->setLeftChild(q);
+    if (r == NULL)
+    {
+        return;
+    }
+    else
+    {
+        printTree(r->getLeftChild());
+        cout << r->getInfoId() << " ";
+        printTree(r->getRightChild());
+    }
 }

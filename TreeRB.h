@@ -12,16 +12,15 @@ class TreeRB
 
 private:
     TreeRBNode *root;
-    int blackHeight;
-    void recolor(TreeRBNode *r);
-    void rotateLeftSimple(TreeRBNode *r);
-    void rotateRightSimple(TreeRBNode *r);
-    void rotateLeftDouble(TreeRBNode *r);
-    void rotateRightDouble(TreeRBNode *r);
+    void rotateLeft(TreeRBNode *r, TreeRBNode *pointer);
+    void rotateRight(TreeRBNode *r, TreeRBNode *pointer);
 
-    public : TreeRB();
+public:
+    TreeRB();
+    TreeRBNode *getRoot();
     void insertNode(string infoId, int infoPosition);
     TreeRBNode *findNode(string infoId);
+    void printTree(TreeRBNode *r);
 }
 
 #endif

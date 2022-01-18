@@ -14,6 +14,10 @@
 #include "quicksort.h"
 #include "combsort.h"
 
+// Parte 3:
+#include "TreeRB.h"
+#include "TreeB.h"
+
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
 #define TEXT_NAME "teste_importacao.txt"
@@ -25,6 +29,26 @@
 using namespace std;
 
 std::fstream arqEntrada;
+
+void testaArvoreRubroNegra(vector<Tiktok> &tiktokVector)
+{ 
+
+    unsigned int N = 1000000;
+    int B = 100;
+
+    TreeRB *arvoreVP = new TreeRB;
+
+    // Encontra reviews aleatórias e dá push:
+    for (int i = 0; i < N; i++)
+    {
+        int posicao = rand() % LINES_CSV;
+        reviewId = tiktokVector[posicao].getReviewId();
+        arvoreVP->insertNode(reviewId, posicao);
+    }
+
+    arvoreVP->printTree( arvoreVP->getRoot() );
+
+}
 
 void manipularHash(vector<Tiktok> &tiktokVector)
 {
