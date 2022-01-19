@@ -35,6 +35,7 @@ void testaArvoreRubroNegra(vector<Tiktok> &tiktokVector)
 
     unsigned int N = 1000000;
     int B = 100;
+    string reviewId;
 
     TreeRB *arvoreVP = new TreeRB;
 
@@ -49,7 +50,7 @@ void testaArvoreRubroNegra(vector<Tiktok> &tiktokVector)
     arvoreVP->printTree( arvoreVP->getRoot() );
 
 }
-
+/*
 void testeArvores()
 {
     cout << "Escolha uma Arvore para montar " << endl;
@@ -70,6 +71,7 @@ void testeArvores()
         case 3:
     }
 }
+*/
 
 void manipularHash(vector<Tiktok> &tiktokVector)
 {

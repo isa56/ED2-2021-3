@@ -18,14 +18,15 @@ private:
 
     // Métodos:
 public:
+    TreeRBNode();
     TreeRBNode(string id, int pos)
     {
-        father = null;
+        father = NULL;
         color = 0;
         infoID = id;
         infoPosition = pos;
-        leftChild = null;
-        rightChild = null;
+        leftChild = NULL;
+        rightChild = NULL;
     }
 
     void changeColor()
@@ -66,9 +67,9 @@ public:
         return color;
     }
 
-    void setFather(TreeRBNode *father)
+    void setFather(TreeRBNode *fatherNode)
     {
-        fatherSibling = father;
+        father = fatherNode;
     }
 
     void setLeftChild(TreeRBNode *left)
@@ -80,6 +81,18 @@ public:
     {
         rightChild = right;
     }
-}
+
+    void setInfo(string info, int position)
+    {
+        infoID = info;
+        infoPosition = position;
+    }
+
+    void setColor(int newColor)
+    {
+        color = newColor;
+    }
+
+};
 
 #endif

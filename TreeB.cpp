@@ -9,7 +9,6 @@
 #include <time.h>
 #include <math.h>
 
-#include "TreeBNo.h" //incluindo o '.h' do Nó da Árvore B
 #include "TreeB.h" //incluindo o '.h' da Árvore B
 
 using namespace std;

@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 
-#include "TreeRBNode.h"
 #include "TreeRB.h"
 
 using namespace std;
@@ -10,16 +9,14 @@ TreeRB::TreeRB()
 {
     root = new TreeRBNode();
     root->changeColor(); // Muda pra preto
-    // nil.changeColor();   // Muda pra preto
-    blackHeight = 0;
 }
 
-TreeRBNode* TreeRB::getRoot(){ return root; }
+TreeRBNode *TreeRB::getRoot() { return root; }
 
 void TreeRB::insertNode(string infoId, int infoPosition)
 {
-    TreeRBNode newNode = new TreeRBNode();
-    newNode.setInfo(infoId, infoPosition);
+    TreeRBNode *newNode = new TreeRBNode();
+    newNode->setInfo(infoId, infoPosition);
 
     TreeRBNode *r = root;
     TreeRBNode *previous = NULL;
@@ -28,7 +25,7 @@ void TreeRB::insertNode(string infoId, int infoPosition)
     while (r != NULL)
     {
         previous = r;
-        if (newNode.getInfoID() < r->getInfoID())
+        if (newNode->getInfoID() < r->getInfoID())
         {
             r = r->getLeftChild();
         }
@@ -42,10 +39,9 @@ void TreeRB::insertNode(string infoId, int infoPosition)
     if (root == NULL)
     {
         root = newNode;
-        blackHeight++;
         return;
     }
-    else if (infoId < previous->getInfoId())
+    else if (infoId < previous->getInfoID())
     {
         previous->setLeftChild(newNode);
     }
@@ -63,7 +59,7 @@ void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
     TreeRBNode *father = NULL;
     TreeRBNode *grandfather = NULL;
 
-    while ((r != root) * *(pt->getColor() != 1) && (r->getFather()->getColor() == 0))
+    while ((r != root) && (r->getColor() != 1) && (r->getFather()->getColor() == 0))
     {
 
         father = r->getFather();
@@ -76,9 +72,9 @@ void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
 
             if (uncle != NULL && uncle->getColor() == 0)
             {
-                grandfather->getColor() = 0;
-                father->getColor() = 1;
-                uncle->getColor() = 1;
+                grandfather->setColor(0);
+                father->setColor(1);
+                uncle->setColor(1);
                 r = grandfather;
             }
             else
@@ -95,16 +91,14 @@ void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
                 father->changeColor();
                 grandfather->changeColor();
                 r = father;
-
             }
-
         }
         else
         {
 
             TreeRBNode *uncle = grandfather->getLeftChild();
 
-            if( (uncle != NULL) && uncle->getColor() != 0 )
+            if ((uncle != NULL) && uncle->getColor() != 0)
             {
                 grandfather->changeColor();
                 father->changeColor();
@@ -126,13 +120,11 @@ void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
                 grandfather->changeColor();
 
                 r = father;
-
             }
         }
     }
 
     previous->changeColor();
-
 }
 
 TreeRBNode *TreeRB::findNode(string infoId)
@@ -141,9 +133,9 @@ TreeRBNode *TreeRB::findNode(string infoId)
 
     while (r->getLeftChild() != NULL || r->getRightChild() != NULL)
     {
-        if (infoId == r->getInfoId())
+        if (infoId == r->getInfoID())
             return r;
-        else if (infoId < r->getInfoId())
+        else if (infoId < r->getInfoID())
             r = r->getLeftChild();
         else
             r = r->getRightChild();
@@ -161,7 +153,7 @@ void TreeRB::rotateLeft(TreeRBNode *r, TreeRBNode *pointer)
 
     if (pointer->getRightChild() != NULL)
     {
-        pointer->getRightChild->setFather(pointer);
+        pointer->getRightChild()->setFather(pointer);
     }
 
     pointerRight->setFather(pointer->getFather());
@@ -223,7 +215,7 @@ void TreeRB::printTree(TreeRBNode *r) // percurso em ordem
     else
     {
         printTree(r->getLeftChild());
-        cout << r->getInfoId() << " ";
+        cout << r->getInfoID() << " ";
         printTree(r->getRightChild());
     }
 }
