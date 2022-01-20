@@ -17,48 +17,38 @@ TreeRBNode *TreeRB::getRoot() {
     return root;
 }
 
+TreeRBNode *TreeRB::insertNodeAux(TreeRBNode *father, TreeRBNode *pointer)
+{
+    if(father == NULL)
+        return pointer;
+    
+    if(pointer->getInfoID() < father->getInfoID())
+    {
+        father->setLeftChild( insertNodeAux(father->getLeftChild(), pointer) );
+        father->getLeftChild()->setFather( father );
+    }
+    else if (pointer->getInfoID() > father->getInfoID())
+    {
+        father->setRightChild( insertNodeAux(father->getRightChild(), pointer) );
+        father->getRightChild()->setFather( father );
+    }
+
+    return root;
+
+}
+
 void TreeRB::insertNode(string infoId, int infoPosition)
 {
     cout << "Inserindo No..." << endl;
-    TreeRBNode *newNode = new TreeRBNode();
-    newNode->setInfo(infoId, infoPosition);
 
-    TreeRBNode *r = root;
-    TreeRBNode *previous = NULL;
+    TreeRBNode *newNode = new TreeRBNode(infoId, infoPosition);
 
-    // Encontrar posição:
-    while (r != NULL)
-    {
-        previous = r;
-        if (newNode->getInfoID() < r->getInfoID())
-        {
-            r = r->getLeftChild();
-        }
-        else
-        {
-            r = r->getRightChild();
-        }
-    }
+    root = insertNodeAux(root, newNode);
 
-    // Inserir:
-    if (root == NULL)
-    {
-        root = newNode;
-        return;
-    }
-    else if (infoId < previous->getInfoID())
-    {
-        previous->setLeftChild(newNode);
-    }
-    else
-    {
-        previous->setRightChild(newNode);
-    }
-
-    balanceTree(newNode, previous);
+    balanceTree(root, newNode);
 }
 
-void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
+void TreeRB::balanceTree(TreeRBNode *&rootR, TreeRBNode *&r)
 {
 
     TreeRBNode *father = NULL;
@@ -87,12 +77,12 @@ void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
 
                 if (r == father->getRightChild())
                 {
-                    rotateLeft(r, father);
+                    rotateLeft(rootR, father);
                     r = father;
                     father = r->getFather();
                 }
 
-                rotateRight(r, grandfather);
+                rotateRight(rootR, grandfather);
                 father->changeColor();
                 grandfather->changeColor();
                 r = father;
@@ -115,12 +105,12 @@ void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
 
                 if (r == father->getLeftChild())
                 {
-                    rotateRight(previous, father);
+                    rotateRight(rootR, father);
                     r = father;
                     father = r->getFather();
                 }
 
-                rotateLeft(previous, grandfather);
+                rotateLeft(rootR, grandfather);
                 father->changeColor();
                 grandfather->changeColor();
 
@@ -129,7 +119,7 @@ void TreeRB::balanceTree(TreeRBNode *r, TreeRBNode *previous)
         }
     }
 
-    previous->changeColor();
+    root->setColor(1);
 }
 
 TreeRBNode *TreeRB::findNode(string infoId)
@@ -149,7 +139,7 @@ TreeRBNode *TreeRB::findNode(string infoId)
     return NULL;
 }
 
-void TreeRB::rotateLeft(TreeRBNode *r, TreeRBNode *pointer)
+void TreeRB::rotateLeft(TreeRBNode *rootR, TreeRBNode *pointer)
 {
     // rotação simples à esquerda
     TreeRBNode *pointerRight = pointer->getRightChild();
@@ -165,7 +155,7 @@ void TreeRB::rotateLeft(TreeRBNode *r, TreeRBNode *pointer)
 
     if (pointer->getFather() == NULL)
     {
-        r = pointerRight;
+        rootR = pointerRight;
     }
     else if (pointer == pointer->getFather()->getLeftChild())
     {
@@ -180,7 +170,7 @@ void TreeRB::rotateLeft(TreeRBNode *r, TreeRBNode *pointer)
     pointer->setFather(pointerRight);
 }
 
-void TreeRB::rotateRight(TreeRBNode *r, TreeRBNode *pointer)
+void TreeRB::rotateRight(TreeRBNode *rootR, TreeRBNode *pointer)
 {
     // rotação simples à direita
     TreeRBNode *pointerLeft = pointer->getLeftChild();
@@ -196,7 +186,7 @@ void TreeRB::rotateRight(TreeRBNode *r, TreeRBNode *pointer)
 
     if (pointer->getFather() == NULL)
     {
-        r = pointerLeft;
+        rootR = pointerLeft;
     }
     else if (pointer == pointer->getFather()->getLeftChild())
     {

@@ -14,7 +14,8 @@ private:
     TreeRBNode *root;
     void rotateLeft(TreeRBNode *r, TreeRBNode *pointer);
     void rotateRight(TreeRBNode *r, TreeRBNode *pointer);
-    void balanceTree(TreeRBNode *r, TreeRBNode *previous);
+    void balanceTree(TreeRBNode *&rootR, TreeRBNode *&r);
+    TreeRBNode *insertNodeAux(TreeRBNode *father, TreeRBNode *pointer);
 
 public:
     TreeRB();
