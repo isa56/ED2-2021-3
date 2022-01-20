@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 
+
 #include "TreeRB.h"
 
 using namespace std;
@@ -11,7 +12,9 @@ TreeRB::TreeRB()
     root->changeColor(); // Muda pra preto
 }
 
-TreeRBNode *TreeRB::getRoot() { return root; }
+TreeRBNode *TreeRB::getRoot() { 
+    return root;
+}
 
 void TreeRB::insertNode(string infoId, int infoPosition)
 {

@@ -18,7 +18,14 @@ private:
 
     // Métodos:
 public:
-    TreeRBNode();
+    TreeRBNode()
+    {
+        father = NULL;
+        color = 0;
+        leftChild = NULL;
+        rightChild = NULL;
+    }
+
     TreeRBNode(string id, int pos)
     {
         father = NULL;
@@ -92,7 +99,6 @@ public:
     {
         color = newColor;
     }
-
 };
 
 #endif
