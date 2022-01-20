@@ -17,18 +17,20 @@ TreeRBNode *TreeRB::getRoot() {
     return root;
 }
 
-TreeRBNode *TreeRB::insertNodeAux(TreeRBNode *father, TreeRBNode *pointer)
+TreeRBNode *TreeRB::insertNodeAux(TreeRBNode *father, TreeRBNode *pointer, int *comparacoes)
 {
     if(father == NULL)
         return pointer;
     
     if(pointer->getInfoID() < father->getInfoID())
     {
+        (*comparacoes)++;
         father->setLeftChild( insertNodeAux(father->getLeftChild(), pointer) );
         father->getLeftChild()->setFather( father );
     }
     else if (pointer->getInfoID() > father->getInfoID())
     {
+        (*comparacoes)++;
         father->setRightChild( insertNodeAux(father->getRightChild(), pointer) );
         father->getRightChild()->setFather( father );
     }
@@ -39,13 +41,25 @@ TreeRBNode *TreeRB::insertNodeAux(TreeRBNode *father, TreeRBNode *pointer)
 
 void TreeRB::insertNode(string infoId, int infoPosition)
 {
+    int comparacao; //Numero de comparacoes feitas
+    clock_t start, end;
+    start = clock(); //Tempo de funcionamento
+
+    comparacao = 0;
+    
     cout << "Inserindo No..." << endl;
 
     TreeRBNode *newNode = new TreeRBNode(infoId, infoPosition);
 
-    root = insertNodeAux(root, newNode);
-
+    root = insertNodeAux(root, newNode, &comparacao);
     balanceTree(root, newNode);
+
+    end = clock();
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC); //Transforma contagem em segundos
+
+    cout << endl
+        << "Numero de comparacoes: " << comparacao << endl 
+        << "Tempo de execucao: " << time_taken << endl;
 }
 
 void TreeRB::balanceTree(TreeRBNode *&rootR, TreeRBNode *&r)
@@ -124,17 +138,34 @@ void TreeRB::balanceTree(TreeRBNode *&rootR, TreeRBNode *&r)
 
 TreeRBNode *TreeRB::findNode(string infoId)
 {
+    int comparacao; //Numero de comparacoes feitas
+    clock_t start, end;
+    start = clock(); //Tempo de funcionamento
+
+    comparacao = 0;
+
     TreeRBNode *r = root;
 
     while (r->getLeftChild() != NULL || r->getRightChild() != NULL)
     {
-        if (infoId == r->getInfoID())
+        if (infoId == r->getInfoID()){
+            comparacao++;
             return r;
-        else if (infoId < r->getInfoID())
+        }
+        else if (infoId < r->getInfoID()){
+            comparacao++;
             r = r->getLeftChild();
+        }
         else
             r = r->getRightChild();
     }
+
+    end = clock();
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC); //Transforma contagem em segundos
+
+    cout << endl
+        << "Numero de comparacoes: " << comparacao << endl 
+        << "Tempo de execucao: " << time_taken << endl;
 
     return NULL;
 }
