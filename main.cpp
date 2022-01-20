@@ -31,13 +31,13 @@ using namespace std;
 std::fstream arqEntrada;
 
 void testaArvoreRubroNegra(vector<Tiktok> &tiktokVector)
-{ 
+{
 
     unsigned int N = 1000000;
     int B = 100;
     string reviewId;
 
-    TreeRB *arvoreVP = new TreeRB;
+    TreeRB *arvoreVP = new TreeRB();
 
     // Encontra reviews aleatórias e dá push:
     for (int i = 0; i < N; i++)
@@ -47,12 +47,11 @@ void testaArvoreRubroNegra(vector<Tiktok> &tiktokVector)
         arvoreVP->insertNode(reviewId, posicao);
     }
 
-    arvoreVP->printTree( arvoreVP->getRoot() );
-
+    arvoreVP->printTree(arvoreVP->getRoot());
 }
 
 void testaArvoreB(vector<Tiktok> &tiktokVector)
-{ 
+{
 
     unsigned int N = 1000000;
     int B = 100;
@@ -83,13 +82,13 @@ void testaArvoreB(vector<Tiktok> &tiktokVector)
         cout << "Digite um numero de 0 a 100 para procurar na arvore => ";
         cin >> procurar;
 
-        (arvB->buscar(procurar) != NULL)? cout << "Esta na arvore!" : cout << "Ausente" << endl;
+        (arvB->buscar(procurar) != NULL) ? cout << "Esta na arvore!" : cout << "Ausente" << endl;
         break;
     }
 }
 
-/*
-void testeArvores()
+
+void testeArvores(vector<Tiktok> &tiktokVector)
 {
     cout << "Escolha uma Arvore para montar " << endl;
     cout << "Digite 1 para Arvore Rubro Negra" << endl;
@@ -103,13 +102,16 @@ void testeArvores()
     switch(numeroEscolhido)
     {
         case 1:
-
+            testaArvoreRubroNegra(tiktokVector);
+            break;
         case 2:
-
-        case 3:
+            testaArvoreB(tiktokVector);
+            break;
+        default:
+            break;
     }
 }
-*/
+
 
 void manipularHash(vector<Tiktok> &tiktokVector)
 {
@@ -322,7 +324,7 @@ int main(int argc, char const *argv[])
     int *sortingArray;
     int numDados, numInstancias, numConjuntos;
     int decisao = 0;
-
+/*
     // Chamada da função de teste:
     while (continuar == 1)
     {
@@ -379,10 +381,14 @@ int main(int argc, char const *argv[])
             }
 
             break;
-
         }
         // testarImportacao();
+        
         cout << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
         cin >> continuar;
     }
+    */
+
+    testeArvores(tiktokVector);
+
 }

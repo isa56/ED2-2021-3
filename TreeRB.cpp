@@ -8,6 +8,7 @@ using namespace std;
 // Construtor:
 TreeRB::TreeRB()
 {
+    cout << "Criando Arvore Rubro-Negra..." << endl;
     root = new TreeRBNode();
     root->changeColor(); // Muda pra preto
 }
@@ -18,6 +19,7 @@ TreeRBNode *TreeRB::getRoot() {
 
 void TreeRB::insertNode(string infoId, int infoPosition)
 {
+    cout << "Inserindo No..." << endl;
     TreeRBNode *newNode = new TreeRBNode();
     newNode->setInfo(infoId, infoPosition);
 
@@ -221,4 +223,5 @@ void TreeRB::printTree(TreeRBNode *r) // percurso em ordem
         cout << r->getInfoID() << " ";
         printTree(r->getRightChild());
     }
+    cout << endl << endl;
 }
