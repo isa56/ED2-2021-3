@@ -50,6 +50,44 @@ void testaArvoreRubroNegra(vector<Tiktok> &tiktokVector)
     arvoreVP->printTree( arvoreVP->getRoot() );
 
 }
+
+void testaArvoreB(vector<Tiktok> &tiktokVector)
+{ 
+
+    unsigned int N = 1000000;
+    int B = 100;
+    string reviewId;
+
+    TreeB *arvB = new TreeB(N);
+
+    // Encontra reviews aleatórias e dá push:
+    for (int i = 0; i < N; i++)
+    {
+        int posicao = rand() % LINES_CSV;
+        reviewId = tiktokVector[posicao].getReviewId();
+        arvB->inserir(posicao);
+    }
+    arvB->percorrer();
+
+    int x;
+
+    cout << "Digite 1 para procurar na arvore " << endl;
+    cout << "Outro para sair " << endl;
+
+    cin >> x;
+
+    switch (x)
+    {
+    case 1:
+        int procurar;
+        cout << "Digite um numero de 0 a 100 para procurar na arvore => ";
+        cin >> procurar;
+
+        (arvB->buscar(procurar) != NULL)? cout << "Esta na arvore!" : cout << "Ausente" << endl;
+        break;
+    }
+}
+
 /*
 void testeArvores()
 {
