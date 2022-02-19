@@ -11,7 +11,6 @@
 
 using namespace std;
 
-private:
 typedef struct
 {
     char dado;
@@ -44,7 +43,7 @@ int ehFolha(NoHeapMinimo* raiz);
 
 HeapMinimo *criaMontaHeapMin(char dados[], int freq[], int tamanho);
 
-public:
+
 HeapMinimo *criarHeapMinimo(unsigned capacidade);
 
 void imprimeArray(int arr[], int n);

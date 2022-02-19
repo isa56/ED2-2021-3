@@ -18,6 +18,9 @@
 #include "TreeRB.h"
 #include "TreeB.h"
 
+// Parte 4
+#include "compressaoHuffman.h"
+
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
 #define TEXT_NAME "teste_importacao.txt"
@@ -219,6 +222,7 @@ void testarImportacao()
     }
 }
 
+
 int main(int argc, char const *argv[])
 {
     // Code Protection: Numero de parametros insuficiente
@@ -388,6 +392,29 @@ int main(int argc, char const *argv[])
         cin >> continuar;
     }
     */
+
+   while (continuar == 1)
+    {
+
+        cout << "Digite 1 se quiser comprimir um conjunto, 2 se quiser descomprimir o arquivo ou 3 para teste" << endl;
+
+        cin >> decisao;
+
+        switch (decisao)
+        {
+        case 1:
+            //Comprimir
+            break;
+        case 2:
+            //Descomprimir
+        case 3:
+            //Teste
+        break;
+        }
+        
+        cout << "Digite 1 se deseja continuar a fazer compressoes, descompressões e execucoes, e qualquer outro valor se deseja parar" << endl;
+        cin >> continuar;
+    }
 
     testeArvores(tiktokVector);
 
