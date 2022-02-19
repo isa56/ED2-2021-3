@@ -1,57 +1,73 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <bits/stdc++.h>
 #include <time.h>
 #include <math.h>
 #include <algorithm>
 
-#include "compressaoHuffman.h"
+#define TAMANHO_MAX_ARVORE 100
+
+// #include "compressaoHuffman.h"
 
 using namespace std;
 
-NoHeapMinimo *novoNo(char dado, unsigned freq)
+struct NoHeapMinimo
 {
-    NoHeapMinimo *temp = (NoHeapMinimo *)malloc(sizeof(NoHeapMin));
+    char dado;
+    unsigned frequencia;
+    struct NoHeapMinimo *esquerda, *direita;
+};
+
+struct HeapMinimo
+{
+    unsigned tamanho, capacidadeMaxima;
+    struct NoHeapMinimo **arrayNos;
+};
+
+struct NoHeapMinimo *novoNo(char dado, unsigned frequencia)
+{
+    struct NoHeapMinimo *temp = (struct NoHeapMinimo *)malloc(sizeof(struct NoHeapMinimo));
 
     temp->esquerda = NULL;
     temp->direita = NULL;
     temp->dado = dado;
-    temp->frequencia = freq;
+    temp->frequencia = frequencia;
 
     return temp;
 }
 
-HeapMinimo *criarHeapMinimo(unsigned capacidade)
+struct HeapMinimo *criarHeapMinimo(unsigned capacidade)
 {
 
-    HeapMinimo *heapMinimo = (struct HeapMinimo *)malloc(sizeof(HeapMinimo));
+    struct HeapMinimo *heapMinimo = (struct HeapMinimo *)malloc(sizeof(HeapMinimo));
 
     heapMinimo->tamanho = 0;
     heapMinimo->capacidadeMaxima = capacidade;
 
-    heapMinimo->arrayNos = (NoHeapMinimo **)malloc(heapMinimo->capacidadeMaxima * sizeof(NoHeapMinimo *));
+    heapMinimo->arrayNos = (struct NoHeapMinimo **)malloc(heapMinimo->capacidadeMaxima * sizeof(struct NoHeapMinimo *));
 
     return heapMinimo;
 }
 
-void trocaNoHeapMinimo(NoHeapMinimo **a, NoHeapMinimo **b)
+void trocaNoHeapMinimo(struct NoHeapMinimo **a, struct NoHeapMinimo **b)
 {
-    NoHeapMinimo *temp = *a;
+    struct NoHeapMinimo *temp = *a;
     *a = *b;
-    *b = t;
+    *b = temp;
 }
 
-void minHeapify(HeapMinimo *minHeap, int idx)
+void minHeapify(struct HeapMinimo *minHeap, int idx)
 {
     int menor = idx;
     int esq = 2 * idx + 1;
     int dir = 2 * idx + 2;
 
-    if (esq < minHeap->tamanho && minHeap->arrayNos[esq]->freq < minHeap->arrayNos[menor]->freq)
+    if (esq < minHeap->tamanho && minHeap->arrayNos[esq]->frequencia < minHeap->arrayNos[menor]->frequencia)
     {
         menor = esq;
     }
 
-    if (dir < minHeap->tamanho && minHeap->arrayNos[dir]->freq < minHeap->arrayNos[menor]->freq)
+    if (dir < minHeap->tamanho && minHeap->arrayNos[dir]->frequencia < minHeap->arrayNos[menor]->frequencia)
     {
         menor = dir;
     }
@@ -63,14 +79,14 @@ void minHeapify(HeapMinimo *minHeap, int idx)
     }
 }
 
-int ehUnitario(HeapMinimo *minHeap)
+int ehUnitario(struct HeapMinimo *minHeap)
 {
     return (minHeap->tamanho == 1);
 }
 
-NoHeapMinimo *extrairMinimo(HeapMinimo *minHeap)
+struct NoHeapMinimo *extrairMinimo(struct HeapMinimo *minHeap)
 {
-    NoHeapMinimo *temp = minHeap->arrayNos[0];
+    struct NoHeapMinimo *temp = minHeap->arrayNos[0];
     minHeap->arrayNos[0] = minHeap->arrayNos[minHeap->tamanho - 1];
 
     --(minHeap->tamanho);
@@ -80,7 +96,7 @@ NoHeapMinimo *extrairMinimo(HeapMinimo *minHeap)
     return temp;
 }
 
-void inserirHeapMinimo(HeapMinimo *minHeap, NoHeapMinimo *noHeap)
+void inserirHeapMinimo(struct HeapMinimo *minHeap, struct NoHeapMinimo *noHeap)
 {
     ++(minHeap->tamanho);
     int i = minHeap->tamanho - 1;
@@ -94,7 +110,7 @@ void inserirHeapMinimo(HeapMinimo *minHeap, NoHeapMinimo *noHeap)
     minHeap->arrayNos[i] = noHeap;
 }
 
-void montaHeapMinimo(HeapMinimo *minHeap)
+void montaHeapMinimo(struct HeapMinimo *minHeap)
 {
     int n = minHeap->tamanho - 1;
     int i;
@@ -115,18 +131,18 @@ void imprimeArray(int arr[], int n)
     cout << endl;
 }
 
-int ehFolha(NoHeapMinimo *raiz)
+int ehFolha(struct NoHeapMinimo *raiz)
 {
     return (!(raiz->esquerda) && !(raiz->direita));
 }
 
-HeapMinimo *criaMontaHeapMin(char dados[], int freq[], int tamanho)
+struct HeapMinimo *criaMontaHeapMin(char dados[], int frequencia[], int tamanho)
 {
-    HeapMinimo *minHeap = criarHeapMinimo(tamanho);
+    struct HeapMinimo *minHeap = criarHeapMinimo(tamanho);
 
     for (int i = 0; i < tamanho; ++i)
     {
-        minHeap->arrayNos[i] = novoNo(dados[i], freq[i]);
+        minHeap->arrayNos[i] = novoNo(dados[i], frequencia[i]);
     }
 
     minHeap->tamanho = tamanho;
@@ -135,11 +151,11 @@ HeapMinimo *criaMontaHeapMin(char dados[], int freq[], int tamanho)
     return minHeap;
 }
 
-NoHeapMinimo *montaArvoreHuffman(char dados[], int freq[], int tamanho)
+struct NoHeapMinimo *montaArvoreHuffman(char dados[], int frequencia[], int tamanho)
 {
-    NoHeapMinimo *esq, *dir, *acima;
+    struct NoHeapMinimo *esq, *dir, *acima;
 
-    HeapMinimo *minHeap = criaMontaHeapMin(dados, freq, tamanho);
+    struct HeapMinimo *minHeap = criaMontaHeapMin(dados, frequencia, tamanho);
 
     while (!ehUnitario(minHeap))
     {
@@ -147,7 +163,7 @@ NoHeapMinimo *montaArvoreHuffman(char dados[], int freq[], int tamanho)
         esq = extrairMinimo(minHeap);
         dir = extrairMinimo(minHeap);
 
-        acima = novoNo('$', esq->freq + dir->freq);
+        acima = novoNo('$', esq->frequencia + dir->frequencia);
 
         acima->esquerda = esq;
         acima->direita = dir;
@@ -158,7 +174,7 @@ NoHeapMinimo *montaArvoreHuffman(char dados[], int freq[], int tamanho)
     return (extrairMinimo(minHeap));
 }
 
-void imprimeCodigos(NoHeapMinimo *raiz, int arr[], int acima)
+void imprimeCodigos(struct NoHeapMinimo *raiz, int arr[], int acima)
 {
 
     if (raiz->esquerda)
@@ -180,10 +196,10 @@ void imprimeCodigos(NoHeapMinimo *raiz, int arr[], int acima)
     }
 }
 
-void codigosHuffman(char dados[], int freq[], int tamanho)
+void codigosHuffman(char dados[], int frequencia[], int tamanho)
 {
 
-    NoHeapMinimo *raiz = montaArvoreHuffman(dados, freq, tamanho);
+    struct NoHeapMinimo *raiz = montaArvoreHuffman(dados, frequencia, tamanho);
 
     int arr[TAMANHO_MAX_ARVORE], acima = 0;
 
