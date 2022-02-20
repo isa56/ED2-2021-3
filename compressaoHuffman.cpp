@@ -7,10 +7,10 @@
 
 #define TAMANHO_MAX_ARVORE 100
 
-// #include "compressaoHuffman.h"
+#include "compressaoHuffman.h"
 
 using namespace std;
-
+/*
 struct NoHeapMinimo
 {
     char dado;
@@ -23,6 +23,7 @@ struct HeapMinimo
     unsigned tamanho, capacidadeMaxima;
     struct NoHeapMinimo **arrayNos;
 };
+*/
 
 struct NoHeapMinimo *novoNo(char dado, unsigned frequencia)
 {

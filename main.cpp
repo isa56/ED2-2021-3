@@ -18,7 +18,7 @@
 #include "TreeRB.h"
 #include "TreeB.h"
 
-// Parte 4
+// Parte 4:
 #include "compressaoHuffman.h"
 
 // Contantes:
@@ -90,7 +90,6 @@ void testaArvoreB(vector<Tiktok> &tiktokVector)
     }
 }
 
-
 void testeArvores(vector<Tiktok> &tiktokVector)
 {
     cout << "Escolha uma Arvore para montar " << endl;
@@ -102,19 +101,18 @@ void testeArvores(vector<Tiktok> &tiktokVector)
 
     cin >> numeroEscolhido;
 
-    switch(numeroEscolhido)
+    switch (numeroEscolhido)
     {
-        case 1:
-            testaArvoreRubroNegra(tiktokVector);
-            break;
-        case 2:
-            testaArvoreB(tiktokVector);
-            break;
-        default:
-            break;
+    case 1:
+        testaArvoreRubroNegra(tiktokVector);
+        break;
+    case 2:
+        testaArvoreB(tiktokVector);
+        break;
+    default:
+        break;
     }
 }
-
 
 void manipularHash(vector<Tiktok> &tiktokVector)
 {
@@ -229,17 +227,18 @@ void seqCompressoes()
     vector<string> tiktokVector;
 
     arquivoBin.open(BINARY_NAME, ios::in | ios::binary);
-    
-    int N; //sequencia de compressoes
+
+    int N; // sequencia de compressoes
     cout << "Digite a quantidade de compressoes que precisa fazer => " << endl;
     cin >> N;
 
-    if(N < 10000){
+    if (N < 10000)
+    {
         cout << "Numero insuficiente de valores!!" << endl;
         exit(1);
     }
-
-    else {
+    else
+    {
         for (int i = 0; i < 100; i++)
         {
             int posicao = rand() % LINES_CSV; // 3660723
@@ -250,14 +249,14 @@ void seqCompressoes()
         }
     }
 
-    delete [] buffer;
+    delete[] buffer;
     arquivoBin.close();
 
     std::fstream arqTesteCompressao;
 
     arqTesteCompressao.open(TEXT_NAME, ios::out);
 
-    //escreve no arquivo txt
+    // escreve no arquivo txt
     for (int i = 0; i < tiktokVector.size(); i++)
     {
         arqTesteCompressao.write(
@@ -267,6 +266,38 @@ void seqCompressoes()
     arqTesteCompressao.close();
 }
 
+void preprocessaCompressao(vector<Tiktok> &tiktokVector)
+{
+
+    int numReviews, contador = 0;
+    string txt;
+    char dados[52];
+    int frequencias[52];
+    vector<string> reviewTexts;
+
+    cout << "Digite o numero de reviews que deseja importar: ";
+    cin >> numReviews;
+
+    for (int i = 0; i < numReviews; i++)
+    {
+        int posicao = rand() % LINES_CSV; // 3660723
+
+        txt = tiktokVector[i].getReviewText();
+
+        for (int j = 0; j < txt.length(); j++)
+        {
+            if ((find(begin(dados), end(dados), txt.at(j))) == end(dados))
+            {
+                frequencias[contador] = count(txt.begin(), txt.end(), txt.at(j));
+                dados[contador] = txt.at(j);
+                contador++;
+            }
+        }
+        reviewTexts.push_back(txt);
+    }
+
+    codigosHuffman(dados, frequencias, contador);
+}
 
 int main(int argc, char const *argv[])
 {
@@ -373,87 +404,87 @@ int main(int argc, char const *argv[])
     int *sortingArray;
     int numDados, numInstancias, numConjuntos;
     int decisao = 0;
-/*
-    // Chamada da função de teste:
-    while (continuar == 1)
-    {
-
-        cout << "Digite 1 se quiser testar a Tabela Hash ou 2 se quiser testar a Ordenacao" << endl;
-
-        cin >> decisao;
-
-        switch (decisao)
+    /*
+        // Chamada da função de teste:
+        while (continuar == 1)
         {
-        case 1:
-            manipularHash(tiktokVector);
-            break;
-        case 2:
-            cout << "Digite 1 para testar o heapsort, 2 para o quicksort, 3 para o combsort e outro para sair" << endl;
-            cin >> escolheSort;
 
-            cout << "Digite o numero de conjuntos distintos de N que serao realizados (minimo 3)" << endl;
-            cin >> numConjuntos;
+            cout << "Digite 1 se quiser testar a Tabela Hash ou 2 se quiser testar a Ordenacao" << endl;
 
-            while (numConjuntos < 3)
+            cin >> decisao;
+
+            switch (decisao)
             {
-                cout << "Numero invalido! Digite um numero maior que 3." << endl;
+            case 1:
+                manipularHash(tiktokVector);
+                break;
+            case 2:
+                cout << "Digite 1 para testar o heapsort, 2 para o quicksort, 3 para o combsort e outro para sair" << endl;
+                cin >> escolheSort;
+
+                cout << "Digite o numero de conjuntos distintos de N que serao realizados (minimo 3)" << endl;
                 cin >> numConjuntos;
-            }
 
-            if (escolheSort == 1)
-            {
-                for (int i = 0; i < numConjuntos; i++)
+                while (numConjuntos < 3)
                 {
-                    cout << "Digite quantos dados devem ser pre processados: " << endl;
-                    cin >> numDados;
-                    sortingArray = preprocessar(tiktokVector, numDados);
-                    heapsort(sortingArray, numDados);
+                    cout << "Numero invalido! Digite um numero maior que 3." << endl;
+                    cin >> numConjuntos;
                 }
-            }
-            else if (escolheSort == 2)
-                for (int i = 0; i < numConjuntos; i++)
-                {
-                    cout << "Digite quantos dados devem ser pre processados: " << endl;
-                    cin >> numDados;
-                    sortingArray = preprocessar(tiktokVector, numDados);
-                    ordenacaoQuickSort(sortingArray, 0, numDados);
-                }
-            else if (escolheSort == 3)
-            {
-                for (int i = 0; i < numConjuntos; i++)
-                {
-                    cout << "Digite quantos dados devem ser pre processados: " << endl;
-                    cin >> numDados;
-                    sortingArray = preprocessar(tiktokVector, numDados);
-                    ordCombSort(sortingArray, numDados);
-                }
-            }
 
-            break;
+                if (escolheSort == 1)
+                {
+                    for (int i = 0; i < numConjuntos; i++)
+                    {
+                        cout << "Digite quantos dados devem ser pre processados: " << endl;
+                        cin >> numDados;
+                        sortingArray = preprocessar(tiktokVector, numDados);
+                        heapsort(sortingArray, numDados);
+                    }
+                }
+                else if (escolheSort == 2)
+                    for (int i = 0; i < numConjuntos; i++)
+                    {
+                        cout << "Digite quantos dados devem ser pre processados: " << endl;
+                        cin >> numDados;
+                        sortingArray = preprocessar(tiktokVector, numDados);
+                        ordenacaoQuickSort(sortingArray, 0, numDados);
+                    }
+                else if (escolheSort == 3)
+                {
+                    for (int i = 0; i < numConjuntos; i++)
+                    {
+                        cout << "Digite quantos dados devem ser pre processados: " << endl;
+                        cin >> numDados;
+                        sortingArray = preprocessar(tiktokVector, numDados);
+                        ordCombSort(sortingArray, numDados);
+                    }
+                }
+
+                break;
+            }
+            // testarImportacao();
+
+            cout << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
+            cin >> continuar;
         }
-        // testarImportacao();
-        
-        cout << "Digite 1 se deseja continuar a fazer testes e qualquer outro valor se deseja parar" << endl;
-        cin >> continuar;
-    }
-    */
+        */
 
-   int continuarComp;
-   continuarComp = 1;
+    int continuarComp;
+    continuarComp = 1;
 
-   int decisaoComp;
-   decisaoComp = 0;
+    int decisaoComp;
+    decisaoComp = 0;
 
-   int *tam, freq;
-   char *Tiktok;
+    int *tam, freq;
+    char *Tiktok;
 
-   cout << "Qual eh o tamanho da compreesao desejada? ";
-   cin >> *tam;
+    cout << "Qual eh o tamanho da compreesao desejada? ";
+    cin >> *tam;
 
-   cout << "E qual a frequencia? ";
-   cin >> freq;
+    cout << "E qual a frequencia? ";
+    cin >> freq;
 
-   while (continuarComp == 1)
+    while (continuarComp == 1)
     {
 
         cout << "Digite 1 se quiser comprimir um conjunto, 2 se quiser descomprimir o arquivo ou 3 para teste" << endl;
@@ -463,20 +494,19 @@ int main(int argc, char const *argv[])
         switch (decisaoComp)
         {
         case 1:
-            codigosHuffman(Tiktok, tam, freq);
+            preprocessaCompressao(tiktokVector);
             break;
         case 2:
-            //Descomprimir o arquivo binário
+            // Descomprimir o arquivo binário
             break;
         case 3:
             seqCompressoes();
             break;
         }
-        
+
         cout << "Digite 1 se deseja continuar a fazer compressoes, descompressões e testes, e qualquer outro valor se deseja parar" << endl;
         cin >> continuarComp;
     }
 
-    testeArvores(tiktokVector);
-
+    // testeArvores(tiktokVector);
 }
