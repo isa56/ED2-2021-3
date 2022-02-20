@@ -235,6 +235,22 @@ void seqCompressoes()
         cout << "Numero insuficiente de valores!!" << endl;
         exit(1);
     }
+
+    delete [] buffer;
+    arquivoBin.close();
+
+    std::fstream arqTesteCompressao;
+
+    arqTesteCompressao.open(TEXT_NAME, ios::out);
+
+    //escreve no arquivo txt
+    for (int i = 0; i < tiktokVector.size(); i++)
+    {
+        arqTesteCompressao.write(
+            (char *)&tiktokVector[i], tiktokVector.size() * STRING_MEDIUM_SIZE);
+    }
+
+    arqTesteCompressao.close();
 }
 
 
