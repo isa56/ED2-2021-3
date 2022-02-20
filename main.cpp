@@ -226,6 +226,8 @@ void seqCompressoes()
     char *buffer = new char[LINES_CSV];
     fstream arquivoBin;
     vector<string> tiktokVector;
+
+    arquivoBin.open(BINARY_NAME, ios::in | ios::binary);
     
     int N; //sequencia de compressoes
     cout << "Digite a quantidade de compressoes que precisa fazer => " << endl;
@@ -234,6 +236,17 @@ void seqCompressoes()
     if(N < 10000){
         cout << "Numero insuficiente de valores!!" << endl;
         exit(1);
+    }
+
+    else {
+        for (int i = 0; i < 100; i++)
+        {
+            int posicao = rand() % LINES_CSV; // 3660723
+            arquivoBin.seekg(posicao * STRING_MEDIUM_SIZE);
+
+            arquivoBin.read(buffer, STRING_MEDIUM_SIZE);
+            tiktokVector.push_back(buffer);
+        }
     }
 
     delete [] buffer;
@@ -440,7 +453,7 @@ int main(int argc, char const *argv[])
         switch (decisaoComp)
         {
         case 1:
-            //Comprimir e salvar em um arquivo binário
+            //codigosHuffman();
             break;
         case 2:
             //Descomprimir o arquivo binário
