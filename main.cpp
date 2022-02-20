@@ -19,6 +19,7 @@
 #include "TreeB.h"
 
 // Parte 4
+#include "compressaoHuffman.h"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
@@ -443,6 +444,15 @@ int main(int argc, char const *argv[])
    int decisaoComp;
    decisaoComp = 0;
 
+   int *tam, freq;
+   char *Tiktok;
+
+   cout << "Qual eh o tamanho da compreesao desejada? ";
+   cin >> *tam;
+
+   cout << "E qual a frequencia? ";
+   cin >> freq;
+
    while (continuarComp == 1)
     {
 
@@ -453,7 +463,7 @@ int main(int argc, char const *argv[])
         switch (decisaoComp)
         {
         case 1:
-            //codigosHuffman();
+            codigosHuffman(Tiktok, tam, freq);
             break;
         case 2:
             //Descomprimir o arquivo binário
