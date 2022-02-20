@@ -19,7 +19,6 @@
 #include "TreeB.h"
 
 // Parte 4
-#include "compressaoHuffman.h"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
@@ -222,6 +221,22 @@ void testarImportacao()
     }
 }
 
+void seqCompressoes()
+{
+    char *buffer = new char[LINES_CSV];
+    fstream arquivoBin;
+    vector<string> tiktokVector;
+    
+    int N; //sequencia de compressoes
+    cout << "Digite a quantidade de compressoes que precisa fazer => " << endl;
+    cin >> N;
+
+    if(N < 10000){
+        cout << "Numero insuficiente de valores!!" << endl;
+        exit(1);
+    }
+}
+
 
 int main(int argc, char const *argv[])
 {
@@ -393,27 +408,34 @@ int main(int argc, char const *argv[])
     }
     */
 
-   while (continuar == 1)
+   int continuarComp;
+   continuarComp = 1;
+
+   int decisaoComp;
+   decisaoComp = 0;
+
+   while (continuarComp == 1)
     {
 
         cout << "Digite 1 se quiser comprimir um conjunto, 2 se quiser descomprimir o arquivo ou 3 para teste" << endl;
 
-        cin >> decisao;
+        cin >> decisaoComp;
 
-        switch (decisao)
+        switch (decisaoComp)
         {
         case 1:
-            //Comprimir
+            //Comprimir e salvar em um arquivo binário
             break;
         case 2:
-            //Descomprimir
+            //Descomprimir o arquivo binário
+            break;
         case 3:
-            //Teste
-        break;
+            seqCompressoes();
+            break;
         }
         
-        cout << "Digite 1 se deseja continuar a fazer compressoes, descompressões e execucoes, e qualquer outro valor se deseja parar" << endl;
-        cin >> continuar;
+        cout << "Digite 1 se deseja continuar a fazer compressoes, descompressões e testes, e qualquer outro valor se deseja parar" << endl;
+        cin >> continuarComp;
     }
 
     testeArvores(tiktokVector);
