@@ -28,16 +28,17 @@ struct HeapMinimo
 struct NoHeapMinimo *novoNo(char dado, unsigned frequencia);
 struct HeapMinimo *criarHeapMinimo(unsigned capacidade);
 void trocaNoHeapMinimo(struct NoHeapMinimo **a, struct NoHeapMinimo **b);
-void minHeapify(struct HeapMinimo *minHeap, int idx);
+void minHeapify(struct HeapMinimo *minHeap, int idx, int *numComparacoes);
 int ehUnitario(struct HeapMinimo *minHeap);
 struct NoHeapMinimo *extrairMinimo(struct HeapMinimo *minHeap);
 void inserirHeapMinimo(struct HeapMinimo *minHeap, struct NoHeapMinimo *noHeap);
 void montaHeapMinimo(struct HeapMinimo *minHeap);
 void imprimeArray(int arr[], int n);
 int ehFolha(struct NoHeapMinimo *raiz);
-struct HeapMinimo *criaMontaHeapMin(char dados[], int frequencia[], int tamanho);
-struct NoHeapMinimo *montaArvoreHuffman(char dados[], int frequencia[], int tamanho);
+struct HeapMinimo *criaMontaHeapMin(char dados[], int frequencia[], int tamanho, int &numComparacoes);
+struct NoHeapMinimo *montaArvoreHuffman(char dados[], int frequencia[], int tamanho, int *numComparacoes);
 void imprimeCodigos(struct NoHeapMinimo *raiz, int arr[], int acima);
-int codigosHuffman(char dados[], int frequencia[], int tamanho);
+float* calculaTaxaCompressao(int *array, char dados[]);
+int codigosHuffman(char dados[], int frequencia[], int tamanho, float *taxaCompressao);
 
 #endif

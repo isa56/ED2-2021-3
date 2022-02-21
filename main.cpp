@@ -220,62 +220,7 @@ void testarImportacao()
     }
 }
 
-void seqCompressoes(vector<Tiktok> &tiktokVector)
-{
-    char *buffer = new char[LINES_CSV];
-    string textToWrite = "";
-
-    int N, M; // sequencia de compressoes
-    std::fstream arqTesteCompressao;
-    int comparacoes10k, comparacoes100k, comparacoes1m;
-    int taxaComp10k, taxaComp100k, taxaComp1m;
-
-    arqTesteCompressao.open(TEXT_NAME, ios::out);
-
-    /*
-    cout << "Digite a quantidade de compressoes que precisa fazer => " << endl;
-    cin >> N;
-    */
-    cout << "Digite a quantidade de testes a rodar => ";
-    cin >> M;
-
-    if (M < 3)
-        M = 3;
-
-    for (int i = 0; i < M; i++)
-    {
-
-        cout << "Iniciando o processamento para M = " << i << endl;
-
-        // Primeiro teste, N = 10000
-        N = 10000;
-        preprocessaCompressao(tiktokVector, N);
-        // Computa dados
-
-        // Segundo teste, N = 100000
-        N = 100000;
-        preprocessaCompressao(tiktokVector, N);
-
-        // Terceiro teste, N = 1000000
-        N = 1000000;
-        preprocessaCompressao(tiktokVector, N);
-
-        textToWrite.append("M").append(to_string(i)).append(" :\n");
-        textToWrite.append("N = 10000 - Comparacoes: ").append(to_string(comparacoes10k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp10k));
-        textToWrite.append("\nN = 100000\nComparacoes: ").append(to_string(comparacoes100k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp100k));
-        textToWrite.append("\nN = 1000000\nComparacoes: ").append(to_string(comparacoes1m)).append("\nTaxa de Compressão: ").append(to_string(taxaComp1m));
-
-        arqTesteCompressao.write(textToWrite.c_str(), textToWrite.length() * sizeof(char));
-        
-        cout << textToWrite << endl;
-    }
-
-    cout << "Escrita terminada!" << endl;
-
-    arqTesteCompressao.close();
-}
-
-int preprocessaCompressao(vector<Tiktok> &tiktokVector, int numReviews)
+int preprocessaCompressao(vector<Tiktok> &tiktokVector, int numReviews, float *taxaCompressao)
 {
 
     int contador = 0, numComparacoes;
@@ -302,8 +247,66 @@ int preprocessaCompressao(vector<Tiktok> &tiktokVector, int numReviews)
         reviewTexts.push_back(txt);
     }
 
-    numComparacoes = codigosHuffman(dados, frequencias, contador);
+    numComparacoes = codigosHuffman(dados, frequencias, contador, taxaCompressao);
     return numComparacoes;
+}
+
+
+void seqCompressoes(vector<Tiktok> &tiktokVector)
+{
+    string textToWrite = "";
+
+    int N, M; // sequencia de compressoes
+    std::fstream arqTesteCompressao;
+    int comparacoes10k, comparacoes100k, comparacoes1m;
+    float taxaComp10k, taxaComp100k, taxaComp1m;
+
+    arqTesteCompressao.open(TEXT_NAME, ios::out);
+
+    /*
+    cout << "Digite a quantidade de compressoes que precisa fazer => " << endl;
+    cin >> N;
+    */
+    cout << "Digite a quantidade de testes a rodar => ";
+    cin >> M;
+
+    if (M < 3)
+    {
+        M = 3;
+    }
+
+    for (int i = 0; i < M; i++)
+    {
+
+        cout << "Iniciando o processamento para M = " << i << endl;
+
+        // Primeiro teste, N = 10000
+        N = 10000;
+        comparacoes10k = preprocessaCompressao(tiktokVector, N, &taxaComp10k);
+        // Computa dados
+
+        // Segundo teste, N = 100000
+        N = 100000;
+        comparacoes100k = preprocessaCompressao(tiktokVector, N, &taxaComp100k);
+
+        // Terceiro teste, N = 1000000
+        N = 1000000;
+        comparacoes1m = preprocessaCompressao(tiktokVector, N, &taxaComp1m);
+
+
+        textToWrite.append("M").append(to_string(i)).append(" :\n");
+        textToWrite.append("N = 10000 - Comparacoes: ").append(to_string(comparacoes10k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp10k));
+        textToWrite.append("\nN = 100000\nComparacoes: ").append(to_string(comparacoes100k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp100k));
+        textToWrite.append("\nN = 1000000\nComparacoes: ").append(to_string(comparacoes1m)).append("\nTaxa de Compressão: ").append(to_string(taxaComp1m));
+
+        arqTesteCompressao.write(textToWrite.c_str(), textToWrite.length() * sizeof(char));
+
+        cout << textToWrite << endl;
+    }
+
+    cout << "Escrita terminada!" << endl;
+
+    arqTesteCompressao.close();
 }
 
 int main(int argc, char const *argv[])
@@ -492,6 +495,7 @@ int main(int argc, char const *argv[])
     cin >> freq;
 
     int numReviews;
+    float taxaCompressao;
 
     while (continuarComp == 1)
     {
@@ -505,7 +509,7 @@ int main(int argc, char const *argv[])
         case 1:
             cout << "Digite o numero de reviews que deseja importar: ";
             cin >> numReviews;
-            preprocessaCompressao(tiktokVector, numReviews);
+            preprocessaCompressao(tiktokVector, numReviews, &taxaCompressao);
             break;
         case 2:
             // Descomprimir o arquivo binário
