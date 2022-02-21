@@ -329,6 +329,11 @@ void seqCompressoes(vector<Tiktok> &tiktokVector)
     arqTesteCompressao.close();
 }
 
+void descompressao()
+{ 
+    
+}
+
 int main(int argc, char const *argv[])
 {
     // Code Protection: Numero de parametros insuficiente
@@ -532,7 +537,7 @@ int main(int argc, char const *argv[])
             preprocessaCompressao(tiktokVector, numReviews, &taxaCompressao);
             break;
         case 2:
-            //descompressao()
+            descompressao();
             break;
         case 3:
             seqCompressoes(tiktokVector);

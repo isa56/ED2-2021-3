@@ -59,7 +59,7 @@ void minHeapify(struct HeapMinimo *minHeap, int idx, int *numComparacoes)
         menor = dir;
     }
 
-    numComparacoes+=3;
+    numComparacoes += 3;
     if (menor != idx)
     {
         trocaNoHeapMinimo(&minHeap->arrayNos[menor], &minHeap->arrayNos[idx]);
@@ -184,7 +184,7 @@ void imprimeCodigos(struct NoHeapMinimo *raiz, int arr[], int acima)
     }
 }
 
-float* calculaTaxaCompressao(int *array, char dados[])
+float *calculaTaxaCompressao(int *array, char dados[])
 {
     int entrada = strlen(dados) * sizeof(char);
     int saida = sizeof(array) / 8;
@@ -202,8 +202,12 @@ int codigosHuffman(char dados[], int frequencia[], int tamanho, float *taxaCompr
 
     imprimeCodigos(raiz, arr, acima);
 
+    std::fstream arqSaida;
+    arqSaida.open("reviewsComp.bin", ios::out | ios::binary);
+
+    arqSaida.write(reinterpret_cast<const char *>(arr), sizeof(arr));
+
     taxaCompressao = calculaTaxaCompressao(arr, dados);
 
     return numComparacoes;
-
 }
