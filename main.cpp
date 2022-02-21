@@ -220,6 +220,17 @@ void testarImportacao()
     }
 }
 
+int encontraCharNaArray(char dados[], char c)
+{
+    int arrayLength = sizeof(dados) / sizeof(dados[0]);
+    for (int i = 0; i < arrayLength; i++)
+    {
+        if(dados[i] == c)
+            return 1;
+    }
+    return 0;
+}
+
 int preprocessaCompressao(vector<Tiktok> &tiktokVector, int numReviews, float *taxaCompressao)
 {
 
@@ -237,7 +248,7 @@ int preprocessaCompressao(vector<Tiktok> &tiktokVector, int numReviews, float *t
 
         for (int j = 0; j < txt.length(); j++)
         {
-            if (dados.find(txt.at(j)) == std::string::npos)
+            if (encontraCharNaArray(dados, txt.at(j)) != 1)
             {
                 frequencias[contador] = count(txt.begin(), txt.end(), txt.at(j));
                 dados[contador] = txt.at(j);
@@ -251,15 +262,14 @@ int preprocessaCompressao(vector<Tiktok> &tiktokVector, int numReviews, float *t
     return numComparacoes;
 }
 
-
 void seqCompressoes(vector<Tiktok> &tiktokVector)
 {
     string textToWrite = "";
 
-    int N, M; // sequencia de compressoes
+    int N, M, numVezes = 0; // sequencia de compressoes
     std::fstream arqTesteCompressao;
-    int comparacoes10k, comparacoes100k, comparacoes1m;
-    float taxaComp10k, taxaComp100k, taxaComp1m;
+    int comparacoes10k, comparacoes100k, comparacoes1m, totalComparacoes = 0;
+    float taxaComp10k, taxaComp100k, taxaComp1m, totalTaxa = 0;
 
     arqTesteCompressao.open(TEXT_NAME, ios::out);
 
@@ -283,21 +293,30 @@ void seqCompressoes(vector<Tiktok> &tiktokVector)
         // Primeiro teste, N = 10000
         N = 10000;
         comparacoes10k = preprocessaCompressao(tiktokVector, N, &taxaComp10k);
-        // Computa dados
+        totalComparacoes += comparacoes10k;
+        totalTaxa += taxaComp10k;
+        numVezes++;
 
         // Segundo teste, N = 100000
         N = 100000;
         comparacoes100k = preprocessaCompressao(tiktokVector, N, &taxaComp100k);
+        totalComparacoes += comparacoes100k;
+        totalTaxa += taxaComp100k;
+        numVezes++;
 
         // Terceiro teste, N = 1000000
         N = 1000000;
         comparacoes1m = preprocessaCompressao(tiktokVector, N, &taxaComp1m);
-
+        totalComparacoes += comparacoes1m;
+        totalTaxa += taxaComp1m;
+        numVezes++;
 
         textToWrite.append("M").append(to_string(i)).append(" :\n");
         textToWrite.append("N = 10000 - Comparacoes: ").append(to_string(comparacoes10k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp10k));
         textToWrite.append("\nN = 100000\nComparacoes: ").append(to_string(comparacoes100k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp100k));
         textToWrite.append("\nN = 1000000\nComparacoes: ").append(to_string(comparacoes1m)).append("\nTaxa de Compressão: ").append(to_string(taxaComp1m));
+        textToWrite.append("\nTotal Comparacoes: ").append(to_string(totalComparacoes)).append("\nTotal taxa de Compressão: ").append(to_string(totalTaxa));
+        textToWrite.append("\nMedia Comparacoes: ").append(to_string(totalComparacoes / numVezes)).append("\nMedia taxa de Compressão: ").append(to_string(totalTaxa / numVezes));
 
         arqTesteCompressao.write(textToWrite.c_str(), textToWrite.length() * sizeof(char));
 
