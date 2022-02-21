@@ -1,4 +1,3 @@
-/*
 #include <bits/stdc++.h>
 
 
@@ -26,13 +25,13 @@ TreeRBNode *TreeRB::insertNodeAux(TreeRBNode *father, TreeRBNode *pointer, int *
     if(pointer->getInfoID() < father->getInfoID())
     {
         (*comparacoes)++;
-        father->setLeftChild( insertNodeAux(father->getLeftChild(), pointer) );
+        father->setLeftChild( insertNodeAux(father->getLeftChild(), pointer, comparacoes) );
         father->getLeftChild()->setFather( father );
     }
     else if (pointer->getInfoID() > father->getInfoID())
     {
         (*comparacoes)++;
-        father->setRightChild( insertNodeAux(father->getRightChild(), pointer) );
+        father->setRightChild( insertNodeAux(father->getRightChild(), pointer, comparacoes) );
         father->getRightChild()->setFather( father );
     }
 
@@ -247,4 +246,3 @@ void TreeRB::printTree(TreeRBNode *r) // percurso em ordem
     }
     cout << endl << endl;
 }
-*/
