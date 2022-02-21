@@ -38,6 +38,6 @@ int ehFolha(struct NoHeapMinimo *raiz);
 struct HeapMinimo *criaMontaHeapMin(char dados[], int frequencia[], int tamanho);
 struct NoHeapMinimo *montaArvoreHuffman(char dados[], int frequencia[], int tamanho);
 void imprimeCodigos(struct NoHeapMinimo *raiz, int arr[], int acima);
-void codigosHuffman(char dados[], int frequencia[], int tamanho);
+int codigosHuffman(char dados[], int frequencia[], int tamanho);
 
 #endif

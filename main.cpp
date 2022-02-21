@@ -220,63 +220,69 @@ void testarImportacao()
     }
 }
 
-void seqCompressoes()
+void seqCompressoes(vector<Tiktok> &tiktokVector)
 {
     char *buffer = new char[LINES_CSV];
-    fstream arquivoBin;
-    vector<string> tiktokVector;
+    string textToWrite = "";
 
-    arquivoBin.open(BINARY_NAME, ios::in | ios::binary);
-
-    int N; // sequencia de compressoes
-    cout << "Digite a quantidade de compressoes que precisa fazer => " << endl;
-    cin >> N;
-
-    if (N < 10000)
-    {
-        cout << "Numero insuficiente de valores!!" << endl;
-        exit(1);
-    }
-    else
-    {
-        for (int i = 0; i < 100; i++)
-        {
-            int posicao = rand() % LINES_CSV; // 3660723
-            arquivoBin.seekg(posicao * STRING_MEDIUM_SIZE);
-
-            arquivoBin.read(buffer, STRING_MEDIUM_SIZE);
-            tiktokVector.push_back(buffer);
-        }
-    }
-
-    delete[] buffer;
-    arquivoBin.close();
-
+    int N, M; // sequencia de compressoes
     std::fstream arqTesteCompressao;
+    int comparacoes10k, comparacoes100k, comparacoes1m;
+    int taxaComp10k, taxaComp100k, taxaComp1m;
 
     arqTesteCompressao.open(TEXT_NAME, ios::out);
 
-    // escreve no arquivo txt
-    for (int i = 0; i < tiktokVector.size(); i++)
+    /*
+    cout << "Digite a quantidade de compressoes que precisa fazer => " << endl;
+    cin >> N;
+    */
+    cout << "Digite a quantidade de testes a rodar => ";
+    cin >> M;
+
+    if (M < 3)
+        M = 3;
+
+    for (int i = 0; i < M; i++)
     {
-        arqTesteCompressao.write(
-            (char *)&tiktokVector[i], tiktokVector.size() * STRING_MEDIUM_SIZE);
+
+        cout << "Iniciando o processamento para M = " << i << endl;
+
+        // Primeiro teste, N = 10000
+        N = 10000;
+        preprocessaCompressao(tiktokVector, N);
+        // Computa dados
+
+        // Segundo teste, N = 100000
+        N = 100000;
+        preprocessaCompressao(tiktokVector, N);
+
+        // Terceiro teste, N = 1000000
+        N = 1000000;
+        preprocessaCompressao(tiktokVector, N);
+
+        textToWrite.append("M").append(to_string(i)).append(" :\n");
+        textToWrite.append("N = 10000 - Comparacoes: ").append(to_string(comparacoes10k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp10k));
+        textToWrite.append("\nN = 100000\nComparacoes: ").append(to_string(comparacoes100k)).append("\nTaxa de Compressão: ").append(to_string(taxaComp100k));
+        textToWrite.append("\nN = 1000000\nComparacoes: ").append(to_string(comparacoes1m)).append("\nTaxa de Compressão: ").append(to_string(taxaComp1m));
+
+        arqTesteCompressao.write(textToWrite.c_str(), textToWrite.length() * sizeof(char));
+        
+        cout << textToWrite << endl;
     }
+
+    cout << "Escrita terminada!" << endl;
 
     arqTesteCompressao.close();
 }
 
-void preprocessaCompressao(vector<Tiktok> &tiktokVector)
+int preprocessaCompressao(vector<Tiktok> &tiktokVector, int numReviews)
 {
 
-    int numReviews, contador = 0;
+    int contador = 0, numComparacoes;
     string txt;
     char dados[52];
     int frequencias[52];
     vector<string> reviewTexts;
-
-    cout << "Digite o numero de reviews que deseja importar: ";
-    cin >> numReviews;
 
     for (int i = 0; i < numReviews; i++)
     {
@@ -286,7 +292,7 @@ void preprocessaCompressao(vector<Tiktok> &tiktokVector)
 
         for (int j = 0; j < txt.length(); j++)
         {
-            if ((find(begin(dados), end(dados), txt.at(j))) == end(dados))
+            if (dados.find(txt.at(j)) == std::string::npos)
             {
                 frequencias[contador] = count(txt.begin(), txt.end(), txt.at(j));
                 dados[contador] = txt.at(j);
@@ -296,7 +302,8 @@ void preprocessaCompressao(vector<Tiktok> &tiktokVector)
         reviewTexts.push_back(txt);
     }
 
-    codigosHuffman(dados, frequencias, contador);
+    numComparacoes = codigosHuffman(dados, frequencias, contador);
+    return numComparacoes;
 }
 
 int main(int argc, char const *argv[])
@@ -484,6 +491,8 @@ int main(int argc, char const *argv[])
     cout << "E qual a frequencia? ";
     cin >> freq;
 
+    int numReviews;
+
     while (continuarComp == 1)
     {
 
@@ -494,13 +503,15 @@ int main(int argc, char const *argv[])
         switch (decisaoComp)
         {
         case 1:
-            preprocessaCompressao(tiktokVector);
+            cout << "Digite o numero de reviews que deseja importar: ";
+            cin >> numReviews;
+            preprocessaCompressao(tiktokVector, numReviews);
             break;
         case 2:
             // Descomprimir o arquivo binário
             break;
         case 3:
-            seqCompressoes();
+            seqCompressoes(tiktokVector);
             break;
         }
 

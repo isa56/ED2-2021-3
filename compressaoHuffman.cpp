@@ -10,20 +10,6 @@
 #include "compressaoHuffman.h"
 
 using namespace std;
-/*
-struct NoHeapMinimo
-{
-    char dado;
-    unsigned frequencia;
-    struct NoHeapMinimo *esquerda, *direita;
-};
-
-struct HeapMinimo
-{
-    unsigned tamanho, capacidadeMaxima;
-    struct NoHeapMinimo **arrayNos;
-};
-*/
 
 struct NoHeapMinimo *novoNo(char dado, unsigned frequencia)
 {
@@ -197,13 +183,16 @@ void imprimeCodigos(struct NoHeapMinimo *raiz, int arr[], int acima)
     }
 }
 
-void codigosHuffman(char dados[], int frequencia[], int tamanho)
+int codigosHuffman(char dados[], int frequencia[], int tamanho)
 {
 
+    int numComparacoes;
     struct NoHeapMinimo *raiz = montaArvoreHuffman(dados, frequencia, tamanho);
 
     int arr[TAMANHO_MAX_ARVORE], acima = 0;
 
     imprimeCodigos(raiz, arr, acima);
+
+    return numComparacoes;
 
 }
