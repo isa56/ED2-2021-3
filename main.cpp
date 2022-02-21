@@ -20,6 +20,7 @@
 
 // Parte 4:
 #include "compressaoHuffman.h"
+#include "descompressaoHuffman.h"
 
 // Contantes:
 #define BINARY_NAME "tiktok_app_reviews.bin"
@@ -531,7 +532,7 @@ int main(int argc, char const *argv[])
             preprocessaCompressao(tiktokVector, numReviews, &taxaCompressao);
             break;
         case 2:
-            // Descomprimir o arquivo binário
+            //descompressao()
             break;
         case 3:
             seqCompressoes(tiktokVector);

@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+#include "descompressaoHuffman.h"
+
 #define TAMANHO_MAX_ARVORE 256
 using namespace std;
   
@@ -7,30 +9,8 @@ map<char, string> codes;
   
 // armazenar a frequencia do caractere inserido
 map<char, int> freq;
-  
-// A Huffman tree node
-struct NoHeapMinimo
-{
-    char dado;             // Caractere específico
-    int frequencia;             // Frequencia do caractere
-    NoHeapMinimo *esquerda, *direita; // Filho da esquerda e direita
-  
-    NoHeapMinimo(char data, int frequencia)
-    {
-        esquerda = direita = NULL;
-        this->dado = data;
-        this->frequencia = frequencia;
-    }
-};
-  
 
-struct comparar
-{
-    bool operator()(NoHeapMinimo* l, NoHeapMinimo* r)
-    {
-        return (l->frequencia > r->frequencia);
-    }
-};
+
   
 // imprime o valor junto de seu valor de huffman
 void imprimeCodigo(struct NoHeapMinimo* raiz, string str)
@@ -87,7 +67,7 @@ void calculaFrequencia(string str, int n)
 
 string descompressao(struct NoHeapMinimo* raiz, string s)
 {
-    string ans = "";
+    string str = "";
     struct NoHeapMinimo* curr = raiz;
     for (int i=0;i<s.size();i++)
     {
@@ -99,21 +79,21 @@ string descompressao(struct NoHeapMinimo* raiz, string s)
         // reached leaf node
         if (curr->esquerda==NULL and curr->direita==NULL)
         {
-            ans += curr->dado;
+            str += curr->dado;
             curr = raiz;
         }
     }
-    // cout<<ans<<endl;
-    return ans+'\0';
+    // cout<<str<<endl;
+    return str+'\0';
 }
   
-int main()
+/*int main()
 {
     string str = "testeDescompressao";
     string StringCompressa, StringDescompressa;
     calculaFrequencia(str, str.length());
     MontaArvoreHuffman(str.length());
-    cout << "Character With there Frequencies:\n";
+    cout << "Caractere com as frequencias:\n";
     for (auto v=codes.begin(); v!=codes.end(); v++)
         cout << v->first <<' ' << v->second << endl;
   
@@ -125,4 +105,4 @@ int main()
     StringDescompressa = descompressao(minHeap.top(), StringCompressa);
     cout << "\nDados decompressos:\n" << StringDescompressa << endl;
     return 0;
-}
+}*/
